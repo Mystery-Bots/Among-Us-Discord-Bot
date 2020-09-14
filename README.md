@@ -1,4 +1,6 @@
-<img src="https://themystery.me/assets/amongus.jpeg" width="100px" alt="Logo" style="display: block;margin-left: auto;margin-right: auto;width: 50%;border-radius:100px;">
+<p align="center">
+  <img src="https://themystery.me/assets/amongus.jpeg" width="100px" alt="Logo">
+</p>
 
 # The Among Us Bot
 
