@@ -11,7 +11,7 @@ module.exports.run = async (bot, message, args) => {
                 
                 member.voice.setMute(false, "Among Us Game Chat Control")
             }
-            return message.reply('No players died in the round. Unmuting all players')
+            return message.channel.send('No players died in the round. Unmuting all players')
         }
         else{
             connection.query(`DROP TABLE \`${guild}\``)
