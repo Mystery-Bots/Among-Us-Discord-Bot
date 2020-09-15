@@ -20,7 +20,7 @@ module.exports.run = async (bot, message, args) => {
                     if (!channel){
                         console.log("No General or Among Us channel in guild "+ guild.name)
                     }else{
-                        channel.send(embed).catch(console.error())
+                        channel.send(embed)
                     }
                 }
             }
