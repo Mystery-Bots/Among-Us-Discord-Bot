@@ -11,16 +11,14 @@ module.exports.run = async (bot, message, args) => {
     connection.query(`SELECT * FROM \`${guild}\``, async function (_error,results) {
         if (!results){
             for ([memberID, member] of channel.members){
-                
-                member.voice.setMute(false, "Among Us Game Chat Control")
+                await member.voice.setMute(false, "Among Us Game Chat Control")
             }
             return message.channel.send('No players died in the round. Unmuting all players')
         }
         else{
             await connection.query(`DROP TABLE \`${guild}\``)
             for ([memberID, member] of channel.members){
-                
-                member.voice.setMute(false, "Among Us Game Chat Control")
+                await member.voice.setMute(false, "Among Us Game Chat Control")
             }
         }
         connection.destroy();

@@ -9,13 +9,12 @@ module.exports.run = async (bot, message, args) => {
     }
 
     let connection = mysql.createConnection(bot.database)
-    guild = message.guild.id
+    guild = message.guild
 
-    connection.query(`SELECT * FROM \`${guild}\``, async function (_error,results) {
+    connection.query(`SELECT * FROM \`${guild.id}\``, async function (_error,results) {
         if (!results){
             for ([memberID, member] of channel.members){
-                
-                member.voice.setMute(false, "Among Us Game Chat Control")
+                await member.voice.setMute(false, "Among Us Game Chat Control")
             }
         }
         else{
@@ -26,7 +25,7 @@ module.exports.run = async (bot, message, args) => {
             for ([memberID, member] of channel.members){
                 if (deadUsers.includes(memberID)){}
                 else{
-                    member.voice.setMute(false, "Among Us Game Chat Control")
+                    await member.voice.setMute(false, "Among Us Game Chat Control")
                 }
             }
         }
