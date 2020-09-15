@@ -13,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
         .addField('\u200b', '\u200b',true)
         .addField("Guilds",bot.guilds.cache.size,true)
         .addField("Players",bot.users.cache.size-1, true)
-        .addField("Support","[Discord Invite](https://discord.gg/FY2XX7T)")
+        .addField("Support","[Discord Invite](https://discord.gg/AD2a24y)")
     message.channel.send(embed)
 }
 
