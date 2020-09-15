@@ -17,13 +17,13 @@ module.exports.run = async (bot, message, args) => {
             return message.channel.send('No players died in the round. Unmuting all players')
         }
         else{
-            connection.query(`DROP TABLE \`${guild}\``)
+            await connection.query(`DROP TABLE \`${guild}\``)
             for ([memberID, member] of channel.members){
                 
                 member.voice.setMute(false, "Among Us Game Chat Control")
             }
         }
-        connection.end();
+        connection.destroy();
         message.channel.send("All users unmuted.")
     })
 }
