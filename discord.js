@@ -7,7 +7,8 @@ const moment = require("moment");
 
 const bot = new Discord.Client();
 
-bot.config = config;
+bot.config = config.discord;
+bot.database = config.database;
 
 // Creating command and aliases collection.
 ["commands", "aliases"].forEach((x) => (bot[x] = new Discord.Collection()));
@@ -76,4 +77,4 @@ bot
 		require("./discordEvents/message").Run(bot, message);
 	});
 
-bot.login(config.token).catch(console.error());
+bot.login(config.discord.token).catch(console.error());
