@@ -4,6 +4,7 @@ const mysql = require("mysql")
 module.exports.run = async (bot, message, args) => {
     let connection = mysql.createConnection(bot.database)
     guild = message.guild.id
+    channel = message.member.voice.channel
     connection.query(`SELECT * FROM \`${guild}\``, async function (_error,results) {
         if (!results){
             for ([memberID, member] of channel.members){
