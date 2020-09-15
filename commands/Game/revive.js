@@ -11,7 +11,7 @@ module.exports.run = async (bot, message, args) => {
             message.channel.send(`${user.tag} is not listed as dead`)
         }
         else{
-            connection.query(`DELETE FROM \`${guild}\` WHERE memberid = '${user.id}'`)
+            await connection.query(`DELETE FROM \`${guild}\` WHERE memberid = '${user.id}'`)
         }
         connection.destroy();
         message.channel.send(`${user.tag} Revived. To list people as dead use \`${bot.config.prefix}dead\`.\nTo unmute revived players use \`${bot.config.prefix}unmute\``)

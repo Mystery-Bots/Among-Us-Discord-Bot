@@ -12,7 +12,7 @@ module.exports.run = async (bot, message, args) => {
             await connection.query(`INSERT INTO \`${guild}\` (memberid) VALUES ('${user.id}')`)
         }
         else{
-            connection.query(`INSERT INTO \`${guild}\` (memberid) VALUES ('${user.id}')`)
+            await connection.query(`INSERT INTO \`${guild}\` (memberid) VALUES ('${user.id}')`)
         }
         connection.destroy();
         message.channel.send(`${user.tag} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\``)
