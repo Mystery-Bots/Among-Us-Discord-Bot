@@ -2,9 +2,12 @@ const Discord = require('discord.js')
 const mysql = require("mysql")
 
 module.exports.run = async (bot, message, args) => {
+    channel = message.member.voice.channel
+    if (!channel){
+        return message.reply("Sorry but you are not connected to a voice chat for me to manage.")
+    }
     let connection = mysql.createConnection(bot.database)
     guild = message.guild.id
-    channel = message.member.voice.channel
     connection.query(`SELECT * FROM \`${guild}\``, async function (_error,results) {
         if (!results){
             for ([memberID, member] of channel.members){
