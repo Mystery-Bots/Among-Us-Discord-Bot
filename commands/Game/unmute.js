@@ -34,10 +34,9 @@ module.exports.run = async (bot, message, args) => {
                 }
             }
         }
+        connection.end();
+        message.channel.send("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
     })
-    
-    message.channel.send("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
-
 }
 
 module.exports.info = {

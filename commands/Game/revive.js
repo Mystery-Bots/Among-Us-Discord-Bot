@@ -13,6 +13,7 @@ module.exports.run = async (bot, message, args) => {
         else{
             connection.query(`DELETE FROM \`${guild}\` WHERE memberid = '${user.id}'`)
         }
+        connection.end();
         message.channel.send(`${user.tag} Revived. To list people as dead use \`${bot.config.prefix}dead\`.\nTo unmute revived players use \`${bot.config.prefix}unmute\``)
     })
 }

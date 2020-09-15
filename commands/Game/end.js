@@ -14,6 +14,7 @@ module.exports.run = async (bot, message, args) => {
         else{
             connection.query(`DROP TABLE \`${guild}\``)
         }
+        connection.end();
         message.channel.send("All users unmuted.")
     })
 }
