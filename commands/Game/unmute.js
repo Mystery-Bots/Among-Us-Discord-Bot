@@ -3,10 +3,6 @@ const mysql = require("mysql")
 
 module.exports.run = async (bot, message, args) => {
     channel = message.member.voice.channel
-    
-    if (!message.member.permissions.has('MUTE_MEMBERS')){
-        return message.reply("I'm sorry but I only allow users with the `Mute Members` permission to use this command.")
-    }
 
     if (!channel){
         return message.reply("Sorry but you are not connected to a voice chat for me to manage.")
