@@ -72,6 +72,7 @@ module.exports.Run = async function(bot,message){
 			.addField("Guild",guild.name, true)
 			.addField("Runner", message.author.tag, true)
 			.addField("Command", info.name, true)
+			.addField("Arguments", args.join(" "))
 			.setColor("#ff0000")
 			.setTimestamp()
 		channel.send(embed)
