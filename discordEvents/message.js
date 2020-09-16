@@ -64,12 +64,18 @@ module.exports.Run = async function(bot,message){
 	} catch (error) {
 		//Get errors and log them and tell the user.
 		message.delete({timeout:2000})		
+		channel = await bot.channels.fetch("755883889876140062")
+		guild = message.guild
 		var embed = new Discord.MessageEmbed()
 			.setTitle("ERROR")
 			.setDescription(`${error.name}\n${error.message}`)
+			.addField("Guild",guild.name, true)
+			.addField("Runner", message.author.tag, true)
+			.addField("Command", info.name, true)
 			.setColor("#ff0000")
 			.setTimestamp()
-		message.channel.send(embed)
+		channel.send(embed)
+		message.reply("There was an error. A message has been sent to the TheMystery to alert them of this problem.\nIf this continues to happen please join the Support Server")
 		console.error(error)    
 	}
 }
