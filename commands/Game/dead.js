@@ -9,8 +9,8 @@ module.exports.run = async (bot, message, args) => {
     member = await guild.members.fetch(user)
     connection.query(`SELECT * FROM \`${guild.id}\``, async function (_error,results) {
         if (!results){
-            await connection.query(`CREATE TABLE \`${guild}\` (memberid VARCHAR(255))`)
-            await connection.query(`INSERT INTO \`${guild}\` (memberid) VALUES ('${user.id}')`)
+            await connection.query(`CREATE TABLE \`${guild.id}\` (memberid VARCHAR(255))`)
+            await connection.query(`INSERT INTO \`${guild.id}\` (memberid) VALUES ('${user.id}')`)
             await member.voice.setMute(true, "Among Us Game Chat Control")
         }
         else{

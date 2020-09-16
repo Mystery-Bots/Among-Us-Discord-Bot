@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
     }
     let connection = mysql.createConnection(bot.database)
     guild = message.guild.id
-    connection.query(`SELECT * FROM \`${guild}\``, async function (_error,results) {
+    connection.query(`SELECT * FROM \`${guild.id}\``, async function (_error,results) {
         if (!results){
             for ([memberID, member] of channel.members){
                 await member.voice.setMute(false, "Among Us Game Chat Control")
@@ -16,7 +16,7 @@ module.exports.run = async (bot, message, args) => {
             return message.channel.send('No players died in the round. Unmuting all players')
         }
         else{
-            await connection.query(`DROP TABLE \`${guild}\``)
+            await connection.query(`DROP TABLE \`${guild.id}\``)
             for ([memberID, member] of channel.members){
                 await member.voice.setMute(false, "Among Us Game Chat Control")
             }
