@@ -5,7 +5,7 @@ const cooldowns = new Discord.Collection()
 
 module.exports.Run = async function(bot,message){
 	var prefix = bot.config.prefix
-	const args = message.content.slice(prefix.length).trim().split(/ +/g)
+	var args = message.content.slice(prefix.length).trim().split(/ +/g)
 	const cmd = args.shift().toLowerCase()
 	let command
 	if (!message.content.startsWith(prefix) || message.author.bot) return
@@ -65,6 +65,7 @@ module.exports.Run = async function(bot,message){
 		//Get errors and log them and tell the user.
 		message.delete({timeout:2000})		
 		channel = await bot.channels.fetch("755883889876140062")
+		if(args.length < 1) args = ["None"]
 		guild = message.guild
 		var embed = new Discord.MessageEmbed()
 			.setTitle("ERROR")
