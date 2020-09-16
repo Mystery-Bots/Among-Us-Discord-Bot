@@ -2,11 +2,15 @@ const Discord = require('discord.js')
 const mysql = require("mysql")
 
 module.exports.run = async (bot, message, args) => {
-    let connection = mysql.createConnection(bot.database)
     guild = message.guild
     user = message.mentions.users.first()
     if (!user) user = message.author
     member = await guild.members.fetch(user)
+    channel = message.member.voice.channel
+    if (!channel){
+        return message.reply("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
+    }
+    let connection = mysql.createConnection(bot.database)
     connection.query(`SELECT * FROM \`${guild.id}\``, async function (_error,results) {
         if (!results){
             message.channel.send(`${user.tag} is not listed as dead`)
