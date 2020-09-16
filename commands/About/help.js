@@ -18,6 +18,7 @@ module.exports.run = (bot, message, args) => {
 		else if (bot.aliases.has(command)) {
 			cmd = bot.commands.get(bot.aliases.get(command))
 		}
+		if(cmd.info.category == "Developer") return message.channel.send(embed.setTitle("Invalid Command.").setDescription(`Do \`${bot.config.prefix}help\` for the list of the commands.`))
 		if(!cmd) return message.channel.send(embed.setTitle("Invalid Command.").setDescription(`Do \`${bot.config.prefix}help\` for the list of the commands.`))
 		command = cmd.info
 		try{
