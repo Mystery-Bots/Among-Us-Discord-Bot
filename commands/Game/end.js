@@ -13,13 +13,13 @@ module.exports.run = async (bot, message, args) => {
         for ([memberID, member] of channel.members){
             await member.voice.setMute(false, "Among Us Game Chat Control")
         }
-        connection.destroy();
+        await connection.destroy();
         message.channel.send("Game ended. All users unmuted.")
     }).catch( async () => {
         for ([memberID, member] of channel.members){
             await member.voice.setMute(false, "Among Us Game Chat Control")
         }
-        connection.destroy();
+        await connection.destroy();
         return message.channel.send('No players died in the game. Unmuting all players.')
     })
 }

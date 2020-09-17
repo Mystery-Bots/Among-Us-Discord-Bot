@@ -16,23 +16,23 @@ module.exports.run = async (bot, message, args) => {
             if (!rows[0]){
                 await connection.query(`INSERT INTO \`${guild.id}\` (memberid) VALUES ('${user.id}')`)
                 await member.voice.setMute(true, "Among Us Game Chat Control")
-                connection.destroy();
+                await connection.destroy();
                 message.channel.send(`${user.tag} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
             }else{
-                connection.destroy();
+                await connection.destroy();
                 message.channel.send(`${user.tag} is already dead.`)
             }
         }).catch( async () => {
             await connection.query(`INSERT INTO \`${guild.id}\` (memberid) VALUES ('${user.id}')`)
             await member.voice.setMute(true, "Among Us Game Chat Control")
-            connection.destroy();
+            await connection.destroy();
             message.channel.send(`${user.tag} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
         })
     }).catch( async () => {
         await connection.query(`CREATE TABLE \`${guild.id}\` (memberid VARCHAR(255))`)
         await connection.query(`INSERT INTO \`${guild.id}\` (memberid) VALUES ('${user.id}')`)
         await member.voice.setMute(true, "Among Us Game Chat Control")
-        connection.destroy();
+        await connection.destroy();
         message.channel.send(`${user.tag} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
     })
 }

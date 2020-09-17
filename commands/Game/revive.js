@@ -13,16 +13,16 @@ module.exports.run = async (bot, message, args) => {
     let connection = await mariadb.createConnection(bot.database)
     connection.query(`SELECT * FROM \`${guild.id}\` WHERE memberid = '${user.id}'`).then( async (rows) => {
         if (!rows[0]){
-            connection.destroy();
+            await connection.destroy();
             message.channel.send(`${user.tag} is not listed as dead.`)
         }else{
             await connection.query(`DELETE FROM \`${guild.id}\` WHERE memberid = '${user.id}'`)
             await member.voice.setMute(false, "Among Us Game Chat Control")
-            connection.destroy();
+            await connection.destroy();
             message.channel.send(`${user.tag} Revived. To list people as dead use \`${bot.config.prefix}dead\`.`)
         }
     }).catch( async () => {
-        connection.destroy();
+        await connection.destroy();
         message.channel.send(`${user.tag} is not listed as dead.`)
     })
 }
