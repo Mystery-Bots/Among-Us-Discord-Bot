@@ -8,9 +8,10 @@ module.exports.run = async (bot, message, args) => {
         .setAuthor("TheMystery",message.author.avatarURL())
         .setDescription(args.join(' '))
         .setURL("https://discord.gg/AD2a24y")
+        .setFooter("To opt out of these messages please join the support server")
         for ([guildID, guild] of bot.guilds.cache){
             if (guild.available){
-                if (bot.config.ignore.includes(guildID)){
+                if (bot.config.ignore.includes(guildID)||bot.config.updateIgnore.includes(guildID)){
                     if (guild.id == "755289058741059596"){
                         channel = await bot.channels.fetch("755292856792383600")
                         channel.send(embed)
