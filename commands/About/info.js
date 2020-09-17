@@ -21,7 +21,9 @@ module.exports.run = async (bot, message, args) => {
         .addField("Guilds",bot.guilds.cache.size,true)
         .addField("\u200B", "\u200B",true)
         .addField("Users", userCount, true)
-        .addField("Support","[Discord Invite](https://discord.gg/AD2a24y)")
+        .addField("Support","[Discord Invite](https://discord.gg/AD2a24y)",true)
+        .addField("\u200B", "\u200B",true)
+        .addField("Donate",`If you wish to donate feel free to run \`${bot.config.prefix}donate\``,true)
     message.channel.send(embed)
 }
 
