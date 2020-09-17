@@ -1,5 +1,5 @@
 const Discord = require('discord.js')
-const mysql = require("mysql")
+const mariadb  = require("mariadb")
 
 module.exports.run = async (bot, message, args) => {
     guild = message.guild
@@ -10,17 +10,20 @@ module.exports.run = async (bot, message, args) => {
     if (!channel){
         return message.reply("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
-    let connection = mysql.createConnection(bot.database)
-    connection.query(`SELECT * FROM \`${guild.id}\``, async function (_error,results) {
-        if (!results){
-            message.channel.send(`${user.tag} is not listed as dead`)
-        }
-        else{
+    let connection = await mariadb.createConnection(bot.database)
+    connection.query(`SELECT * FROM \`${guild.id}\` WHERE memberid = '${user.id}'`).then( async (rows) => {
+        if (!rows[0]){
+            connection.destroy();
+            message.channel.send(`${user.tag} is not listed as dead.`)
+        }else{
             await connection.query(`DELETE FROM \`${guild.id}\` WHERE memberid = '${user.id}'`)
             await member.voice.setMute(false, "Among Us Game Chat Control")
+            connection.destroy();
+            message.channel.send(`${user.tag} Revived. To list people as dead use \`${bot.config.prefix}dead\`.`)
         }
+    }).catch( async () => {
         connection.destroy();
-        message.channel.send(`${user.tag} Revived. To list people as dead use \`${bot.config.prefix}dead\`.`)
+        message.channel.send(`${user.tag} is not listed as dead.`)
     })
 }
 
