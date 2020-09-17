@@ -15,8 +15,7 @@ module.exports.run = async (bot, message, args) => {
         }
         connection.destroy();
         message.channel.send("Game ended. All users unmuted.")
-    }).catch( async (error) => {
-        console.log(error)
+    }).catch( async () => {
         for ([memberID, member] of channel.members){
             await member.voice.setMute(false, "Among Us Game Chat Control")
         }

@@ -23,8 +23,7 @@ module.exports.run = async (bot, message, args) => {
         }
         connection.destroy();
         message.channel.send("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
-    }).catch( async (error) => {
-        console.log(error)
+    }).catch( async () => {
         for ([memberID, member] of channel.members){
             await member.voice.setMute(false, "Among Us Game Chat Control")
         }
