@@ -17,8 +17,8 @@ module.exports.run = async (bot, message, args) => {
             message.channel.send(`${user.tag} is not listed as dead.`)
         }else{
             await connection.query(`DELETE FROM \`${guild.id}\` WHERE memberid = '${user.id}'`)
-            await member.voice.setMute(false, "Among Us Game Chat Control")
             await connection.destroy();
+            await member.voice.setMute(false, "Among Us Game Chat Control")
             message.channel.send(`${user.tag} Revived. To list people as dead use \`${bot.config.prefix}dead\`.`)
         }
     }).catch( async () => {

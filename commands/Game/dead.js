@@ -15,8 +15,8 @@ module.exports.run = async (bot, message, args) => {
         connection.query(`SELECT * FROM \`${guild.id}\` WHERE memberid = '${user.id}'`).then( async (rows) => {
             if (!rows[0]){
                 await connection.query(`INSERT INTO \`${guild.id}\` (memberid) VALUES ('${user.id}')`)
-                await member.voice.setMute(true, "Among Us Game Chat Control")
                 await connection.destroy();
+                await member.voice.setMute(true, "Among Us Game Chat Control")
                 message.channel.send(`${user.tag} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
             }else{
                 await connection.destroy();
@@ -24,15 +24,15 @@ module.exports.run = async (bot, message, args) => {
             }
         }).catch( async () => {
             await connection.query(`INSERT INTO \`${guild.id}\` (memberid) VALUES ('${user.id}')`)
-            await member.voice.setMute(true, "Among Us Game Chat Control")
             await connection.destroy();
+            await member.voice.setMute(true, "Among Us Game Chat Control")
             message.channel.send(`${user.tag} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
         })
     }).catch( async () => {
         await connection.query(`CREATE TABLE \`${guild.id}\` (memberid VARCHAR(255))`)
         await connection.query(`INSERT INTO \`${guild.id}\` (memberid) VALUES ('${user.id}')`)
-        await member.voice.setMute(true, "Among Us Game Chat Control")
         await connection.destroy();
+        await member.voice.setMute(true, "Among Us Game Chat Control")
         message.channel.send(`${user.tag} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
     })
 }
