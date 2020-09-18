@@ -77,7 +77,7 @@ module.exports.Run = async function(bot,message){
 			.setColor("#ff0000")
 			.setTimestamp()
 		channel.send(embed)
-		message.reply("There was an error. A message has been sent to the TheMystery to alert them of this problem.\nIf this continues to happen please join the Support Server")
+		require("./reports").Run(bot, message,error)
 		console.error(error)    
 	}
 }
