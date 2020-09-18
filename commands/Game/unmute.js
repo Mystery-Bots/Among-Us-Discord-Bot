@@ -11,9 +11,10 @@ module.exports.run = async (bot, message, args) => {
     let connection = await mariadb.createConnection(bot.database)
     guild = message.guild
     connection.query(`SELECT * FROM \`${guild.id}\``).then( async (rows) => {
+        await connection.destroy();
         deadUsers = []
         for (deadUser of rows){
-            await deadUsers.push(deadUser.memberid)
+            await deadUsers.push(deadUser[0])
         }
         for ([memberID, member] of channel.members){
             if (deadUsers.includes(memberID)){}
@@ -21,13 +22,12 @@ module.exports.run = async (bot, message, args) => {
                 await member.voice.setMute(false, "Among Us Game Chat Control")
             }
         }
-        await connection.destroy();
         message.channel.send("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
     }).catch( async () => {
+        await connection.destroy();
         for ([memberID, member] of channel.members){
             await member.voice.setMute(false, "Among Us Game Chat Control")
         }
-        await connection.destroy();
         message.channel.send("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
     })
 }
