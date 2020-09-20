@@ -3,31 +3,22 @@ const Discord = require('discord.js')
 module.exports.run = async (bot, message, args) => {
     if (!bot.config.devs.includes(message.author.id)) return console.log(`${message.author.tag} (ID: ${message.author.id}) tried to use "servers"`)
     message.channel.startTyping()
-    embed = new Discord.MessageEmbed()
-        .setTitle("Server List")
+    list = []
         for ([guildID, guild] of bot.guilds.cache){
             if (bot.config.ignore.includes(guildID)){
                 
             }
             else{
-                if (guild.me.hasPermission("MANAGE_GUILD")){
-                    invites = await guild.fetchInvites()
-                }else{
-                    invites = undefined
-                }
-                if (!invites){  
-                    invite = "No Perms"
-                }else if (invites.size < 1){
-                    invite = "No Invites"
+                if (!guild.owner){
+                    list.push(`${guild.name} (ID: ${guild.id}): Owner: **Unknown User** (ID: ${guild.ownerID})  Member Count: ${guild.memberCount}`)
                 }
                 else{
-                    invite = invites.first()
+                    list.push(`${guild.name} (ID: ${guild.id}): Owner: ${guild.owner.user.tag} (ID: ${guild.ownerID})  Member Count: ${guild.memberCount}`)
                 }
-                embed.addField(`${guild.name} (ID: ${guild.id})`, `Member Count: ${guild.memberCount}\nPermissions: ${guild.me.permissions.bitfield}\nInvite: ${invite}`,true)
             }
         }
         message.channel.stopTyping(true)
-        message.channel.send(embed)
+        message.channel.send(`${list.join("\n")}`,{code:true, split:true})
 }
 
 module.exports.info = {
