@@ -14,5 +14,5 @@ module.exports.run = async (bot, message, args) => {
 module.exports.info = {
     name: "donate",
     description: "Get a link to help support the bot",
-    category: "About",
+    category: "Support",
 }

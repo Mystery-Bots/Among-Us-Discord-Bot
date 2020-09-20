@@ -9,5 +9,5 @@ module.exports.run = async (bot, message, args) => {
 module.exports.info = {
     name: "invite",
     description: "Get bot invite to add to your server",
-    category: "About",
+    category: "Support",
 }
