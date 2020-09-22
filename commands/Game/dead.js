@@ -6,7 +6,7 @@ module.exports.run = async (bot, message, args) => {
     user = message.mentions.users.first()
     if (!user) user = message.author
     member = await guild.members.fetch(user)
-    channel = message.member.voice.channel
+    channel = member.voice.channel
     if (!channel){
         return message.reply("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
