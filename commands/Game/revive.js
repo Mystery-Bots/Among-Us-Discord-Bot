@@ -6,7 +6,7 @@ module.exports.run = async (bot, message, args) => {
     user = message.mentions.users.first()
     if (!user) user = message.author
     member = await guild.members.fetch(user)
-    channel = message.member.voice.channel
+    channel = member.voice.channel
     if (!channel){
         return message.reply("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
@@ -17,7 +17,10 @@ module.exports.run = async (bot, message, args) => {
             message.channel.send(`${user.tag} is not listed as dead.`)
         }else{
             await connection.query(`DELETE FROM \`${guild.id}\` WHERE memberid = '${user.id}'`)
-            await connection.destroy();
+            connection.query(`SELECT * FROM \`${guild.id}\``).then( async (rows) => {
+                if (!rows[0]){await connection.query(`DROP TABLE \`${guild.id}\``)}
+                await connection.destroy()
+            })
             await member.voice.setMute(false, "Among Us Game Chat Control")
             message.channel.send(`${user.tag} Revived. To list people as dead use \`${bot.config.prefix}dead\`.`)
         }
