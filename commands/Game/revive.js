@@ -17,7 +17,7 @@ module.exports.run = async (bot, message, args) => {
             message.channel.send(`${user.tag} is not listed as dead.`)
         }else{
             await connection.query(`DELETE FROM \`${guild.id}\` WHERE memberid = '${user.id}'`)
-            connection.query(`SELECT * FROM \`${guild.id}\``).then( async (rows) => {
+            await connection.query(`SELECT * FROM \`${guild.id}\``).then( async (rows) => {
                 if (!rows[0]){await connection.query(`DROP TABLE \`${guild.id}\``)}
                 await connection.destroy()
             })
