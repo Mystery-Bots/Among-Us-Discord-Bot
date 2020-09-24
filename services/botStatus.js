@@ -38,6 +38,6 @@ module.exports.Run = async function (bot) {
 			update(bot.guilds.cache.size);
 		}
 		let status = statuses[currentStatus];
-		//bot.user.setActivity(status, { type: "PLAYING" });
+		bot.user.setActivity(status, { type: "PLAYING" });
 	}, 10 * 1000);
 };
