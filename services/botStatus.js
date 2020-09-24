@@ -2,7 +2,7 @@ const { MongoClient } = require("mongodb");
 const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
 currentStatus = 1;
 
-async function update(serverCount, botStatus) {
+async function update(serverCount) {
 	const client = new MongoClient(uri, { useUnifiedTopology: true });
 	try {
 		await client.connect();
@@ -16,8 +16,7 @@ async function update(serverCount, botStatus) {
 		// create a document that sets the plot of the movie
 		const updateDoc = {
 			$set: {
-				status: botStatus,
-				count: `${serverCount}`,
+				count: `${serverCount}`
 			},
 		};
 
@@ -36,7 +35,7 @@ module.exports.Run = async function (bot) {
 		];
 		currentStatus = currentStatus + 1 < statuses.length ? currentStatus + 1 : 0;
 		if (currentStatus == 0) {
-			update(bot.guilds.cache.size, bot.user.presence.status);
+			update(bot.guilds.cache.size);
 		}
 		let status = statuses[currentStatus];
 		//bot.user.setActivity(status, { type: "PLAYING" });
