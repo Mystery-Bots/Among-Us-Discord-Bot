@@ -16,6 +16,15 @@ crewColor = [
     "https://themystery.s-ul.eu/bot/5MT8kSEi"
 ]
 
+async function serverCount(bot){
+	count = await bot.shard.fetchClientValues('guilds.cache.size')
+			.then(results => {
+				return results.reduce((acc, guildCount) => acc + guildCount, 0)
+			})
+			.catch(console.error);
+	return count
+}
+
 module.exports.run = async (bot, message, args) => {
     userCount = 0
     for ([guildID, guild] of bot.guilds.cache){
@@ -28,16 +37,16 @@ module.exports.run = async (bot, message, args) => {
     color = Math.floor(Math.random() * crewColor.length) //Number 0 to 11
     embed = new Discord.MessageEmbed()
         .setTitle("Among Us Bot Info")
-        .setURL("https://themystery.me/Among-Us")
+        .setURL("https://aub.themystery.me")
         .setFooter("Created by TheMystery#7755")
         .setThumbnail(crewColor[color])
         .setDescription("The only Among Us Discord bot you need for your friends group/server.")
         .addField("Ping", `${bot.ws.ping.toFixed(1)}ms`,true)
         .addField("\u200B", "\u200B",true)
         .addField("Uptime", ms(bot.uptime,{long:true}),true)
-        .addField("Guilds",bot.guilds.cache.size,true)
+        .addField("Servers",bot.guilds.cache.size,true)
         .addField("\u200B", "\u200B",true)
-        .addField("Users", userCount, true)
+        .addField("Total Servers", await serverCount(bot), true)
         .addField("Support","[Discord Invite](https://discord.gg/AD2a24y)",true)
         .addField("\u200B", "\u200B",true)
         .addField("Donate",`If you wish to donate feel free to run \`${bot.config.prefix}donate\``,true)
