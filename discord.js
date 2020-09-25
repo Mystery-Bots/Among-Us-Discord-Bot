@@ -35,8 +35,6 @@ const load = (dir = "./commands/") => {
 					);
 				// get more info about command for help command
 				bot.commands.set(pull.info.name, pull);
-				// log if successful
-				console.log(`Loaded command ${pull.info.name}.`);
 			} else {
 				console.log(
 					`Error loading command in ${dir}${dirs}.${file} you have a missing info.name or info.name is not a string. or you have a missing info.category or info.category is not a string`
