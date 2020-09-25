@@ -39,5 +39,5 @@ module.exports.Run = async function (bot) {
 		}
 		let status = statuses[currentStatus];
 		bot.user.setActivity(status, { type: "PLAYING" });
-	}, 10 * 1000);
+	}, 60 * 1000);
 };
