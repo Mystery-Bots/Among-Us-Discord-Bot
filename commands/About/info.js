@@ -28,7 +28,7 @@ module.exports.run = async (bot, message, args) => {
     color = Math.floor(Math.random() * crewColor.length) //Number 0 to 11
     embed = new Discord.MessageEmbed()
         .setTitle("Among Us Bot Info")
-        .setURL("https://themystery.me/Among-Us")
+        .setURL("https://aub.themystery.me")
         .setFooter("Created by TheMystery#7755")
         .setThumbnail(crewColor[color])
         .setDescription("The only Among Us Discord bot you need for your friends group/server.")
