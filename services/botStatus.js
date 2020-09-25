@@ -26,16 +26,25 @@ async function update(serverCount) {
 	}
 }
 
+async function serverCount(bot){
+	count = await bot.shard.fetchClientValues('guilds.cache.size')
+			.then(results => {
+				return results.reduce((acc, guildCount) => acc + guildCount, 0)
+			})
+			.catch(console.error);
+	return count
+}
+
 module.exports.Run = async function (bot) {
-	console.log("Bot Ready");
+	console.log(`Shard ${bot.shard.ids} Ready`);
 	setInterval(async function () {
 		let statuses = [
-			`${bot.config.prefix}help | ${bot.guilds.cache.size} Servers!`,
-			`${bot.config.prefix}help | aub.TheMystery.me`,
+			`${await serverCount(bot)} Servers!`,
+			`aub.TheMystery.me`,
 		];
 		currentStatus = currentStatus + 1 < statuses.length ? currentStatus + 1 : 0;
 		if (currentStatus == 0) {
-			update(bot.guilds.cache.size);
+			//update(bot.guilds.cache.size);
 		}
 		let status = statuses[currentStatus];
 		bot.user.setActivity(status, { type: "PLAYING" });
