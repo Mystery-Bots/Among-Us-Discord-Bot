@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
 const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
-currentStatus = 1;
+currentStatus = 0;
 
 async function update(serverCount) {
 	const client = new MongoClient(uri, { useUnifiedTopology: true });
@@ -28,6 +28,7 @@ async function update(serverCount) {
 
 module.exports.Run = async function (bot) {
 	console.log("Bot Ready");
+	bot.user.setActivity(`${bot.config.prefix}help | ${bot.guilds.cache.size} Servers!`, { type: "PLAYING" });
 	setInterval(async function () {
 		let statuses = [
 			`${bot.config.prefix}help | ${bot.guilds.cache.size} Servers!`,
