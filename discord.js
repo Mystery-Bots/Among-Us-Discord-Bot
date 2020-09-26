@@ -5,7 +5,10 @@ let config = require("./config");
 const ms = require("ms");
 const moment = require("moment");
 
-const bot = new Discord.Client();
+const bot = new Discord.Client({
+	messageCacheLifetime:ms('3m'),
+	messageSweepInterval:ms('3m')
+});
 
 bot.config = config.discord;
 bot.database = config.database;
