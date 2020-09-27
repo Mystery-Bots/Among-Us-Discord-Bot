@@ -6,8 +6,8 @@ const ms = require("ms");
 const moment = require("moment");
 
 const bot = new Discord.Client({
-	messageCacheLifetime:ms('3m'),
-	messageSweepInterval:ms('3m')
+	messageCacheLifetime:ms('1m'),
+	messageSweepInterval:ms('1m')
 });
 
 bot.config = config.discord;
