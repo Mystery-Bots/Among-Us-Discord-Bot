@@ -63,7 +63,6 @@ module.exports.Run = async function(bot,message){
 		
 	} catch (error) {
 		//Get errors and log them and tell the user.
-		message.delete({timeout:2000})		
 		channel = await bot.channels.fetch("755883889876140062")
 		if(args.length < 1) args = ["None"]
 		guild = message.guild
@@ -77,7 +76,7 @@ module.exports.Run = async function(bot,message){
 			.setColor("#ff0000")
 			.setTimestamp()
 		channel.send(embed)
-		require("./reports").Run(bot, message,error)
+		message.reply("There was an error. A message has been sent to the TheMystery to alert them of this problem.\nIf this continues to happen please join the Support Server")
 		console.error(error)    
 	}
 }
