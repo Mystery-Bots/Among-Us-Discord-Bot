@@ -19,14 +19,14 @@ module.exports.run = async (bot, message, args) => {
         for ([memberID, member] of channel.members){
             if (deadUsers.includes(memberID)){}
             else{
-                await member.voice.setMute(false, "Among Us Game Chat Control").catch(()=>{})
+                await member.voice.setMute(false, "Among Us Game Chat Control").catch(() => {return message.channel.send("Sorry but I need permissions to Mute Members")})
             }
         }
         message.channel.send("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
     }).catch( async () => {
         await connection.destroy();
         for ([memberID, member] of channel.members){
-            await member.voice.setMute(false, "Among Us Game Chat Control").catch(()=>{})
+            await member.voice.setMute(false, "Among Us Game Chat Control").catch(() => {return message.channel.send("Sorry but I need permissions to Mute Members")})
         }
         message.channel.send("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
     })

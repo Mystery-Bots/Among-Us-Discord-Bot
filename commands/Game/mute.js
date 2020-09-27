@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
     }
 
     for ([memberID, member] of channel.members){
-        await member.voice.setMute(true, "Among Us Game Chat Control").catch(()=>{})
+        await member.voice.setMute(true, "Among Us Game Chat Control").catch(() => {return message.channel.send("Sorry but I need permissions to Mute Members")})
     }
     message.channel.send("Users muted for round. To unmute the voice chat for discussion please use" + `\`${bot.config.prefix}unmute\`.`)
 

@@ -21,7 +21,7 @@ module.exports.run = async (bot, message, args) => {
                 if (!rows[0]){await connection.query(`DROP TABLE \`${guild.id}\``)}
                 await connection.destroy()
             })
-            await member.voice.setMute(false, "Among Us Game Chat Control")
+            await member.voice.setMute(false, "Among Us Game Chat Control").catch(() => {return message.channel.send("Sorry but I need permissions to Mute Members")})
             message.channel.send(`${user.tag} Revived. To list people as dead use \`${bot.config.prefix}dead\`.`)
         }
     }).catch( async () => {

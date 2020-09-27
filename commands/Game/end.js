@@ -12,13 +12,13 @@ module.exports.run = async (bot, message, args) => {
         await connection.query(`DROP TABLE \`${guild.id}\``)
         await connection.destroy();
         for ([memberID, member] of channel.members){
-            await member.voice.setMute(false, "Among Us Game Chat Control")
+            await member.voice.setMute(false, "Among Us Game Chat Control").catch(() => {return message.channel.send("Sorry but I need permissions to Mute Members")})
         }
         message.channel.send("Game ended. All users unmuted.")
     }).catch( async () => {
         await connection.destroy();
         for ([memberID, member] of channel.members){
-            await member.voice.setMute(false, "Among Us Game Chat Control")
+            await member.voice.setMute(false, "Among Us Game Chat Control").catch(() => {return message.channel.send("Sorry but I need permissions to Mute Members")})
         }
         return message.channel.send('No players died in the game. Unmuting all players.')
     })
