@@ -1,4 +1,3 @@
-const Discord = require('discord.js')
 const mariadb  = require("mariadb")
 
 module.exports.run = async (bot, message, args) => {
