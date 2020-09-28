@@ -84,9 +84,7 @@ const load = (dir = "./commands/") => {
 load();
 
 bot
-	.on("error", (error) => {
-		require("./discordEvents/error").Run(bot, error);
-	})
+	.on("error",console.error)
 	.on("warn", console.warn)
 	.on("ready", () => {
 		require("./discordEvents/ready").Run(bot);
