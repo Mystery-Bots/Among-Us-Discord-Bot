@@ -33,7 +33,7 @@ async function fetchStatus(bot){
 	status = await connection.query(`SELECT status FROM botInfo`).then( async (rows) => {
 		return rows[0]
 	})
-	return status
+	return status[0]
 }
 
 module.exports.Run = async function (bot) {
