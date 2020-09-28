@@ -1,6 +1,21 @@
 const Discord = require('discord.js')
 const ms = require('ms')
 
+embedColor = [
+    0x3e474e,
+    0xf6f656,
+    0xd8e1f2,
+    0xc51110,
+    0x6c2fbb,
+    0xef54bc,
+    0xf17d0e,
+    0x50f038,
+    0x10802c,
+    0x38e3dd,
+    0x70491e,
+    0x132ed3
+]
+
 crewColor = [
     "https://themystery.s-ul.eu/bot/l4PQmeQ3",
     "https://themystery.s-ul.eu/bot/kj0elCnG",
@@ -18,30 +33,67 @@ crewColor = [
 
 module.exports.run = async (bot, message, args) => {
     userCount = 0
-    for ([guildID, guild] of bot.guilds.cache){
-        if (bot.config.ignore.includes(guildID)){
-                
-        }else{
-            userCount += guild.memberCount
-        }
-    }
     color = Math.floor(Math.random() * crewColor.length) //Number 0 to 11
-    embed = new Discord.MessageEmbed()
-        .setTitle("Among Us Bot Info")
-        .setURL("https://aub.themystery.me")
-        .setFooter("Created by TheMystery#7755")
-        .setThumbnail(crewColor[color])
-        .setDescription("The only Among Us Discord bot you need for your friends group/server.")
-        .addField("Ping", `${bot.ws.ping.toFixed(1)}ms`,true)
-        .addField("\u200B", "\u200B",true)
-        .addField("Uptime", ms(bot.uptime,{long:true}),true)
-        .addField("Guilds",bot.guilds.cache.size,true)
-        .addField("\u200B", "\u200B",true)
-        .addField("Users", userCount, true)
-        .addField("Support","[Discord Invite](https://discord.gg/AD2a24y)",true)
-        .addField("\u200B", "\u200B",true)
-        .addField("Donate",`If you wish to donate feel free to run \`${bot.config.prefix}donate\``,true)
-    message.channel.send(embed)
+    embedObject = {embed:{
+        title: `${bot.user.username} Info`,
+        url: "https://aub.themystery.me",
+        footer: {
+            text: "Created by TheMystery#7755"
+        },
+        thumbnail: {
+            url: crewColor[color]
+        },
+        color: embedColor[color],
+        description: "The only Among Us Discord bot you need for your friends group/server.",
+        fields: [
+            {
+                name: "Ping",
+                value: `${message.channel.guild.shard.latency.toFixed(1)} ms`,
+                inline: true
+            },
+            {
+                name: "\u200B",
+                value: "\u200B",
+                inline: true
+            },
+            {
+                name: "Uptime",
+                value: ms(bot.uptime, {long:true}),
+                inline: true
+            },
+            {
+                name: "Servers",
+                value: bot.guilds.size,
+                inline: true
+            },
+            {
+                name: "\u200B",
+                value: "\u200B",
+                inline: true
+            },
+            {
+                name: "Shard ID",
+                value: message.channel.guild.shard.id,
+                inline: true
+            },
+            {
+                name: "Support",
+                value: "[Discord Invite](https://discord.gg/AD2a24y)",
+                inline: true
+            },
+            {
+                name: "\u200B",
+                value: "\u200B",
+                inline: true
+            },
+            {
+                name: "Donate",
+                value: `If you wish to donate feel free to run \`${bot.config.prefix}donate\``,
+                inline: true
+            }
+        ]
+    }}
+    message.channel.createMessage(embedObject)
 }
 
 module.exports.info = {

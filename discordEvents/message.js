@@ -1,7 +1,9 @@
 const ms = require("ms")
-const Discord = require("discord.js")
+const Discord = require("eris")
 
 const cooldowns = new Discord.Collection()
+
+messageCount = 0
 
 module.exports.Run = async function(bot,message){
 	var prefix = bot.config.prefix
@@ -21,8 +23,8 @@ module.exports.Run = async function(bot,message){
 	info = command.info
 
 	//Check if command is GuildOnly.
-	if (info.GuildOnly && message.channel.type !== 'text') {
-		return message.reply('I can\'t execute that command inside DMs!').then(msg => msg.delete({timeout:5000}))
+	if (info.GuildOnly && message.channel.type !== 0) {
+		return message.channel.createMessage('I can\'t execute that command inside DMs!').then(msg => setTimeout(msg.delete(),5000))
 	}
 
 	//Check if args are required.
@@ -32,8 +34,8 @@ module.exports.Run = async function(bot,message){
 		if (info.usage) {
 			reply += `\nThe proper usage would be: \`${prefix}${info.name} ${info.usage}\``
 		}
-		message.delete({timeout:2000})
-		return message.channel.send(reply).then(msg => msg.delete({timeout:5000}))
+		setTimeout(message.delete(),2000)
+		return message.channel.createMessage(reply)
 	}
 	//Command cooldowns
 	if (!cooldowns.has(info.name)) {
@@ -49,8 +51,8 @@ module.exports.Run = async function(bot,message){
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now)
-			message.delete({timeout:2000})
-			return message.reply(`please wait ${ms(timeLeft, {long:true})} before reusing the \`${info.name}\` command.`).then(msg => msg.delete({timeout:5000}))
+			setTimeout(message.delete(),2000)
+			return message.channel.createMessage(`please wait ${ms(timeLeft, {long:true})} before reusing the \`${info.name}\` command.`).then(msg => setTimeout(msg.delete(),5000))
 		}
 	}
 
@@ -63,20 +65,40 @@ module.exports.Run = async function(bot,message){
 		
 	} catch (error) {
 		//Get errors and log them and tell the user.
-		channel = await bot.channels.fetch("755883889876140062")
+		channel = await bot.getChannel("755883889876140062")
 		if(args.length < 1) args = ["None"]
-		guild = message.guild
-		var embed = new Discord.MessageEmbed()
-			.setTitle("ERROR")
-			.setDescription(`${error.name}\n${error.message}`)
-			.addField("Guild",guild.name, true)
-			.addField("Runner", message.author.tag, true)
-			.addField("Command", info.name, true)
-			.addField("Arguments", args.join(" "))
-			.setColor("#ff0000")
-			.setTimestamp()
-		channel.send(embed)
-		message.reply("There was an error. A message has been sent to the TheMystery to alert them of this problem.\nIf this continues to happen please join the Support Server")
+		guild = message.channel.guild
+		timestring = new Date
+		var embedObject = {embed: {
+			title:"ERROR",
+			description:`${error.name}\n${error.message}`,
+			color:0xff0000,
+			timestamp: timestring.toISOString(),
+			fields:[
+				{
+					name:"Guild",
+					value:guild.name,
+					inline:true
+				},
+				{
+					name:"Runner",
+					value:message.author.username,
+					inline:true
+				},
+				{
+					name:"Command",
+					value:info.name,
+					inline:true
+				},
+				{
+					name:"Arguments",
+					value:args.join(" "),
+					inline:true
+				}
+			]
+		}}
+		//channel.createMessage(embedObject)
+		message.channel.createMessage("There was an error. A message has been sent to the TheMystery to alert them of this problem.\nIf this continues to happen please join the Support Server")
 		console.error(error)    
 	}
 }

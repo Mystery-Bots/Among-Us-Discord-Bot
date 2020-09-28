@@ -1,13 +1,35 @@
-const Discord = require("discord.js");
+const Discord = require("eris");
 const { readdirSync } = require("fs");
 const { sep } = require("path");
 let config = require("./config");
 const ms = require("ms");
 const moment = require("moment");
 
-const bot = new Discord.Client({
-	messageCacheLifetime:ms('1m'),
-	messageSweepInterval:ms('1m')
+const bot = new Discord.Client(config.discord.token, {
+	maxShards:2,
+	guildSubscriptions:false,
+	largeThreshold: 50,
+	disableEvents: [
+		"CHANNEL_CREATE",
+		"CHANNEL_DELETE",
+		"CHANNEL_UPDATE",
+		"GUILD_BAN_ADD",
+		"GUILD_BAN_REMOVE",
+		"GUILD_CREATE",
+		"GUILD_MEMBER_ADD",
+		"GUILD_MEMBER_REMOVE",
+		"GUILD_MEMBER_UPDATE",
+		'GUILD_ROLE_CREATE',
+		'GUILD_ROLE_DELETE',
+		'GUILD_ROLE_UPDATE',
+		'GUILD_UPDATE',
+		'MESSAGE_DELETE',
+		'MESSAGE_DELETE_BULK',
+		'MESSAGE_UPDATE',
+		'PRESENCE_UPDATE',
+		'TYPING_START',
+		'USER_UPDATE'
+	],
 });
 
 bot.config = config.discord;
@@ -38,6 +60,7 @@ const load = (dir = "./commands/") => {
 					);
 				// get more info about command for help command
 				bot.commands.set(pull.info.name, pull);
+				console.log(`Loaded command ${pull.info.name}.`);
 			} else {
 				console.log(
 					`Error loading command in ${dir}${dirs}.${file} you have a missing info.name or info.name is not a string. or you have a missing info.category or info.category is not a string`
@@ -76,8 +99,8 @@ bot
 			`${moment(Date.now()).format("hh/mm A, DD/MM/YYYY")}: Reconnecting...`
 		);
 	})
-	.on("message", (message) => {
+	.on("messageCreate", (message) => {
 		require("./discordEvents/message").Run(bot, message);
 	});
 
-bot.login(config.discord.token).catch(console.error());
+bot.connect()

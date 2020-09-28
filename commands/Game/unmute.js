@@ -2,33 +2,49 @@ const Discord = require('discord.js')
 const mariadb  = require("mariadb")
 
 module.exports.run = async (bot, message, args) => {
-    channel = message.member.voice.channel
-
-    if (!channel){
-        return message.reply("Sorry but you are not connected to a voice chat for me to manage.")
+    channelID = message.member.voiceState.channelID
+    if (!channelID){
+        return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
     }
-
+    channel = bot.getChannel(channelID)
+    guild = message.guildID
     let connection = await mariadb.createConnection(bot.database)
-    guild = message.guild
-    connection.query(`SELECT * FROM \`${guild.id}\``).then( async (rows) => {
+    connection.query(`SELECT * FROM \`${guild}\``).then( async (rows) => {
         await connection.destroy();
         deadUsers = []
+        failed = false
         for (deadUser of rows){
             await deadUsers.push(deadUser[0])
         }
-        for ([memberID, member] of channel.members){
-            if (deadUsers.includes(memberID)){}
-            else{
-                await member.voice.setMute(false, "Among Us Game Chat Control").catch(() => {return message.channel.send("Sorry but I need permissions to Mute Members")})
+        for ([memberID, member] of channel.voiceMembers){
+            try {
+                if (deadUsers.includes(memberID)){}
+                else{
+                    await member.edit({mute:false}, "Among Us Game Chat Control")
+                }
+            }
+            catch (e){
+                failed = true
+                return message.channel.createMessage("Sorry but I need permissions to Mute Members")
             }
         }
-        message.channel.send("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
+        if (!failed){
+            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
+        }
     }).catch( async () => {
         await connection.destroy();
-        for ([memberID, member] of channel.members){
-            await member.voice.setMute(false, "Among Us Game Chat Control").catch(() => {return message.channel.send("Sorry but I need permissions to Mute Members")})
+        for ([memberID, member] of channel.voiceMembers){
+            try {
+                await member.edit({mute:false}, "Among Us Game Chat Control")
+            }
+            catch (e) {
+                failed = true
+                return message.channel.createMessage("Sorry but I need permissions to Mute Members")
+            }
         }
-        message.channel.send("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
+        if (!failed){
+            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
+        }
     })
 }
 

@@ -2,25 +2,45 @@ const Discord = require('discord.js')
 const mariadb  = require("mariadb")
 
 module.exports.run = async (bot, message, args) => {
-    channel = message.member.voice.channel
-    if (!channel){
-        return message.reply("Sorry but you are not connected to a voice chat for me to manage.")
+    channelID = message.member.voiceState.channelID
+    if (!channelID){
+        return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
     }
+    channel = bot.getChannel(channelID)
+    guild = message.guildID
     let connection = await mariadb.createConnection(bot.database)
-    guild = message.guild
-    connection.query(`SELECT * FROM \`${guild.id}\``).then( async () => {
-        await connection.query(`DROP TABLE \`${guild.id}\``)
-        await connection.destroy();
-        for ([memberID, member] of channel.members){
-            await member.voice.setMute(false, "Among Us Game Chat Control").catch(() => {return message.channel.send("Sorry but I need permissions to Mute Members")})
+    connection.query(`SELECT * FROM \`${guild}\``).then( async () => {
+        let failed = false
+        for ([memberID, member] of channel.voiceMembers){
+            try {
+                await member.edit({mute:false}, "Among Us Game Chat Control")
+            }
+            catch (e){
+                failed = true
+                await connection.destroy();
+                return message.channel.createMessage("Sorry but I need permissions to Mute Members")
+            }
         }
-        message.channel.send("Game ended. All users unmuted.")
-    }).catch( async () => {
-        await connection.destroy();
-        for ([memberID, member] of channel.members){
-            await member.voice.setMute(false, "Among Us Game Chat Control").catch(() => {return message.channel.send("Sorry but I need permissions to Mute Members")})
+        if (!failed){
+            await connection.query(`DROP TABLE \`${guild}\``)
+            await connection.destroy();
+            message.channel.createMessage("Game ended. All users unmuted.")
         }
-        return message.channel.send('No players died in the game. Unmuting all players.')
+    }).catch( async (error) => {
+        await connection.destroy();
+        let failed = false
+        for ([memberID, member] of channel.voiceMembers){
+            try {
+                await member.edit({mute:false}, "Among Us Game Chat Control")
+            }
+            catch (e){
+                failed = true
+                return message.channel.createMessage("Sorry but I need permissions to Mute Members")
+            }
+        }
+        if (!failed){
+            message.channel.createMessage('No players died in the game. Unmuting all players.')
+        }
     })
 }
 

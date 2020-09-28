@@ -1,4 +1,4 @@
-const Discord = require("discord.js")
+const Discord = require("eris")
 
 module.exports.Run = async function (bot, error){
     channel = await bot.channels.fetch("755883889876140062")

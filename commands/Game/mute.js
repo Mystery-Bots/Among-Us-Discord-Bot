@@ -1,17 +1,25 @@
 const Discord = require('discord.js')
 
 module.exports.run = async (bot, message, args) => {
-    channel = message.member.voice.channel
-
-    if (!channel){
-        return message.reply("Sorry but you are not connected to a voice chat for me to manage.")
+    channelID = message.member.voiceState.channelID
+    if (!channelID){
+        return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
     }
-
-    for ([memberID, member] of channel.members){
-        await member.voice.setMute(true, "Among Us Game Chat Control").catch(() => {return message.channel.send("Sorry but I need permissions to Mute Members")})
+    channel = bot.getChannel(channelID)
+    failed = false
+    for ([memberID, member] of channel.voiceMembers){
+        try {
+            await member.edit({mute:true}, "Among Us Game Chat Control")
+        }
+        catch (e) {
+            failed = true
+            message.channel.createMessage("Sorry but I need permissions to Mute Members")
+            break
+        }
     }
-    message.channel.send("Users muted for round. To unmute the voice chat for discussion please use" + `\`${bot.config.prefix}unmute\`.`)
-
+    if (!failed){
+        message.channel.createMessage("Users muted for round. To unmute the voice chat for discussion please use" + `\`${bot.config.prefix}unmute\`.`)
+    }
 }
 
 module.exports.info = {
