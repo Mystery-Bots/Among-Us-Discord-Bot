@@ -1,4 +1,6 @@
 const { MongoClient } = require("mongodb");
+const mariadb  = require("mariadb")
+botStatus = require("../status.json").status
 const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
 currentStatus = 0;
 
@@ -26,19 +28,27 @@ async function update(serverCount) {
 	}
 }
 
+async function fetchStatus(bot){
+	let connection = await mariadb.createConnection(bot.database)
+	status = await connection.query(`SELECT status FROM botInfo`).then( async (rows) => {
+		return rows[0]
+	})
+	return status
+}
+
 module.exports.Run = async function (bot) {
 	console.log("Bot Ready");
-	bot.user.setActivity(`${bot.config.prefix}help | ${bot.guilds.cache.size} Servers!`, { type: "PLAYING" });
+	bot.editStatus(await fetchStatus(bot), {name:`${bot.config.prefix}help | ${bot.guilds.size} Servers!`, type: 0 });
 	setInterval(async function () {
 		let statuses = [
-			`${bot.config.prefix}help | ${bot.guilds.cache.size} Servers!`,
+			`${bot.config.prefix}help | ${bot.guilds.size} Servers!`,
 			`${bot.config.prefix}help | aub.TheMystery.me`,
 		];
 		currentStatus = currentStatus + 1 < statuses.length ? currentStatus + 1 : 0;
 		if (currentStatus == 0) {
-			update(bot.guilds.cache.size);
+			//update(bot.guilds.size);
 		}
 		let status = statuses[currentStatus];
-		bot.user.setActivity(status, { type: "PLAYING" });
+		bot.editStatus(await fetchStatus(bot),{name: status, type: 0});
 	}, 60 * 1000);
 };
