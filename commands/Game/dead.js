@@ -30,7 +30,7 @@ module.exports.run = async (bot, message, args) => {
                 }
             }else{
                 await connection.destroy();
-                message.channel.createMessage(`${user.username} is already dead.`)
+                message.channel.createMessage(`${member.user.username} is already dead.`)
             }
         }).catch( async (error) => {
             console.log(error)
