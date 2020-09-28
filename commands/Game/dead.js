@@ -32,7 +32,8 @@ module.exports.run = async (bot, message, args) => {
                 await connection.destroy();
                 message.channel.createMessage(`${user.username} is already dead.`)
             }
-        }).catch( async () => {
+        }).catch( async (error) => {
+            console.log(error)
             let failed = false
             try {
                 await member.edit({mute:true}, "Among Us Game Chat Control")
