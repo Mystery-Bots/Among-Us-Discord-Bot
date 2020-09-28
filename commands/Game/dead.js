@@ -7,7 +7,7 @@ module.exports.run = async (bot, message, args) => {
     member = await guild.members.find(user => user.id == userMention.id)
     channelID = message.member.voiceState.channelID
     if (!channelID){
-        return message.reply("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
+        return message.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
     channel = bot.getChannel(channelID)
     let connection = await mariadb.createConnection(bot.database)
