@@ -33,6 +33,7 @@ async function fetchStatus(bot){
 	status = await connection.query(`SELECT status FROM botInfo`).then( async (rows) => {
 		return rows[0]
 	})
+	await connection.destroy();
 	return status[0]
 }
 
