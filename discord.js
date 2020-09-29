@@ -99,6 +99,9 @@ bot
 	})
 	.on("messageCreate", (message) => {
 		require("./discordEvents/message").Run(bot, message);
-	});
+	})
+	.on("guildDelete", (guild) => {
+		require("./discordEvents/guildDelete").Run(bot, guild)
+	})
 
 bot.connect()
