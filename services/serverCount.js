@@ -24,7 +24,7 @@ async function update(serverCount) {
 		};
 
         const result = await collection.updateOne(filter, updateDoc);
-        console.log(`Sent data: {count:${serverCount}} to the Website`)
+        console.log(`Sent data: {count:'${serverCount}}' to the Website`)
 	} finally {
 		await client.close();
 	}
