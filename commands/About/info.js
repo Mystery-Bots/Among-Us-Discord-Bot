@@ -92,7 +92,11 @@ module.exports.run = async (bot, message, args) => {
             }
         ]
     }}
-    message.channel.createMessage(embedObject)
+    message.channel.createMessage(embedObject).catch((error) => {
+		if (error.message == "Missing Permissions"){
+			message.channel.createMessage("I need `Embed Links` permissions to be able to send this message.")
+		}
+	})
 }
 
 module.exports.info = {

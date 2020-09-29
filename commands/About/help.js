@@ -44,7 +44,11 @@ module.exports.run = (bot, message, args) => {
 			`❯ **Cooldown:** ${cooldown}`
 		].join("\n"))
 
-		return message.channel.createMessage(embedObject)
+		return message.channel.createMessage(embedObject).catch((error) => {
+			if (error.message == "Missing Permissions"){
+				message.channel.createMessage("I need `Embed Links` permissions to be able to send this message.")
+			}
+		})
 	}
 	const categories = readdirSync("./commands/")
 	embedObject.embed.description = [
@@ -67,7 +71,11 @@ module.exports.run = (bot, message, args) => {
 			console.log(e)
 		}
 	})
-	return message.channel.createMessage(embedObject)
+	return message.channel.createMessage(embedObject).catch((error) => {
+		if (error.message == "Missing Permissions"){
+			message.channel.createMessage("I need `Embed Links` permissions to be able to send this message.")
+		}
+	})
 }
 
 module.exports.info = {

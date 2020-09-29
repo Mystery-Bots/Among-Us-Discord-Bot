@@ -9,7 +9,11 @@ module.exports.run = async (bot, message, args) => {
         url: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VAKYBY5DB8UQE&source=url",
         color: 0x00ff00
     }}
-    message.channel.createMessage(embedObject)
+    message.channel.createMessage(embedObject).catch((error) => {
+		if (error.message == "Missing Permissions"){
+			message.channel.createMessage("I need `Embed Links` permissions to be able to send this message.")
+		}
+	})
 }
 
 module.exports.info = {
