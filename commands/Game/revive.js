@@ -6,10 +6,10 @@ module.exports.run = async (bot, message, args) => {
     if (!userMention) userMention = message.author
     member = await guild.members.find(user => user.id == userMention.id)
     channelID = message.member.voiceState.channelID
-    if (!channelID){
+    channel = bot.getChannel(channelID)
+    if (!channel.type == 2){
         return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
-    channel = bot.getChannel(channelID)
     let connection = await mariadb.createConnection(bot.database)
     connection.query(`SELECT * FROM \`${guild.id}\` WHERE memberid = '${member.id}'`).then( async (rows) => {
         if (!rows[0]){
