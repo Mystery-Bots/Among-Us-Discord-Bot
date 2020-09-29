@@ -47,7 +47,7 @@ module.exports.Run = async function (bot) {
 		];
 		currentStatus = currentStatus + 1 < statuses.length ? currentStatus + 1 : 0;
 		if (currentStatus == 0) {
-			//update(bot.guilds.size);
+			update(bot.guilds.size);
 		}
 		let status = statuses[currentStatus];
 		bot.editStatus(await fetchStatus(bot),{name: status, type: 0});
