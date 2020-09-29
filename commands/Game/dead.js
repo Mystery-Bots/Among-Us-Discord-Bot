@@ -54,6 +54,10 @@ module.exports.run = async (bot, message, args) => {
         })
     }).catch( async (error) => {
         let failed = false
+        if (!guild.id) {
+            console.log(error)
+            message.channel.createMessage("Please re run the command. There was an error")
+        }
         try {
             await member.edit({mute:true}, "Among Us Game Chat Control")
         }
