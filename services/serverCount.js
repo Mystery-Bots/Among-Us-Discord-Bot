@@ -19,7 +19,7 @@ async function update(serverCount) {
 		// create a document that sets the plot of the movie
 		const updateDoc = {
 			$set: {
-				count: serverCount
+				count: `${serverCount}`
 			},
 		};
 
