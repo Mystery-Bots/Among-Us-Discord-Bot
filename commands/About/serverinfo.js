@@ -1,4 +1,4 @@
-cdconst moment = require("moment")
+const moment = require("moment")
 const mariadb  = require("mariadb")
 
 const embedColor = [
