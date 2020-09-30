@@ -6,7 +6,7 @@ const ms = require("ms");
 const moment = require("moment");
 
 const bot = new Discord.Client(config.discord.token, {
-	intents: 515,
+	intents: 643,
 	maxShards:2,
 	guildSubscriptions:false,
 	largeThreshold: 50,
