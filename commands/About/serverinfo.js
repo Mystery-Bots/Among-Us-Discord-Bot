@@ -162,5 +162,5 @@ module.exports.info = {
     name: "serverinfo",
     description: "Display information about the server",
     category: "About",
-    aliases: ["info","si","server"],
+    aliases: ["si","server"],
 }
