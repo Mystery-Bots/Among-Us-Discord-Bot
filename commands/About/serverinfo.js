@@ -19,6 +19,8 @@ const embedColor = [
 
 const guildIcons = {
     "official": "<:aub:756022955414126602>",
+    "partner": "<:crewmates:756043466886086676>",
+    "innersloth":"<:innersloth:760986640616521758>",
     "colors":[
         "<:crewmate_black:756037185576108083>", //0
         "<:crewmate_yellow:756036948535017542>", //1
@@ -148,6 +150,14 @@ module.exports.run = async (bot, message, args) => {
     }
     else if (guildStatus.type == "official") {
         embedObject.embed.description = `${guildIcons[guildStatus.type]} Official Server`
+        embedObject.embed.color = embedColor[guildStatus.color]
+    }
+    else if (guildStatus.type == "partner") {
+        embedObject.embed.description = `${guildIcons[guildStatus.type]} Partnered Server`
+        embedObject.embed.color = embedColor[guildStatus.color]
+    }
+    else if (guildStatus.type == "innersloth") {
+        embedObject.embed.description = `${guildIcons[guildStatus.type]} InnerSloth Official Server`
         embedObject.embed.color = embedColor[guildStatus.color]
     }
     else if (guildStatus.type == "donator") {
