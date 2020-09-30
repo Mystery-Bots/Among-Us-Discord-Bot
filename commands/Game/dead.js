@@ -66,7 +66,6 @@ module.exports.run = async (bot, message, args) => {
         }
         if (!failed){
             await connection.query(`CREATE TABLE \`${guild.id}\` (memberid VARCHAR(255))`)
-            console.log(`Table created for: ${guild.name}\nTable name: bot.${guild.id}`)
             await connection.query(`INSERT INTO \`${guild.id}\` (memberid) VALUES ('${member.id}')`)
             await connection.destroy();
             message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
