@@ -2,6 +2,9 @@ const mariadb  = require("mariadb")
 
 module.exports.run = async (bot, message, args) => {
     guild = message.channel.guild
+    if (!guild.id){
+        return message.channel.createMessage("There was an error. Please make sure you are not running this command in a DM or Group DM")
+    }
     userMention = message.mentions[0]
     if (!userMention) userMention = message.author
     member = await guild.members.find(user => user.id == userMention.id)
@@ -36,7 +39,6 @@ module.exports.run = async (bot, message, args) => {
                 message.channel.createMessage(`${member.user.username} is already dead.`)
             }
         }).catch( async (error) => {
-            console.log(error)
             let failed = false
             try {
                 await member.edit({mute:true}, "Among Us Game Chat Control")
@@ -54,10 +56,6 @@ module.exports.run = async (bot, message, args) => {
         })
     }).catch( async (error) => {
         let failed = false
-        if (!guild.id) {
-            console.log(error)
-            message.channel.createMessage("Please re run the command. There was an error")
-        }
         try {
             await member.edit({mute:true}, "Among Us Game Chat Control")
         }
@@ -68,6 +66,7 @@ module.exports.run = async (bot, message, args) => {
         }
         if (!failed){
             await connection.query(`CREATE TABLE \`${guild.id}\` (memberid VARCHAR(255))`)
+            console.log(`Table created for: ${guild.name}\nTable name: bot.${guild.id}`)
             await connection.query(`INSERT INTO \`${guild.id}\` (memberid) VALUES ('${member.id}')`)
             await connection.destroy();
             message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
