@@ -3,11 +3,11 @@ const mariadb  = require("mariadb")
 module.exports.run = async (bot, message, args) => {
     channelID = message.member.voiceState.channelID
     if (!channelID){
-        return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
+        return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
     }
     channel = bot.getChannel(channelID)
     if (!channel.type == 2){
-        return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
+        return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
     }
     guild = message.guildID
     let connection = await mariadb.createConnection(bot.database)
