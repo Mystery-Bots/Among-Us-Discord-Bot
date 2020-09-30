@@ -1,4 +1,4 @@
-const moment = require("moment")
+cdconst moment = require("moment")
 const mariadb  = require("mariadb")
 
 const embedColor = [
@@ -143,11 +143,14 @@ module.exports.run = async (bot, message, args) => {
             },
         ]
     }}
-    if (guildStatus.type == "official") {
+    if (!guildStatus){
+        //embedObject.embed.description = `Want a Crewmate and colorful embed. Feel free to donate to get these perks and more.`
+    }
+    else if (guildStatus.type == "official") {
         embedObject.embed.description = `${guildIcons[guildStatus.type]} Official Server`
         embedObject.embed.color = embedColor[guildStatus.color]
     }
-    if (guildStatus.type == "donator") {
+    else if (guildStatus.type == "donator") {
         embedObject.embed.description = `${guildIcons.colors[guildStatus.color]} Donator Server`
         embedObject.embed.color = embedColor[guildStatus.color]
     }
