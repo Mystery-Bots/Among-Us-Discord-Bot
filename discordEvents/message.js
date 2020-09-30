@@ -23,8 +23,8 @@ module.exports.Run = async function(bot,message){
 	info = command.info
 
 	//Check if command is GuildOnly.
-	if (info.GuildOnly && message.channel.type !== 0) {
-		return message.channel.createMessage('I can\'t execute that command inside DMs!').then(msg => setTimeout(msg.delete(),5000))
+	if (info.GuildOnly && !message.channel.guild) {
+		return message.channel.createMessage('I can\'t execute that command inside DMs!')
 	}
 
 	//Check if args are required.
@@ -97,8 +97,8 @@ module.exports.Run = async function(bot,message){
 				}
 			]
 		}}
+		console.log(error)
 		channel.createMessage(embedObject)
-		message.channel.createMessage("There was an error. A message has been sent to the TheMystery to alert them of this problem.\nIf this continues to happen please join the Support Server")
-		console.error(error)    
+		message.channel.createMessage("There was an error. A message has been sent to the TheMystery to alert them of this problem.\nIf this continues to happen please join the Support Server")   
 	}
 }
