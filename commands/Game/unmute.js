@@ -35,6 +35,7 @@ module.exports.run = async (bot, message, args) => {
         }
     }).catch( async () => {
         await connection.destroy();
+        let failed = false
         for ([memberID, member] of channel.voiceMembers){
             try {
                 await member.edit({mute:false}, "Among Us Game Chat Control")
