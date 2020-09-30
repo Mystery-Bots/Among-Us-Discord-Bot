@@ -5,7 +5,7 @@ module.exports.run = async (bot, message, args) => {
     }
     channel = bot.getChannel(channelID)
     if (!channel.type == 2){
-        return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
+        return message.channel.createMessage("Sorry but you are no connected to a voice chat for me to manage.")
     }
     failed = false
     for ([memberID, member] of channel.voiceMembers){
