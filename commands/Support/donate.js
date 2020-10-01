@@ -9,7 +9,7 @@ module.exports.run = async (bot, message, args) => {
         fields: [
             {
                 name:"Perks",
-                value:"-Colored Embed\n-Crewmate\n-Role in [Support Server](https://discord.gg/AD2a24y)"
+                value:"-Colored Server Info Embed\n-Crewmate in your Server Info Embed\n-Role in [Support Server](https://discord.gg/AD2a24y)"
             }
         ],
         url: "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VAKYBY5DB8UQE&source=url",
