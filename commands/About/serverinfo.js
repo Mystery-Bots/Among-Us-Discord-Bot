@@ -176,4 +176,5 @@ module.exports.info = {
     description: "Display information about the server",
     category: "About",
     aliases: ["si","server"],
+    GuildOnly: true
 }
