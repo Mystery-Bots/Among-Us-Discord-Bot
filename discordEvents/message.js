@@ -10,7 +10,9 @@ module.exports.Run = async function(bot,message){
 	var args = message.content.slice(prefix.length).trim().split(/ +/g)
 	const cmd = args.shift().toLowerCase()
 	let command
-	if (!message.content.startsWith(prefix) || message.author.bot) return
+
+	//Check if starts with prefix
+	if (!message.content.startsWith(prefix) || message.author == bot.user) return
 
 	if (cmd.length === 0) return
 	if (bot.commands.has(cmd)) command = bot.commands.get(cmd)
@@ -21,6 +23,13 @@ module.exports.Run = async function(bot,message){
 
 	//For command info like command description.
 	info = command.info
+
+	//Check if command is webhook only
+	if (info.WebhookOnly && !message.author.bot) {
+		return message.channel.createMessage('This is a command for bot\'s/webhooks only')
+	}
+	
+	if (!info.WebhookOnly && message.author.bot) return
 
 	//Check if command is GuildOnly.
 	if (info.GuildOnly && !message.channel.guild) {
