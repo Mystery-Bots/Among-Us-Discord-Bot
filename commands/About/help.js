@@ -41,7 +41,8 @@ module.exports.run = (bot, message, args) => {
 			`❯ **Usage:** ${command.usage ? `\`${bot.config.prefix}${command.name} ${command.usage}\`` : "No Usage"} `,
 			`❯ **Aliases:** ${command.aliases ? command.aliases.join(", ") : "None"}`,
             `❯ **Category:** ${command.category}`,
-			`❯ **Cooldown:** ${cooldown}`
+			`❯ **Guild Only:** ${command.GuildOnly ? command.GuildOnly : "false"}`,
+			`❯ **Webhook Only:** ${command.WebhookOnly ? command.WebhookOnly : "false"}`
 		].join("\n"))
 
 		return message.channel.createMessage(embedObject).catch((error) => {
