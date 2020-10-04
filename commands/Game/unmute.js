@@ -11,6 +11,7 @@ module.exports.run = async (bot, message, args) => {
     }
     guild = message.guildID
     let connection = await mariadb.createConnection(bot.database)
+    console.log("Connection Open unmute")
     connection.query(`SELECT * FROM \`${guild}\``).then( async (rows) => {
         await connection.destroy();
         console.log("Conection Closed. unmute 1");

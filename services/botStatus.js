@@ -5,6 +5,7 @@ currentStatus = 0;
 
 async function fetchStatus(bot){
 	let connection = await mariadb.createConnection(bot.database)
+	console.log("Connection Open bot status")
 	status = await connection.query(`SELECT status FROM botInfo`).then( async (rows) => {
 		return rows[0]
 	})

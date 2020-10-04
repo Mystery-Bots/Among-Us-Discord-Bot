@@ -14,6 +14,7 @@ module.exports.run = async (bot, message, args) => {
         return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
     let connection = await mariadb.createConnection(bot.database)
+    console.log("Connection Open revive")
     connection.query(`SELECT * FROM \`${guild.id}\` WHERE memberid = '${member.id}'`).then( async (rows) => {
         if (!rows[0]){
             await connection.destroy();

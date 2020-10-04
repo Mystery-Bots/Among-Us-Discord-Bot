@@ -14,6 +14,7 @@ module.exports.run = async (bot, message, args) => {
     }
     guild = message.guildID
     let connection = await mariadb.createConnection(bot.database)
+    console.log("Connection Open webhook end")
     connection.query(`SELECT * FROM \`${guild}\``).then( async () => {
         let failed = false
         for ([memberID, member] of channel.voiceMembers){
