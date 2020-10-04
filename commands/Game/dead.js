@@ -66,7 +66,7 @@ module.exports.run = async (bot, message, args) => {
             return message.channel.createMessage("Sorry but I need permissions to Mute Members")
         }
         if (!failed){
-            await connection.query(`CREATE TABLE \`${guildID}\` (memberid VARCHAR(255))`).catch(() => ())
+            await connection.query(`CREATE TABLE \`${guildID}\` (memberid VARCHAR(255))`).catch(() => {})
             await connection.query(`INSERT INTO \`${guildID}\` (memberid) VALUES ('${member.id}')`)
             await connection.destroy();
             message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
