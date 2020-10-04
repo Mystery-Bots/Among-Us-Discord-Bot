@@ -25,15 +25,18 @@ module.exports.run = async (bot, message, args) => {
                 catch (e){
                     failed = true
                     await connection.destroy();
+                    console.log("Conection Closed. dead 1");
                     return message.channel.createMessage("Sorry but I need permissions to Mute Members")
                 }
                 if (!failed){
                     await connection.query(`INSERT INTO \`${guildID}\` (memberid) VALUES ('${member.id}')`)
                     await connection.destroy();
+                    console.log("Conection Closed. dead 2");
                     message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
                 }
             }else{
                 await connection.destroy();
+                console.log("Conection Closed. dead 3");
                 message.channel.createMessage(`${member.user.username} is already dead.`)
             }
         }).catch( async (error) => {
@@ -44,11 +47,13 @@ module.exports.run = async (bot, message, args) => {
             catch (e){
                 failed = true
                 await connection.destroy();
+                console.log("Conection Closed. dead 4");
                 return message.channel.createMessage("Sorry but I need permissions to Mute Members")
             }
             if (!failed){
                 await connection.query(`INSERT INTO \`${guildID}\` (memberid) VALUES ('${member.id}')`)
                 await connection.destroy();
+                console.log("Conection Closed. dead 5");
                 message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
             }
         })
@@ -63,12 +68,14 @@ module.exports.run = async (bot, message, args) => {
         catch (e){
             failed = true
             await connection.destroy();
+            console.log("Conection Closed. dead 6");
             return message.channel.createMessage("Sorry but I need permissions to Mute Members")
         }
         if (!failed){
             await connection.query(`CREATE TABLE \`${guildID}\` (memberid VARCHAR(255))`)
             await connection.query(`INSERT INTO \`${guildID}\` (memberid) VALUES ('${member.id}')`)
             await connection.destroy();
+            console.log("Conection Closed. dead 7");
             message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`)
         }
     })

@@ -9,6 +9,7 @@ async function fetchStatus(bot){
 		return rows[0]
 	})
 	await connection.destroy();
+	console.log("Conection Closed. botstatus 1");
 	return status[0]
 }
 

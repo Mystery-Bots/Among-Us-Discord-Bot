@@ -20,16 +20,19 @@ module.exports.run = async (bot, message, args) => {
             catch (e){
                 failed = true
                 await connection.destroy();
+                console.log("Conection Closed. end 1");
                 return message.channel.createMessage("Sorry but I need permissions to Mute Members")
             }
         }
         if (!failed){
             await connection.query(`DROP TABLE \`${guild}\``)
             await connection.destroy();
+            console.log("Conection Closed. end 2");
             message.channel.createMessage("Game ended. All users unmuted.")
         }
     }).catch( async (error) => {
         await connection.destroy();
+        console.log("Conection Closed. end 3");
         let failed = false
         for ([memberID, member] of channel.voiceMembers){
             try {
