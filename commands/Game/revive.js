@@ -14,11 +14,10 @@ module.exports.run = async (bot, message, args) => {
         return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
     let connection = await mariadb.createConnection(bot.database)
-    console.log("Connection Open revive")
+    
     connection.query(`SELECT * FROM \`${guild.id}\` WHERE memberid = '${member.id}'`).then( async (rows) => {
         if (!rows[0]){
             await connection.destroy();
-            console.log("Conection Closed. revive 1");
             message.channel.createMessage(`${member.user.username} is not listed as dead.`)
         }else{
             let failed = false
@@ -28,7 +27,6 @@ module.exports.run = async (bot, message, args) => {
             catch (e){
                 failed = true
                 await connection.destroy();
-                console.log("Conection Closed. revive 2");
                 return message.channel.createMessage("Sorry but I need permissions to Mute Members")
             }
             if (!failed){
@@ -36,14 +34,12 @@ module.exports.run = async (bot, message, args) => {
                 await connection.query(`SELECT * FROM \`${guild.id}\``).then( async (rows) => {
                     if (!rows[0]) {await connection.query(`DROP TABLE \`${guild.id}\``);}
                     await connection.destroy();
-                    console.log("Conection Closed. revive 3");
                 })
                 message.channel.createMessage(`${member.user.username} Revived. To list people as dead use \`${bot.config.prefix}dead\`.`)
             }
         }
     }).catch( async () => {
         await connection.destroy();
-        console.log("Conection Closed. revive 4");
         message.channel.createMessage(`${member.user.username} is not listed as dead.`)
     })
 }
