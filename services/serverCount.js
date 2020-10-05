@@ -13,9 +13,6 @@ async function update(serverCount) {
 		const database = client.db("bot");
 		const collection = database.collection("info");
 
-		// create a filter for a movie to update
-		const filter = { _id: "5f6c5183784bc0b5904a1b9d" };
-
 		// create a document that sets the plot of the movie
 		const updateDoc = {
 			$set: {
@@ -24,7 +21,7 @@ async function update(serverCount) {
 		};
 
         const result = await collection.updateOne(filter, updateDoc);
-        console.log(`Sent data: {count:'${serverCount}}' to the Website`)
+        console.log(`Sent data: {count:${serverCount}} to the Website`)
 	} finally {
 		await client.close();
 	}
