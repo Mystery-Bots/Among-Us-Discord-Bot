@@ -10,7 +10,7 @@ module.exports.info = {
     name: "webhook",
     description: "Commands for webhooks",
     usage: "<mute, unmute, end> <channelID>",
-    category: "About",
+    category: "Game",
     GuildOnly: true,
     WebhookOnly: true
 }
