@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
         description: "If you would like to donate to keep the bot running.\nFeel free to donate [here](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=VAKYBY5DB8UQE&source=url)",
         fields: [
             {
-                name:"Perks",
+                name:"Perks ($5+)",
                 value:"-Colored Server Info Embed\n-Crewmate in your Server Info Embed\n-Role in [Support Server](https://discord.gg/AD2a24y)"
             }
         ],

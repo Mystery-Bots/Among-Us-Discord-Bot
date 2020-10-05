@@ -146,7 +146,7 @@ module.exports.run = async (bot, message, args) => {
         ]
     }}
     if (!guildStatus){
-        //embedObject.embed.description = `Want a Crewmate and colorful embed. Feel free to donate to get these perks and more.`
+        embedObject.embed.description = `Want a Crewmate and colorful embed. Feel free to donate to get these perks and more.`
     }
     else if (guildStatus.type == "official") {
         embedObject.embed.description = `${guildIcons[guildStatus.type]} Official Server`
