@@ -13,7 +13,10 @@ async function update(serverCount) {
 		const database = client.db("bot");
 		const collection = database.collection("info");
 
-		// create a document that sets the plot of the movie
+        // create a filter for server count to update
+		const filter = { _id: "5f6c5183784bc0b5904a1b9d" };
+
+		// create a document that sets the server count
 		const updateDoc = {
 			$set: {
 				count: `${serverCount}`
