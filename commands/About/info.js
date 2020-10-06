@@ -86,8 +86,8 @@ module.exports.run = async (bot, message, args) => {
                 inline: true
             },
             {
-                name: "Donate",
-                value: `If you wish to donate feel free to run \`${bot.config.prefix}donate\``,
+                name: "Premium",
+                value: `If you wish to buy premium feel free to check it out [here](https://www.patreon.com/TheMystery)`,
                 inline: true
             }
         ]
