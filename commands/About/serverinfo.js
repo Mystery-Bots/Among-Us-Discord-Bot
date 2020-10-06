@@ -160,8 +160,8 @@ module.exports.run = async (bot, message, args) => {
         embedObject.embed.description = `${guildIcons[guildStatus.type]} InnerSloth Official Server`
         embedObject.embed.color = embedColor[guildStatus.color]
     }
-    else if (guildStatus.type == "donator") {
-        embedObject.embed.description = `${guildIcons.colors[guildStatus.color]} Donator Server`
+    else if (guildStatus.type == "premium") {
+        embedObject.embed.description = `${guildIcons.colors[guildStatus.color]} Premium Server`
         embedObject.embed.color = embedColor[guildStatus.color]
     }
     message.channel.createMessage(embedObject).catch((error) => {
