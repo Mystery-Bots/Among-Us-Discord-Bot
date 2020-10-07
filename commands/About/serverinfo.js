@@ -85,7 +85,6 @@ module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
     let channels = await getChannels(guild)
     //let members = await getMembers(guild)
-    //let owner = await guild.fetchMembers({query:,userIDs: [guild.ownerID], limit:1})
     let guildStatus = await getGuildStatus(bot, guild)
     let embedObject = {embed: {
         title: `${guild.name} Info`,
@@ -95,8 +94,7 @@ module.exports.run = async (bot, message, args) => {
         fields: [  
             {
                 name: "Owner",
-                //value: `<@${guild.ownerID}>\nID: ${guild.ownerID}`,
-                value:`Currently disabled`,
+                value: `<@${guild.ownerID}>\nID: ${guild.ownerID}`,
                 inline: true
             },
             {
