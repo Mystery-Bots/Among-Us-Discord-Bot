@@ -5,7 +5,7 @@ module.exports.run = async (bot, message, args) => {
         thumbnail: {
             url: "https://themystery.s-ul.eu/bot/Ih7eUxcH"
         },
-        description: "If you would like to donate to keep the bot running.\nFeel free to buy premium [here](https://www.patreon.com/TheMystery)",
+        description: "If you would like to help to keep the bot running.\nFeel free to buy premium [here](https://www.patreon.com/TheMystery)",
         fields: [
             {
                 name:"Perks",
@@ -26,4 +26,5 @@ module.exports.info = {
     name: "premium",
     description: "Get a link to get premium",
     category: "Support",
+    aliases:["donate"]
 }
