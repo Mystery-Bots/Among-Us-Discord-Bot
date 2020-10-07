@@ -71,8 +71,8 @@ module.exports.run = async (bot, message, args) => {
                 inline: true
             },
             {
-                name: "Shard ID",
-                value: message.channel.guild.shard.id,
+                name: "Shards",
+                value: `Current Shard ID: ${message.channel.guild.shard.id}\nTotal Shards: ${bot.shards.size}`,
                 inline: true
             },
             {
