@@ -84,7 +84,7 @@ async function getGuildStatus(bot, guild) {
 module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
     let channels = await getChannels(guild)
-    let members = await getMembers(guild)
+    //let members = await getMembers(guild)
     let owner = await guild.fetchMembers({userIDs: [guild.ownerID]})
     let guildStatus = await getGuildStatus(bot, guild)
     let embedObject = {embed: {
@@ -110,7 +110,8 @@ module.exports.run = async (bot, message, args) => {
             },
             {
                 name: "Member Count",
-                value: `Users: ${members[0]}\nBots: ${members[1]}\n**Total:** ${members[0]+members[1]}`,
+                //value: `Users: ${members[0]}\nBots: ${members[1]}\n**Total:** ${members[0]+members[1]}`,
+                value:`Currently disabled`,
                 inline: true
             },
             {
