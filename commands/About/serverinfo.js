@@ -95,7 +95,7 @@ module.exports.run = async (bot, message, args) => {
         fields: [  
             {
                 name: "Owner",
-                value: owner[0].username+"#"+owner[0].discriminator+"\n ID: "+guild.ownerID,
+                value: `<@${guild.ownerID}>\nID: ${guild.ownerID}`,
                 inline: true
             },
             {
@@ -143,7 +143,10 @@ module.exports.run = async (bot, message, args) => {
                 value: `\`${guild.features.join('` `') ? guild.features.join('` `') : "None"}\``,
                 inline: true
             },
-        ]
+        ],
+        footer:{
+            text:`Managed by Shard: ${message.channel.guild.shard.id}`
+        }
     }}
     if (!guildStatus || !guildStatus.type){
         embedObject.embed.description = `Want a Crewmate and colorful embed. Feel free to get premium to get these perks and more.`
