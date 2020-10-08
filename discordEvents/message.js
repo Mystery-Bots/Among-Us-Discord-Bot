@@ -8,7 +8,7 @@ const cooldowns = new Discord.Collection()
 messageCount = 0
 
 async function getPrefix(guild){
-const client = new MongoClient(uri, { useUnifiedTopology: true });
+const client = new MongoClient(uri);
 	try {
 		await client.connect().catch((error) => {
 			console.log(error)
@@ -35,7 +35,7 @@ const client = new MongoClient(uri, { useUnifiedTopology: true });
 }
 
 module.exports.Run = async function(bot,message){
-	var prefixes = [bot.config.prefix, await getPrefix(message.channel.guild)]
+	var prefixes = [bot.config.prefix]
 	let prefix = false;
 	for(const thisPrefix of prefixes) {
 		if(message.content.startsWith(thisPrefix)) prefix = thisPrefix;
