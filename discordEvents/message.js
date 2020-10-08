@@ -1,41 +1,26 @@
 const ms = require("ms")
 const Discord = require("eris")
-const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
 
 const cooldowns = new Discord.Collection()
 
 messageCount = 0
 
 async function getPrefix(guild){
-const client = new MongoClient(uri, { useUnifiedTopology: true });
-	try {
-		await client.connect().catch((error) => {
-			console.log(error)
-			return null
-		});
-
-		const database = client.db("bot");
-		const collection = database.collection("servers");
-    
-        // create a filter for server id to find
-        const filter = { "guildID": `${guild.id}` };
-        
-        const result = await collection.findOne(filter);
-		if (!result){
-			return null
-		}
-		else{
-			return result.prefix
-		}
-
-    } finally {
-		await client.close();
+	prefixes = require('../services/prefixFetch').prefixes
+	if (!guild) return null
+	guildID = guild.id
+	if (!prefixes){
+		return null
+	}
+	if (!prefixes[guildID]){
+		return null
+	}else{
+		return prefixes[guildID]
 	}
 }
 
 module.exports.Run = async function(bot,message){
-	var prefixes = [bot.config.prefix/* , await getPrefix(message.channel.guild) */]
+	var prefixes = [bot.config.prefix, await getPrefix(message.channel.guild)]
 	let prefix = false;
 	for(const thisPrefix of prefixes) {
 		if(message.content.startsWith(thisPrefix)) prefix = thisPrefix;
