@@ -1,4 +1,5 @@
 module.exports.run = async (bot, message, args) => {
+    if (!args[0]) args[0] = "null"
     if (args[0].toLowerCase() == "mute"){return await require("./wehookCommands/mute").run(bot, message,args)}
     if (args[0].toLowerCase() == "unmute"){return await require("./wehookCommands/unmute").run(bot, message,args)}
     if (args[0].toLowerCase() == "end"){return await require("./wehookCommands/end").run(bot, message,args)}
