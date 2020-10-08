@@ -35,7 +35,7 @@ module.exports.run = async (bot, message, args) => {
 }
 
 module.exports.info = {
-    name: "server",
+    name: "addserver",
     description: "Sets the status for a server",
     category: "Developer",
 }
