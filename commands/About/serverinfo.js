@@ -1,5 +1,7 @@
 const moment = require("moment")
-const mariadb  = require("mariadb")
+const { MongoClient } = require("mongodb");
+const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
+
 
 const embedColor = [
     0x3e474e, //Black 0
@@ -60,24 +62,23 @@ async function getMembers(guild) {
     
 }
 
-async function getGuildStatus(bot, guild) {
-    let connection = await mariadb.createConnection(bot.database)
-    let result = await connection.query(`SELECT guilds FROM botInfo`).then( async (rows) => {
-        servers = JSON.parse(rows[0])
-        if (servers[guild.id]){
-            await connection.destroy()
-            return servers[guild.id]
-        }
-        else{
-            await connection.destroy()
-            return null
-        }
-    }).catch(async (error) => {
-        console.log(error)
-        await connection.destroy()
-        return null
-    })
-    return result
+async function getGuildStatus(guild) {
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+	try {
+		await client.connect();
+
+		const database = client.db("bot");
+		const collection = database.collection("servers");
+    
+        // create a filter for server id to find
+        const filter = { "guildID": `${guild.id}` };
+        
+        const result = await collection.findOne(filter);
+        return result.status
+
+    } finally {
+		await client.close();
+	}
 }
 
 
@@ -85,7 +86,7 @@ module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
     let channels = await getChannels(guild)
     //let members = await getMembers(guild)
-    let guildStatus = await getGuildStatus(bot, guild)
+    let guildStatus = await getGuildStatus(guild)
     let embedObject = {embed: {
         title: `${guild.name} Info`,
         thumbnail: {
