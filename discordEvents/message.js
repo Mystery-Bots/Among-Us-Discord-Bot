@@ -19,7 +19,12 @@ const client = new MongoClient(uri, { useUnifiedTopology: true });
         const filter = { "guildID": `${guild.id}` };
         
         const result = await collection.findOne(filter);
-        return result.prefix
+		if (!result){
+			return null
+		}
+		else{
+			return result.prefix
+		}
 
     } finally {
 		await client.close();
