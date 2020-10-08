@@ -10,7 +10,10 @@ messageCount = 0
 async function getPrefix(guild){
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 	try {
-		await client.connect();
+		await client.connect().catch((error) => {
+			console.log(error)
+			return null
+		});
 
 		const database = client.db("bot");
 		const collection = database.collection("servers");
