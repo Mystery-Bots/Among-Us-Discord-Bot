@@ -13,7 +13,11 @@ async function getGuildStatus(guild) {
         const filter = { "guildID": `${guild.id}` };
         
         const result = await collection.findOne(filter);
-        return result.status
+        if (!result){
+            return null
+        }else{
+            return result.status
+        }
 
     } finally {
 		await client.close();
