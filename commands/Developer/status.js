@@ -1,19 +1,57 @@
-const mariadb  = require("mariadb")
+const { MongoClient } = require("mongodb");
+const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
 
 module.exports.run = async (bot, message, args) => {
     if (!bot.config.devs.includes(message.author.id)) return console.log(`${message.author.username} (ID: ${message.author.id}) tried to use "servers"`)
-    let connection = await mariadb.createConnection(bot.database)
     if (!args[0]){
-        await connection.query(`SELECT status FROM botInfo`).then( async (rows) => {
-            await connection.destroy();
-            message.channel.createMessage("Current bot status is: "+rows[0])
-        })
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        try {
+            await client.connect();
+
+            const database = client.db("bot");
+            const collection = database.collection("info");
+        
+            // create a filter for server id to find
+            const filter = { _id: "5f6c5183784bc0b5904a1b9d" };
+            
+            const result = await collection.findOne(filter);
+            return message.channel.createMessage("Current bot status is: "+result.status)
+
+        } finally {
+            await client.close();
+        }
     }else{
-        await connection.query(`SELECT status FROM botInfo`).then( async (rows) => {
-            await connection.query(`UPDATE botInfo SET status = '${args[0]}' WHERE status = '${rows[0]}'`)
-        })
-        await connection.destroy();
-        message.channel.createMessage("Changed bot status to: "+args[0])
+        const client = new MongoClient(uri, { useUnifiedTopology: true });
+        try {
+            await client.connect();
+
+            const database = client.db("bot");
+            const collection = database.collection("info");
+        
+            // create a filter for server id to find
+            const filter = { _id: "5f6c5183784bc0b5904a1b9d" };
+            
+            // create a document that sets the server count
+            if (args[0] == 'offline'){
+                updateDoc = {
+                    $set: {
+                        "status": "invisible"
+                    }
+                };
+            }
+            else{
+                updateDoc = {
+                    $set: {
+                        "status": `${args[0]}`
+                    }
+                };
+            }
+
+            const result = await collection.updateOne(filter, updateDoc);
+            return message.channel.createMessage("Changed bot status to: "+args[0])
+        } finally {
+            await client.close();
+        }
     }
 }
 
