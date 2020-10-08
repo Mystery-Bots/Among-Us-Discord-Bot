@@ -30,19 +30,18 @@ crewColor = [
     "https://themystery.s-ul.eu/bot/5MT8kSEi"
 ]
 
+deadCrew = "https://themystery.s-ul.eu/bot/iP9xDX98"
+
 module.exports.run = async (bot, message, args) => {
     userCount = 0
     color = Math.floor(Math.random() * crewColor.length) //Number 0 to 11
+    dead = Math.floor(Math.random() * 101) //Number 0 to 100
     embedObject = {embed:{
         title: `${bot.user.username} Info`,
         url: "https://aub.themystery.me",
         footer: {
             text: "Created by TheMystery#7755"
         },
-        thumbnail: {
-            url: crewColor[color]
-        },
-        color: embedColor[color],
         description: "The only Among Us Discord bot you need for your friends group/server.",
         fields: [
             {
@@ -92,6 +91,17 @@ module.exports.run = async (bot, message, args) => {
             }
         ]
     }}
+    if (dead != 100){
+        embedObject.embed.thumbnail = {
+            url: crewColor[color]
+        }
+        embedObject.embed.color = embedColor[color]
+    }else{
+        embedObject.embed.thumbnail = {
+            url: deadCrew
+        }
+        embedObject.embed.color = embedColor["9"]
+    }
     message.channel.createMessage(embedObject).catch((error) => {
 		if (error.message == "Missing Permissions"){
 			message.channel.createMessage("I need `Embed Links` permissions to be able to send this message.")
