@@ -1,12 +1,38 @@
 const ms = require("ms")
 const Discord = require("eris")
+const { MongoClient } = require("mongodb");
+const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
 
 const cooldowns = new Discord.Collection()
 
 messageCount = 0
 
+async function getPrefix(guild){
+const client = new MongoClient(uri, { useUnifiedTopology: true });
+	try {
+		await client.connect();
+
+		const database = client.db("bot");
+		const collection = database.collection("servers");
+    
+        // create a filter for server id to find
+        const filter = { "guildID": `${guild.id}` };
+        
+        const result = await collection.findOne(filter);
+        return result.prefix
+
+    } finally {
+		await client.close();
+	}
+}
+
 module.exports.Run = async function(bot,message){
-	var prefix = bot.config.prefix
+	var prefixes = [bot.config.prefix, await getPrefix(message.channel.guild)]
+	let prefix = false;
+	for(const thisPrefix of prefixes) {
+		if(message.content.startsWith(thisPrefix)) prefix = thisPrefix;
+	}
+	if(!prefix) return;
 	var args = message.content.slice(prefix.length).trim().split(/ +/g)
 	const cmd = args.shift().toLowerCase()
 	let command
