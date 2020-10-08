@@ -1,16 +1,25 @@
-const mariadb  = require("mariadb")
 botStatus = require("../status.json").status
+const { MongoClient } = require("mongodb");
+const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
 
 currentStatus = 0;
 
 async function fetchStatus(bot){
-	let connection = await mariadb.createConnection(bot.database)
-	
-	status = await connection.query(`SELECT status FROM botInfo`).then( async (rows) => {
-		return rows[0]
-	})
-	await connection.destroy();
-	return status[0]
+	const client = new MongoClient(uri, { useUnifiedTopology: true });
+	try {
+		await client.connect();
+
+		const database = client.db("bot");
+		const collection = database.collection("info");
+
+        // create a filter for server count to update
+		const filter = { _id: "5f6c5183784bc0b5904a1b9d" };
+
+		const result = await collection.findOne(filter);
+		return result.status
+	} finally {
+		await client.close();
+	}
 }
 
 module.exports.Run = async function (bot) {
