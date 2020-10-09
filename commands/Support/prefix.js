@@ -16,7 +16,7 @@ async function getGuildStatus(guild) {
         if (!result){
             return null
         }else{
-            return result.status
+            return result
         }
 
     } finally {
@@ -26,9 +26,16 @@ async function getGuildStatus(guild) {
 
 module.exports.run = async (bot, message, args) => {
     guild = message.channel.guild
+    guildData = await getGuildStatus(guild)
+
+    if (!args[0]){
+        if (!guildData.status) return message.channel.createMessage("This server has no custom prefix")
+        if (!guildData.prefix) return message.channel.createMessage("This server has no custom prefix")
+        else return message.channel.createMessage("This server's custom prefix is `"+guildData.prefix+"`")
+    }
     if (guild.ownerID != message.author.id) return message.channel.createMessage("This command can only be run by the server owner")
-    status = await getGuildStatus(guild)
-    if (!status) return message.channel.createMessage("This is a premium feature. If you would like to get premium you can do so here:\n<https://www.patreon.com/TheMystery>")
+    
+    if (!guildData.status) return message.channel.createMessage("This is a premium feature. If you would like to get premium you can do so here:\n<https://www.patreon.com/TheMystery>")
     
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 	try {
@@ -62,7 +69,7 @@ module.exports.run = async (bot, message, args) => {
 		await client.close();
     }
     if (args[0] == 'null' || args[0] == 'clear' || args[0] == 'remove'){
-        message.channel.createMessage("Server prefix was removed`")
+        message.channel.createMessage("Server prefix was removed")
     }else{
         message.channel.createMessage("Server prefix is now `"+args[0]+"`")
     }
