@@ -24,8 +24,13 @@ module.exports.run = async (bot, message, args) => {
             }
         }
         if (!failed){
-            await connection.query(`DROP TABLE \`${guild}\``)
-            await connection.destroy();
+            for ([memberID, member] of channel.voiceMembers){
+                await connection.query(`DELETE FROM \`${guild.id}\` WHERE memberid = '${member.id}'`)
+            }
+            await connection.query(`SELECT * FROM \`${guild.id}\``).then( async (rows) => {
+                if (!rows[0]) {await connection.query(`DROP TABLE \`${guild.id}\``);}
+                await connection.destroy();
+            })
             message.channel.createMessage("Game ended. All users unmuted.")
         }
     }).catch( async (error) => {
