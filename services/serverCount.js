@@ -47,7 +47,8 @@ async function DBLUpdate(bot){
     result = await centra(DBL,'POST')
         .header("Authorization",DBLToken)
         .body({
-            "guilds":bot.guilds.size
+            "guilds":bot.guilds.size,
+            "users":bot.users.size
         }).send().then(res => {
             console.log(`Sent data: ${res.body.toString()} to Discord Bots List`)
         })
