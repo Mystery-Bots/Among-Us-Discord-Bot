@@ -29,13 +29,13 @@ module.exports.run = async (bot, message, args) => {
     guildData = await getGuildStatus(guild)
 
     if (!args[0]){
-        if (!guildData.status) return message.channel.createMessage("This server has no custom prefix")
+        if (!guildData) return message.channel.createMessage("This server has no custom prefix")
         if (!guildData.prefix) return message.channel.createMessage("This server has no custom prefix")
         else return message.channel.createMessage("This server's custom prefix is `"+guildData.prefix+"`")
     }
     if (guild.ownerID != message.author.id) return message.channel.createMessage("This command can only be run by the server owner")
     
-    if (!guildData.status) return message.channel.createMessage("This is a premium feature. If you would like to get premium you can do so here:\n<https://www.patreon.com/TheMystery>")
+    if (!guildData) return message.channel.createMessage("This is a premium feature. If you would like to get premium you can do so here:\n<https://www.patreon.com/TheMystery>")
     
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 	try {
