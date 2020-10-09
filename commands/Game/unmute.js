@@ -1,20 +1,20 @@
 const mariadb  = require("mariadb")
 
 module.exports.run = async (bot, message, args) => {
-    channelID = message.member.voiceState.channelID
+    let channelID = message.member.voiceState.channelID
     if (!channelID){
         return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
     }
-    channel = bot.getChannel(channelID)
+    let channel = bot.getChannel(channelID)
     if (!channel.type == 2){
         return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
     }
-    guild = message.guildID
+    let guild = message.guildID
     let connection = await mariadb.createConnection(bot.database)
     connection.query(`SELECT * FROM \`${guild}\``).then( async (rows) => {
         await connection.destroy();
-        deadUsers = []
-        failed = false
+        let deadUsers = []
+        let failed = false
         for (deadUser of rows){
             await deadUsers.push(deadUser[0])
         }
