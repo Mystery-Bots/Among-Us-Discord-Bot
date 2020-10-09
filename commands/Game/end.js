@@ -34,7 +34,6 @@ module.exports.run = async (bot, message, args) => {
             message.channel.createMessage("Game ended. All users unmuted.")
         }
     }).catch( async (error) => {
-        console.log(error)
         await connection.destroy();
         let failed = false
         for ([memberID, member] of channel.voiceMembers){
