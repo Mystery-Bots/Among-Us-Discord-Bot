@@ -50,7 +50,7 @@ async function DBLUpdate(bot){
             "guilds":bot.guilds.size,
             "users":bot.users.size
         }).send().then(res => {
-            console.log(`Sent data: ${res.body.toString()} to Discord Bots List`)
+            console.log(`Sent data: {"guilds":${bot.guilds.size},"users":${bot.users.size}} to Discord Bots List`)
         })
 }
 
