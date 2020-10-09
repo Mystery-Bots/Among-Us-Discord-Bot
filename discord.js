@@ -10,6 +10,7 @@ const bot = new Discord.Client(config.discord.token, {
 	intents:4737,
 	maxShards:"auto",
 	guildSubscriptions:false,
+	messageLimit:10,
 	largeThreshold: 50,
 	disableEvents: [
 		"CHANNEL_CREATE",
