@@ -48,7 +48,7 @@ module.exports.run = async (bot, message, args) => {
         const filter = { "guildID": `${guild.id}` };
         
         // create a document that sets the server count
-        if (args[0] == 'null' || args[0] == 'clear' || args[0] == 'remove'){
+        if (args[0] == 'none' || args[0] == 'clear' || args[0] == 'remove'){
             updateDoc = {
                 $set: {
                     prefix: null
@@ -68,7 +68,7 @@ module.exports.run = async (bot, message, args) => {
     } finally {
 		await client.close();
     }
-    if (args[0] == 'null' || args[0] == 'clear' || args[0] == 'remove'){
+    if (args[0] == 'none' || args[0] == 'clear' || args[0] == 'remove'){
         message.channel.createMessage("Server prefix was removed")
     }else{
         message.channel.createMessage("Server prefix is now `"+args[0]+"`")
