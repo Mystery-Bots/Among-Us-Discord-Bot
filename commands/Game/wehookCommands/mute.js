@@ -3,7 +3,7 @@ module.exports.run = async (bot, message, args) => {
     if (!channelID){
         return message.channel.createMessage("Sorry but the channel ID is not a voice chat that I can manage.")
     }
-    let  = bot.getChannel(channelID)
+    let channel = bot.getChannel(channelID)
     if (!channel){
         return message.channel.createMessage("Sorry but the channel ID is not a voice chat that I can manage.")
     }
