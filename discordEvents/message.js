@@ -104,8 +104,8 @@ module.exports.Run = async function(bot,message){
 			timestamp: timestring.toISOString(),
 			fields:[
 				{
-					name:"Guild",
-					value:guild.name,
+					name:"Guild/DM",
+					value:guild.name ? guild.name : `${message.author.username}'s DMS`,
 					inline:true
 				},
 				{
