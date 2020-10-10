@@ -49,19 +49,6 @@ async function getChannels(guild) {
     return [text, voice]
 }
 
-async function getMembers(guild) {
-    let users = 0
-    let bots = 0
-    members = await guild.fetchMembers()
-    for (member of members){
-        if (!member.user.bot) users ++
-        if (member.user.bot) bots ++
-    }
-    delete members
-    return [users, bots]
-    
-}
-
 async function getGuildStatus(guild) {
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 	try {
@@ -89,7 +76,6 @@ async function getGuildStatus(guild) {
 module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
     let channels = await getChannels(guild)
-    //let members = await getMembers(guild)
     let guildStatus = await getGuildStatus(guild)
     let embedObject = {embed: {
         title: `${guild.name} Info`,
@@ -114,8 +100,7 @@ module.exports.run = async (bot, message, args) => {
             },
             {
                 name: "Member Count",
-                //value: `Users: ${members[0]}\nBots: ${members[1]}\n**Total:** ${members[0]+members[1]}`,
-                value:`Currently disabled`,
+                value:guild.memberCount,
                 inline: true
             },
             {
