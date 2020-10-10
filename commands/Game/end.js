@@ -31,7 +31,7 @@ module.exports.run = async (bot, message, args) => {
                 if (!rows[0]) {await connection.query(`DROP TABLE \`${guild}\``);}
                 await connection.destroy();
             })
-            message.channel.createMessage("Game ended. All users unmuted.")
+            message.channel.createMessage("Game ended. All users unmuted.").catch(()=>{})
         }
     }).catch( async (error) => {
         await connection.destroy();
@@ -46,7 +46,7 @@ module.exports.run = async (bot, message, args) => {
             }
         }
         if (!failed){
-            message.channel.createMessage('No players died in the game. Unmuting all players.')
+            message.channel.createMessage('No players died in the game. Unmuting all players.').catch(()=>{})
         }
     })
 }

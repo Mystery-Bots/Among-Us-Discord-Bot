@@ -35,12 +35,12 @@ module.exports.run = async (bot, message, args) => {
                     if (!rows[0]) {await connection.query(`DROP TABLE \`${guild.id}\``);}
                     await connection.destroy();
                 })
-                message.channel.createMessage(`${member.user.username} Revived. To list people as dead use \`${bot.config.prefix}dead\`.`)
+                message.channel.createMessage(`${member.user.username} Revived. To list people as dead use \`${bot.config.prefix}dead\`.`).catch(()=>{})
             }
         }
     }).catch( async () => {
         await connection.destroy();
-        message.channel.createMessage(`${member.user.username} is not listed as dead.`)
+        message.channel.createMessage(`${member.user.username} is not listed as dead.`).catch(()=>{})
     })
 }
 

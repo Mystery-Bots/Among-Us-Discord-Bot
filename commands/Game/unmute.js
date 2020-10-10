@@ -31,7 +31,7 @@ module.exports.run = async (bot, message, args) => {
             }
         }
         if (!failed){
-            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
+            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`).catch(()=>{})
         }
     }).catch( async () => {
         await connection.destroy();
@@ -47,7 +47,7 @@ module.exports.run = async (bot, message, args) => {
             }
         }
         if (!failed){
-            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`)
+            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`).catch(()=>{})
         }
     })
 }
