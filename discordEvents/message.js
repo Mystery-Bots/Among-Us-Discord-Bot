@@ -62,7 +62,6 @@ module.exports.Run = async function(bot,message){
 		if (info.usage) {
 			reply += `\nThe proper usage would be: \`${prefix}${info.name} ${info.usage}\``
 		}
-		setTimeout(message.delete(),2000)
 		return message.channel.createMessage(reply)
 	}
 	//Command cooldowns
@@ -79,8 +78,7 @@ module.exports.Run = async function(bot,message){
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now)
-			setTimeout(message.delete(),2000)
-			return message.channel.createMessage(`please wait ${ms(timeLeft, {long:true})} before reusing the \`${info.name}\` command.`).then(msg => setTimeout(msg.delete(),5000))
+			return message.channel.createMessage(`please wait ${ms(timeLeft, {long:true})} before reusing the \`${info.name}\` command.`)
 		}
 	}
 
