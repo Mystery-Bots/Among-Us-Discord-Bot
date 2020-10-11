@@ -76,7 +76,7 @@ module.exports.run = async (bot, message, args) => {
             },
             {
                 name: "Support",
-                value: "[Discord Invite](https://discord.gg/AD2a24y)",
+                value: "[Discord Invite](https://discord.gg/AD2a24y)\nI am giving away 3, one months of premium in my Support Server.\n **Join now for a chance to win.**",
                 inline: true
             },
             {

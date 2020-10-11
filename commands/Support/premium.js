@@ -10,6 +10,10 @@ module.exports.run = async (bot, message, args) => {
             {
                 name:"Perks",
                 value:"-Colored Server Info Embed\n-Crewmate in your Server Info Embed\n-Role in [Support Server](https://discord.gg/AD2a24y)\n-Premium Support\n-Early previews of updates"
+            },
+            {
+                name:"Giveaway",
+                value:"I am giving away 3, one months of premium in my [Support Server](https://discord.gg/AD2a24y).\n**Join now for a chance to win.**"
             }
         ],
         url: "https://www.patreon.com/TheMystery",
