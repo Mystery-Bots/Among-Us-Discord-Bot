@@ -1,6 +1,6 @@
 module.exports.run = async (bot, message, args) => {
 
-    message.channel.createMessage("Here is an invite for you to add me to your server.\n<:Invite:756026277311283292><https://discord.com/api/oauth2/authorize?client_id=754922494376542219&permissions=8&scope=bot><:Invite:756026277311283292>")
+    message.channel.createMessage("Here is an invite for you to add me to your server.\n<:Invite:756026277311283292><https://discord.com/oauth2/authorize?client_id=754922494376542219&scope=bot&permissions=4221960><:Invite:756026277311283292>")
 
 }
 
