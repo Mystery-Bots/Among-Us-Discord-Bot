@@ -1,6 +1,6 @@
 module.exports.run = async (bot, message, args) => {
 
-    message.channel.createMessage("Here is an link to my privacy policy.\n<:Invite:756026277311283292><https://aub.themystery.me/privacy><:Invite:756026277311283292>")
+    message.channel.createMessage("Here is an link to my privacy policy.\n<:Invite:756026277311283292><https://aub.mysterybots.com/terms><:Invite:756026277311283292>")
 
 }
 

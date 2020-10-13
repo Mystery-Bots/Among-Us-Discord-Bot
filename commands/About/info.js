@@ -38,7 +38,7 @@ module.exports.run = async (bot, message, args) => {
     dead = Math.floor(Math.random() * 101) //Number 0 to 100
     embedObject = {embed:{
         title: `${bot.user.username} Info`,
-        url: "https://aub.themystery.me",
+        url: "https://aub.mysterybots.com",
         footer: {
             text: "Created by TheMystery#7755"
         },
