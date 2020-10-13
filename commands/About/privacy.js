@@ -8,4 +8,5 @@ module.exports.info = {
     name: "privacy",
     description: "Get a link to the privacy policy for the bot.",
     category: "About",
+    aliases: ["terms"]
 }
