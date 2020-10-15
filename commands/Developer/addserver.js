@@ -19,6 +19,7 @@ module.exports.run = async (bot, message, args) => {
             
         // create a document that sets the server info
         const updateDoc = {
+            $set:{
                 "guildID": `${guild.id}`,
                 "status":{
                     "type":args[1],
@@ -30,6 +31,7 @@ module.exports.run = async (bot, message, args) => {
                     "ownerID":guild.ownerID
                 },
                 "prefix":null
+            }
         };
         const result = await collection.updateOne(filter, updateDoc,{upsert:true});
     } finally {
