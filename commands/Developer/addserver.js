@@ -11,7 +11,11 @@ module.exports.run = async (bot, message, args) => {
 		await client.connect();
 
 		const database = client.db("bot");
-		const collection = database.collection("servers");
+        const collection = database.collection("servers");
+        
+        // create a filter for server id to find
+        const filter = { "guildID": `${guild.id}` };
+
             
         // create a document that sets the server info
         const updateDoc = {
@@ -27,7 +31,7 @@ module.exports.run = async (bot, message, args) => {
                 },
                 "prefix":null
         };
-        const result = await collection.insertOne(updateDoc);
+        const result = await collection.updateOne(filter, updateDoc,{upsert:true});
     } finally {
 		await client.close();
     }
