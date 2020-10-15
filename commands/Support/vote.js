@@ -3,9 +3,6 @@
 module.exports.run = async (bot, message, args) => {
     embedObject = {embed: {
         title: "Vote for Among Us Bot",
-        footer:{
-            text: "Embed will delete in 20 seconds"
-        },
         thumbnail: {
             url: "https://themystery.s-ul.eu/bot/ehRyaZhA"
         },
@@ -22,7 +19,7 @@ module.exports.run = async (bot, message, args) => {
             } */
         ]
     }}
-    message.channel.createMessage(embedObject).then(message => setTimeout(() => {message.delete()},20*1000))
+    message.channel.createMessage(embedObject)
 }
 
 module.exports.info = {
