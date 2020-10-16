@@ -76,7 +76,7 @@ module.exports.run = async (bot, message, args) => {
             },
             {
                 name: "Support",
-                value: "[Discord Invite](https://discord.gg/AD2a24y)\nI am giving away 3, one months of premium in my Support Server.\n **Join now for a chance to win.**",
+                value: "[Discord Invite](https://discord.gg/AD2a24y)",
                 inline: true
             },
             {
@@ -86,7 +86,7 @@ module.exports.run = async (bot, message, args) => {
             },
             {
                 name: "Premium",
-                value: `If you wish to buy premium feel free to check it out [here](https://www.patreon.com/TheMystery)`,
+                value: `If you wish to buy premium feel free to check it out [here](https://aub.mysterybots.com/premium)`,
                 inline: true
             }
         ]
