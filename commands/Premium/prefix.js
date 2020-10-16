@@ -78,5 +78,5 @@ module.exports.run = async (bot, message, args) => {
 module.exports.info = {
     name: "prefix",
     description: "Change the prefix of the bot in your server. (Premium Only)",
-    category: "Support",
+    category: "Premium",
 }
