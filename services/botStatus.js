@@ -27,7 +27,7 @@ module.exports.Run = async function (bot) {
 	bot.editStatus(await fetchStatus(bot), {name:`${bot.config.prefix}help | ${bot.guilds.size} Servers!`, type: 0 });
 	setInterval(async function () {
 		let statuses = [
-			`${bot.config.prefix}help | ${bot.guilds.size} Servers!`,
+			`${bot.config.prefix}help | ${bot.guilds.size.toLocaleString()} Servers!`,
 			`${bot.config.prefix}help | aub.mysterybots.com`,
 		];
 		currentStatus = currentStatus + 1 < statuses.length ? currentStatus + 1 : 0;
