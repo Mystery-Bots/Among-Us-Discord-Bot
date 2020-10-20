@@ -33,7 +33,6 @@ crewColor = [
 deadCrew = "https://themystery.s-ul.eu/bot/iP9xDX98"
 
 module.exports.run = async (bot, message, args) => {
-    userCount = 0
     color = Math.floor(Math.random() * crewColor.length) //Number 0 to 11
     dead = Math.floor(Math.random() * 101) //Number 0 to 100
     embedObject = {embed:{
@@ -61,7 +60,7 @@ module.exports.run = async (bot, message, args) => {
             },
             {
                 name: "Servers",
-                value: bot.guilds.size,
+                value: bot.guilds.size.toLocaleString(),
                 inline: true
             },
             {
