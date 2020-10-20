@@ -19,7 +19,7 @@ module.exports.run = async (bot, message, args) => {
         fields: []
     }}
     for ([shardID, shard] of bot.shards){
-        embedObject.embed.fields.push({name:`Shard ${shardID}`, value: `Status: ${statuses[shard.status]}\nPing:${shard.latency}`})
+        embedObject.embed.fields.push({name:`Shard ${shardID}`, value: `Status: ${statuses[shard.status]}\nPing:${shard.latency}`, inline:true})
     }
     message.channel.createMessage(embedObject).catch((error) => {
 		if (error.message == "Missing Permissions"){
