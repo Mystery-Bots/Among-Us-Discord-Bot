@@ -19,7 +19,7 @@ module.exports.run = async (bot, message, args) => {
         fields: []
     }}
     for ([shardID, shard] of bot.shards){
-        if (!isFinite(shard.latency)) {
+        if (isFinite(shard.latency)) {
             pings.push(shard.latency)
         }
         if (shardID == message.channel.guild.shard.id){
@@ -28,7 +28,7 @@ module.exports.run = async (bot, message, args) => {
             embedObject.embed.fields.push({name:`Shard ${shardID}`, value: `Status: ${statuses[shard.status]}\nPing: ${isFinite(shard.latency) ? `${shard.latency} ms` : "Offline"}`, inline:true})
         }
     }
-    embedObject.embed.description = `Status of all bot shards\nAverage Ping: ${(pings.reduce((a, b) => a + b)/pings.size)} ms`,
+    embedObject.embed.description = `Status of all bot shards\nAverage Ping: ${(pings.reduce((a, b) => a + b))} ms`,
     message.channel.createMessage(embedObject).catch((error) => {
 		if (error.message == "Missing Permissions"){
 			message.channel.createMessage("I need `Embed Links` permissions to be able to send this message.")
