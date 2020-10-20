@@ -20,7 +20,7 @@ module.exports.run = async (bot, message, args) => {
     }}
     for ([shardID, shard] of bot.shards){
         if (shardID == message.channel.guild.shard.id){
-            embedObject.embed.fields.push({name:`Shard ${shardID} (This Shard)`, value: `Status: ${statuses[shard.status]}\nPing:${shard.latency}`, inline:true})
+            embedObject.embed.fields.push({name:`Shard ${shardID} (This Shard)`, value: `Status: ${statuses[shard.status]}\nPing: ${isFinite(shard.latency) ? `${shard.latency} ms` : "Offline"}`, inline:true})
         }else{
             embedObject.embed.fields.push({name:`Shard ${shardID}`, value: `Status: ${statuses[shard.status]}\nPing: ${isFinite(shard.latency) ? `${shard.latency} ms` : "Offline"}`, inline:true})
         }
