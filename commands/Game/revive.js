@@ -48,7 +48,7 @@ module.exports.info = {
     name: "revive",
     description: "Revive yourself or someone else if you set them as dead on accident.",
     category: "Game",
-    usage: "(User Mention)",
+    usage: "(@user)",
     aliases: ["r"],
     GuildOnly: true
 }

@@ -90,7 +90,7 @@ module.exports.info = {
     name: "dead",
     description: "Set yourself or someone else to dead so they don't get unmuted when running the unmute command",
     category: "Game",
-    usage: "(User Mention)",
+    usage: "(@user)",
     aliases: ["d"],
     GuildOnly: true
 }
