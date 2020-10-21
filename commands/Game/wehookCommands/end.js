@@ -1,4 +1,5 @@
-const mariadb  = require("mariadb")
+const { MongoClient } = require("mongodb");
+const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
 
 module.exports.run = async (bot, message, args) => {
     let channelID = args[1]
