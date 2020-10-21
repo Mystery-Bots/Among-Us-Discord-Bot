@@ -37,7 +37,7 @@ module.exports.run = async (bot, message, args) => {
 }
 
 module.exports.info = {
-    name: "shard",
+    name: "shards",
     description: "Get information about all the bot's shards.",
     category: "About",
 }
