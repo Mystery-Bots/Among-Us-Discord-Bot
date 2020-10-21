@@ -43,7 +43,9 @@ module.exports.run = async (bot, message, args) => {
                 const updateDoc = {
                     $set:{
                         "guildID":guild.id,
-                        "dead":dead
+                        "dead":dead,
+                        "createdAt":new Date,
+                        "updatedAt":new Date
                     }
                 }
                 await collection.updateOne(filter, updateDoc,{upsert:true}); 
@@ -69,7 +71,8 @@ module.exports.run = async (bot, message, args) => {
                 dead.push(member.id)
                 const updateDoc = {
                     $set:{
-                        "dead":dead
+                        "dead":dead,
+                        "updatedAt":new Date
                     }
                 }
                 await collection.updateOne(filter, updateDoc,{upsert:true}); 
