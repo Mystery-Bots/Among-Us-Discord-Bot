@@ -20,6 +20,10 @@ module.exports.run = async (bot, message, args) => {
             if (!rows[0]){
                 let failed = false
                 try {
+                    if (member.bot){
+                        connection.destroy()
+                        return message.channel.createMessage("Bot's are exempt from being set as dead")
+                    }
                     await member.edit({mute:true}, "Among Us Game Chat Control")
                 }
                 catch (e){
@@ -39,6 +43,10 @@ module.exports.run = async (bot, message, args) => {
         }).catch( async (error) => {
             let failed = false
             try {
+                if (member.bot){
+                    connection.destroy()
+                    return message.channel.createMessage("Bot's are exempt from being set as dead")
+                }
                 await member.edit({mute:true}, "Among Us Game Chat Control")
             }
             catch (e){
@@ -58,6 +66,10 @@ module.exports.run = async (bot, message, args) => {
             return message.channel.createMessage("There was an error. Please make sure you are not running this command in a DM or Group DM")
         }
         try {
+            if (member.bot){
+                connection.destroy()
+                return message.channel.createMessage("Bot's are exempt from being set as dead")
+            }
             await member.edit({mute:true}, "Among Us Game Chat Control")
         }
         catch (e){

@@ -13,6 +13,7 @@ module.exports.run = async (bot, message, args) => {
     let failed = false
     for ([memberID, member] of channel.voiceMembers){
         try {
+            if (member.bot){continue}
             await member.edit({mute:true}, "Among Us Game Chat Control")
         }
         catch (e) {
