@@ -13,7 +13,20 @@ module.exports.run = async (bot, message, args) => {
         return message.channel.createMessage("Sorry but the channel ID is not a voice chat that I can manage.")
     }
     let guild = message.guildID
-    let connection = await mariadb.createConnection(bot.database)
+    let failed = false
+    for ([memberID, member] of channel.voiceMembers){
+        try {
+            await member.edit({mute:false}, "Among Us Game Chat Control")
+        }
+        catch (e){
+            failed = true
+            return message.channel.createMessage("Sorry but I need permissions to Mute Members")
+        }
+    }
+    if (!failed){
+        message.channel.createMessage('Unmuting all players.')
+    }
+    /* let connection = await mariadb.createConnection(bot.database)
     connection.query(`SELECT * FROM \`${guild}\``).then( async () => {
         let failed = false
         for ([memberID, member] of channel.voiceMembers){
@@ -47,7 +60,7 @@ module.exports.run = async (bot, message, args) => {
         if (!failed){
             message.channel.createMessage('No players died in the game. Unmuting all players.')
         }
-    })
+    }) */
 }
 
 module.exports.info = {

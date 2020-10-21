@@ -92,5 +92,6 @@ module.exports.info = {
     category: "Game",
     usage: "(@user)",
     aliases: ["d"],
-    GuildOnly: true
+    GuildOnly: true,
+    disabled: true
 }

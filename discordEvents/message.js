@@ -44,6 +44,12 @@ module.exports.Run = async function(bot,message){
 	//For command info like command description.
 	info = command.info
 
+	//Check to see if command is disabled
+
+	if(info.disabled){
+		return message.channel.createMessage('This command is disabled currently. Join the support server for more info')
+	}
+
 	//Check if command is webhook only
 	if (info.WebhookOnly && !message.webhookID) {
 		return message.channel.createMessage('This is a command for webhooks only')
