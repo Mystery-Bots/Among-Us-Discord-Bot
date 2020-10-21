@@ -1,4 +1,5 @@
-const mariadb  = require("mariadb")
+const { MongoClient } = require("mongodb");
+const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
 
 module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
@@ -13,35 +14,51 @@ module.exports.run = async (bot, message, args) => {
     if (!channel.type == 2){
         return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
-    let connection = await mariadb.createConnection(bot.database)
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    try {
+		await client.connect();
+
+		const database = client.db("bot");
+		const collection = database.collection("games");
     
-    connection.query(`SELECT * FROM \`${guild.id}\` WHERE memberid = '${member.id}'`).then( async (rows) => {
-        if (!rows[0]){
-            await connection.destroy();
-            message.channel.createMessage(`${member.user.username} is not listed as dead.`)
+        // create a filter for server id to find
+        const filter = { "guildID": `${guild.id}` };
+        
+        const result = await collection.findOne(filter);
+        if (!result){
+            message.channel.createMessage(`${member.user.username} is not listed as dead.`).catch(()=>{})
         }else{
+            if(!result.dead.includes(member.id)){
+                return message.channel.createMessage(`${member.user.username} is not listed as dead.`).catch(()=>{})
+            }
             let failed = false
             try {
                 await member.edit({mute:false}, "Among Us Game Chat Control")
             }
             catch (e){
                 failed = true
-                await connection.destroy();
-                return message.channel.createMessage("Sorry but I need permissions to Mute Members")
+                return message.channel.createMessage("Sorry but I need permissions to Mute Members").catch(()=>{})
             }
             if (!failed){
-                await connection.query(`DELETE FROM \`${guild.id}\` WHERE memberid = '${member.id}'`)
-                await connection.query(`SELECT * FROM \`${guild.id}\``).then( async (rows) => {
-                    if (!rows[0]) {await connection.query(`DROP TABLE \`${guild.id}\``);}
-                    await connection.destroy();
-                })
+                dead = result.dead
+                index = dead.indexOf(member.id)
+                dead.splice(index,1)
+                if (dead.length == 0){
+                    await collection.deleteOne(filter);
+                }else{
+                    const updateDoc = {
+                        $set:{
+                            "dead":dead
+                        }
+                    }
+                    await collection.updateOne(filter, updateDoc,{upsert:true});
+                }
                 message.channel.createMessage(`${member.user.username} Revived. To list people as dead use \`${bot.config.prefix[0]}dead\`.`).catch(()=>{})
             }
         }
-    }).catch( async () => {
-        await connection.destroy();
-        message.channel.createMessage(`${member.user.username} is not listed as dead.`).catch(()=>{})
-    })
+    } finally {
+		await client.close();
+	}
 }
 
 module.exports.info = {
@@ -51,5 +68,5 @@ module.exports.info = {
     usage: "(@user)",
     aliases: ["r"],
     GuildOnly: true,
-    disabled: true
+    disabled: false
 }

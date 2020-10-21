@@ -1,4 +1,5 @@
-const mariadb  = require("mariadb")
+const { MongoClient } = require("mongodb");
+const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
 
 module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
@@ -14,76 +15,70 @@ module.exports.run = async (bot, message, args) => {
     if (!channel.type == 2){
         return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
-    let connection = await mariadb.createConnection(bot.database)
-    connection.query(`SELECT * FROM \`${guildID}\``).then( async () => {
-        connection.query(`SELECT * FROM \`${guildID}\` WHERE memberid = '${member.id}'`).then( async (rows) => {
-            if (!rows[0]){
-                let failed = false
-                try {
-                    if (member.bot){
-                        connection.destroy()
-                        return message.channel.createMessage("Bot's are exempt from being set as dead")
-                    }
-                    await member.edit({mute:true}, "Among Us Game Chat Control")
-                }
-                catch (e){
-                    failed = true
-                    await connection.destroy();
-                    return message.channel.createMessage("Sorry but I need permissions to Mute Members")
-                }
-                if (!failed){
-                    await connection.query(`INSERT INTO \`${guildID}\` (memberid) VALUES ('${member.id}')`)
-                    await connection.destroy();
-                    message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0][0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix[0]}revive\`.`).catch(()=>{})
-                }
-            }else{
-                await connection.destroy();
-                message.channel.createMessage(`${member.user.username} is already dead.`)
-            }
-        }).catch( async (error) => {
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    try {
+		await client.connect();
+
+		const database = client.db("bot");
+		const collection = database.collection("games");
+    
+        // create a filter for server id to find
+        const filter = { "guildID": `${guild.id}` };
+        
+        const result = await collection.findOne(filter);
+        if (!result){
             let failed = false
             try {
                 if (member.bot){
-                    connection.destroy()
                     return message.channel.createMessage("Bot's are exempt from being set as dead")
                 }
                 await member.edit({mute:true}, "Among Us Game Chat Control")
             }
             catch (e){
                 failed = true
-                await connection.destroy();
                 return message.channel.createMessage("Sorry but I need permissions to Mute Members")
             }
             if (!failed){
-                await connection.query(`INSERT INTO \`${guildID}\` (memberid) VALUES ('${member.id}')`)
-                await connection.destroy();
-                message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix[0]}revive\`.`).catch(()=>{})
+                dead = [member.id]
+                const updateDoc = {
+                    $set:{
+                        "guildID":guild.id,
+                        "dead":dead
+                    }
+                }
+                await collection.updateOne(filter, updateDoc,{upsert:true}); 
+                message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0][0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix[0]}revive\`.`).catch(()=>{})
             }
-        })
-    }).catch( async (error) => {
-        let failed = false
-        if (!guildID){
-            return message.channel.createMessage("There was an error. Please make sure you are not running this command in a DM or Group DM")
-        }
-        try {
-            if (member.bot){
-                connection.destroy()
-                return message.channel.createMessage("Bot's are exempt from being set as dead")
+        }else{
+            if(result.dead.includes(member.id)){
+                return message.channel.createMessage(`${member.user.username} is already dead.`)
             }
-            await member.edit({mute:true}, "Among Us Game Chat Control")
+            let failed = false
+            try {
+                if (member.bot){
+                    return message.channel.createMessage("Bot's are exempt from being set as dead")
+                }
+                await member.edit({mute:true}, "Among Us Game Chat Control")
+            }
+            catch (e){
+                failed = true
+                return message.channel.createMessage("Sorry but I need permissions to Mute Members")
+            }
+            if (!failed){
+                dead = result.dead
+                dead.push(member.id)
+                const updateDoc = {
+                    $set:{
+                        "dead":dead
+                    }
+                }
+                await collection.updateOne(filter, updateDoc,{upsert:true}); 
+                message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0][0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix[0]}revive\`.`).catch(()=>{})
+            }
         }
-        catch (e){
-            failed = true
-            await connection.destroy();
-            return message.channel.createMessage("Sorry but I need permissions to Mute Members")
-        }
-        if (!failed){
-            await connection.query(`CREATE TABLE IF NOT EXISTS \`${guildID}\` (memberid VARCHAR(255))`)
-            await connection.query(`INSERT INTO \`${guildID}\` (memberid) VALUES ('${member.id}')`)
-            await connection.destroy();
-            message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix[0]}revive\`.`).catch(()=>{})
-        }
-    })
+    } finally {
+		await client.close();
+	}
 }
 
 module.exports.info = {
@@ -93,5 +88,5 @@ module.exports.info = {
     usage: "(@user)",
     aliases: ["d"],
     GuildOnly: true,
-    disabled: true
+    disabled: false
 }

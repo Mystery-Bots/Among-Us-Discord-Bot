@@ -12,55 +12,67 @@ module.exports.run = async (bot, message, args) => {
     if (!channel.type == 2){
         return message.channel.createMessage("Sorry but the channel ID is not a voice chat that I can manage.")
     }
-    let guild = message.guildID
-    let failed = false
-    for ([memberID, member] of channel.voiceMembers){
-        try {
-            await member.edit({mute:false}, "Among Us Game Chat Control")
-        }
-        catch (e){
-            failed = true
-            return message.channel.createMessage("Sorry but I need permissions to Mute Members")
-        }
-    }
-    if (!failed){
-        message.channel.createMessage('Unmuting all players.')
-    }
-    /* let connection = await mariadb.createConnection(bot.database)
-    connection.query(`SELECT * FROM \`${guild}\``).then( async () => {
-        let failed = false
-        for ([memberID, member] of channel.voiceMembers){
-            try {
-                await member.edit({mute:false}, "Among Us Game Chat Control")
-            }
-            catch (e){
-                failed = true
-                await connection.destroy();
-                return message.channel.createMessage("Sorry but I need permissions to Mute Members")
-            }
-        }
-        if (!failed){
-            await connection.query(`DROP TABLE \`${guild}\``)
-            await connection.destroy();
-            message.channel.createMessage("Game ended. All users unmuted.")
-        }
-    }).catch( async (error) => {
-        await connection.destroy();
+    let guild = message.channel.guild
+    const client = new MongoClient(uri, { useUnifiedTopology: true });
+    try {
+		await client.connect();
+
+		const database = client.db("bot");
+		const collection = database.collection("games");
+    
+        // create a filter for server id to find
+        const filter = { "guildID": `${guild.id}` };
         
-        let failed = false
-        for ([memberID, member] of channel.voiceMembers){
-            try {
-                await member.edit({mute:false}, "Among Us Game Chat Control")
+        const result = await collection.findOne(filter);
+        console.log(result)
+        if (!result){
+            let failed = false
+            for ([memberID, member] of channel.voiceMembers){
+                try {
+                    await member.edit({mute:false}, "Among Us Game Chat Control")
+                }
+                catch (e) {
+                    failed = true
+                    return message.channel.createMessage("Sorry but I need permissions to Mute Members")
+                }
             }
-            catch (e){
-                failed = true
-                return message.channel.createMessage("Sorry but I need permissions to Mute Members")
+            if (!failed){
+                message.channel.createMessage('No players died in the game. Unmuting all players.').catch(()=>{})
+            }
+        }else{
+            let failed = false
+            for ([memberID, member] of channel.voiceMembers){
+                try {
+                    await member.edit({mute:false}, "Among Us Game Chat Control")
+                }
+                catch (e){
+                    failed = true
+                    await connection.destroy();
+                    return message.channel.createMessage("Sorry but I need permissions to Mute Members")
+                }
+            }
+            if (!failed){
+                dead = result.dead
+                for ([memberID, member] of channel.voiceMembers){
+                    index = dead.indexOf(member.id)
+                    dead.splice(index,1)
+                }
+                if (dead.length == 0){
+                    await collection.deleteOne(filter);
+                }else{
+                    updateDoc = {
+                        $set:{
+                            "dead":dead
+                        }
+                    }
+                    await collection.updateOne(filter, updateDoc,{upsert:true});
+                }
+                message.channel.createMessage("Game ended. All users unmuted.").catch(()=>{})
             }
         }
-        if (!failed){
-            message.channel.createMessage('No players died in the game. Unmuting all players.')
-        }
-    }) */
+    } finally {
+		await client.close();
+	}
 }
 
 module.exports.info = {
