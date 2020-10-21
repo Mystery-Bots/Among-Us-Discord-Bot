@@ -20,7 +20,8 @@ async function getPrefix(guild){
 }
 
 module.exports.Run = async function(bot,message){
-	var prefixes = ["au", "Au", await getPrefix(message.channel.guild)]
+	var prefixes = bot.config.prefix
+	prefixes.push(await getPrefix(message.channel.guild))
 	let prefix = false;
 	for(const thisPrefix of prefixes) {
 		if(message.content.startsWith(thisPrefix)) prefix = thisPrefix;
@@ -44,8 +45,8 @@ module.exports.Run = async function(bot,message){
 	info = command.info
 
 	//Check if command is webhook only
-	if (info.WebhookOnly && !message.author.bot) {
-		return message.channel.createMessage('This is a command for bot\'s/webhooks only')
+	if (info.WebhookOnly && !message.webhookID) {
+		return message.channel.createMessage('This is a command for webhooks only')
 	}
 	
 	if (!info.WebhookOnly && message.author.bot) return
