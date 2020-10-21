@@ -23,11 +23,11 @@ async function fetchStatus(bot){
 
 module.exports.Run = async function (bot) {
 	console.log("Bot Ready");
-	bot.editStatus(await fetchStatus(bot), {name:`${bot.config.prefix}help | ${bot.guilds.size.toLocaleString()} Servers!`, type: 0 });
+	bot.editStatus(await fetchStatus(bot), {name:`${bot.config.prefix[0]}help | ${bot.guilds.size.toLocaleString()} Servers!`, type: 0 });
 	setInterval(async function () {
 		let statuses = [
-			`${bot.config.prefix}help | ${bot.guilds.size.toLocaleString()} Servers!`,
-			`${bot.config.prefix}help | aub.mysterybots.com`,
+			`${bot.config.prefix[0]}help | ${bot.guilds.size.toLocaleString()} Servers!`,
+			`${bot.config.prefix[0]}help | aub.mysterybots.com`,
 		];
 		currentStatus = currentStatus + 1 < statuses.length ? currentStatus + 1 : 0;
 		let status = statuses[currentStatus];
