@@ -24,7 +24,7 @@ async function fetchStatus(bot){
 
 module.exports.Run = async function (bot) {
 	console.log("Bot Ready");
-	bot.editStatus(await fetchStatus(bot), {name:`${bot.config.prefix}help | ${bot.guilds.size} Servers!`, type: 0 });
+	bot.editStatus(await fetchStatus(bot), {name:`${bot.config.prefix}help | ${bot.guilds.size.toLocaleString()} Servers!`, type: 0 });
 	setInterval(async function () {
 		let statuses = [
 			`${bot.config.prefix}help | ${bot.guilds.size.toLocaleString()} Servers!`,
