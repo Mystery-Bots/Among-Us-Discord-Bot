@@ -10,9 +10,11 @@ statuses = {
 
 module.exports.run = async (bot, message, args) => {
     pings = []
+    timestring = new Date
     embedObject = {embed:{
         title: `${bot.user.username} Shards Info`,
         url: "https://aub.mysterybots.com",
+        timestamp: timestring.toISOString(),
         footer: {
             text: "Created by TheMystery#7755"
         },

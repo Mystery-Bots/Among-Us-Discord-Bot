@@ -77,11 +77,13 @@ module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
     let channels = await getChannels(guild)
     let guildStatus = await getGuildStatus(guild)
+    timestring = new Date
     let embedObject = {embed: {
         title: `${guild.name} Info`,
         thumbnail: {
             url: guild.iconURL
         },
+        timestamp: timestring.toISOString(),
         fields: [  
             {
                 name: "Owner",

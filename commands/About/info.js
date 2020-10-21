@@ -35,12 +35,14 @@ deadCrew = "https://themystery.s-ul.eu/bot/iP9xDX98"
 module.exports.run = async (bot, message, args) => {
     color = Math.floor(Math.random() * crewColor.length) //Number 0 to 11
     dead = Math.floor(Math.random() * 101) //Number 0 to 100
+    timestring = new Date
     embedObject = {embed:{
         title: `${bot.user.username} Info`,
         url: "https://aub.mysterybots.com",
         footer: {
             text: "Created by TheMystery#7755"
         },
+        timestamp: timestring.toISOString(),
         description: "The only Among Us Discord bot you need for your friends group/server.",
         fields: [
             {

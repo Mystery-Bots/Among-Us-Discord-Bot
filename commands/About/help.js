@@ -11,7 +11,7 @@ module.exports.run = (bot, message, args) => {
 		},
 		color: 0x2C2F33,
 		footer: {
-			text: `Requested by ${message.author.username} at`,
+			text: `Requested by ${message.author.username}`,
 			icon_url: message.author.staticAvatarURL
 		},
 		timestamp: timestring.toISOString()
