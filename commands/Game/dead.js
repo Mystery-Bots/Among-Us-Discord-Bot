@@ -34,7 +34,7 @@ module.exports.run = async (bot, message, args) => {
                 if (!failed){
                     await connection.query(`INSERT INTO \`${guildID}\` (memberid) VALUES ('${member.id}')`)
                     await connection.destroy();
-                    message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`).catch(()=>{})
+                    message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0][0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix[0]}revive\`.`).catch(()=>{})
                 }
             }else{
                 await connection.destroy();
@@ -57,7 +57,7 @@ module.exports.run = async (bot, message, args) => {
             if (!failed){
                 await connection.query(`INSERT INTO \`${guildID}\` (memberid) VALUES ('${member.id}')`)
                 await connection.destroy();
-                message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`).catch(()=>{})
+                message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix[0]}revive\`.`).catch(()=>{})
             }
         })
     }).catch( async (error) => {
@@ -81,7 +81,7 @@ module.exports.run = async (bot, message, args) => {
             await connection.query(`CREATE TABLE IF NOT EXISTS \`${guildID}\` (memberid VARCHAR(255))`)
             await connection.query(`INSERT INTO \`${guildID}\` (memberid) VALUES ('${member.id}')`)
             await connection.destroy();
-            message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`).catch(()=>{})
+            message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix[0]}revive\`.`).catch(()=>{})
         }
     })
 }
