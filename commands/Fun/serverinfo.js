@@ -167,7 +167,7 @@ module.exports.run = async (bot, message, args) => {
 module.exports.info = {
     name: "serverinfo",
     description: "Display information about the server",
-    category: "About",
+    category: "Fun",
     aliases: ["si","server"],
     GuildOnly: true
 }
