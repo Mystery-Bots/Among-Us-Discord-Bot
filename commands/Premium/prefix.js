@@ -54,8 +54,9 @@ module.exports.run = async (bot, message, args) => {
                     prefix: null
                 }
             };
-        }
-        else{
+        }if (args[0].match(/a/i)){
+            return message.channel.createMessage("This custom prefix could not be set. Please try something that doesn't start with `a` or `A`")
+        }else{
             updateDoc = {
                 $set: {
                     prefix: `${args[0]}`
