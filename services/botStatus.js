@@ -1,4 +1,3 @@
-botStatus = require("../status.json").status
 const { MongoClient } = require("mongodb");
 const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
 
