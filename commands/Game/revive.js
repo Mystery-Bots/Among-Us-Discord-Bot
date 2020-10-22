@@ -48,7 +48,8 @@ module.exports.run = async (bot, message, args) => {
                 }else{
                     const updateDoc = {
                         $set:{
-                            "dead":dead
+                            "dead":dead,
+                            "updatedAt":new Date
                         }
                     }
                     await collection.updateOne(filter, updateDoc,{upsert:true});
