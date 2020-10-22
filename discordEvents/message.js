@@ -41,11 +41,16 @@ module.exports.Run = async function(bot,message){
 	//Check if a command is being run.
 	if (!command) return
 
+	//Check to see if bot is offline and if owner not running command
+	if (bot.presence.status == "invisible" && !bot.config.devs.includes(message.author.id)) return
+
+	//Check dev mode and if owner not running command
+	if (bot.presence.status == "dnd" && !bot.config.devs.includes(message.author.id)) return
+
 	//For command info like command description.
 	info = command.info
 
 	//Check to see if command is disabled
-
 	if(info.disabled){
 		return message.channel.createMessage('This command is disabled currently. Join the support server for more info')
 	}
