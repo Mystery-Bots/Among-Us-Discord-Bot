@@ -44,7 +44,6 @@ module.exports.run = async (bot, message, args) => {
                     $set:{
                         "guildID":guild.id,
                         "dead":dead,
-                        "createdAt":new Date,
                         "updatedAt":new Date
                     }
                 }
