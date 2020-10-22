@@ -33,7 +33,7 @@ module.exports.run = async (bot, message, args) => {
         if (!guildData.prefix) return message.channel.createMessage("This server has no custom prefix")
         else return message.channel.createMessage("This server's custom prefix is `"+guildData.prefix+"`")
     }
-    if (guild.ownerID != message.author.id) return message.channel.createMessage("This command can only be run by the server owner")
+    if (!message.member.permission.has('manageGuild')) return message.channel.createMessage("This command can only be run by users who have `manage server` permissions")
     
     if (!guildData) return message.channel.createMessage("This is a premium feature. If you would like to get premium you can do so here:\n<https://www.patreon.com/TheMystery>")
     
