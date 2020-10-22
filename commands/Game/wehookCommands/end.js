@@ -25,7 +25,6 @@ module.exports.run = async (bot, message, args) => {
         const filter = { "guildID": `${guild.id}` };
         
         const result = await collection.findOne(filter);
-        console.log(result)
         if (!result){
             let failed = false
             for ([memberID, member] of channel.voiceMembers){
