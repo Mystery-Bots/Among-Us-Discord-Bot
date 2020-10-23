@@ -56,6 +56,7 @@ module.exports.run = (bot, message, args) => {
 		`Available commands for ${bot.user.username}.`,
 		`The bot prefix is **${bot.config.prefix[0]}**`,
 		"`<>`means needed and `()` it is optional but don't include those",
+		"*Check out [premium](https://aub.mysterybots.com/premium/) for access to customize the bot*"
 	].join("\n")
 	categories.forEach(category => {
 		const dir = bot.commands.filter(c => c.info.category.toLowerCase() === category.toLowerCase())
