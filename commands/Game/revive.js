@@ -1,5 +1,4 @@
-const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
+var MDBConnect =  require('../../mongodb');
 
 module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
@@ -14,52 +13,43 @@ module.exports.run = async (bot, message, args) => {
     if (!channel.type == 2){
         return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
-    try {
-		await client.connect();
 
-		const database = client.db("bot");
-		const collection = database.collection("games");
+    // create a filter for server id to find
+    const filter = { "guildID": `${guild.id}` };
     
-        // create a filter for server id to find
-        const filter = { "guildID": `${guild.id}` };
-        
-        const result = await collection.findOne(filter);
-        if (!result){
-            message.channel.createMessage(`${member.user.username} is not listed as dead.`).catch(()=>{})
-        }else{
-            if(!result.dead.includes(member.id)){
-                return message.channel.createMessage(`${member.user.username} is not listed as dead.`).catch(()=>{})
-            }
-            let failed = false
-            try {
-                await member.edit({mute:false}, "Among Us Game Chat Control")
-            }
-            catch (e){
-                failed = true
-                return message.channel.createMessage("Sorry but I need permissions to Mute Members").catch(()=>{})
-            }
-            if (!failed){
-                dead = result.dead
-                index = dead.indexOf(member.id)
-                dead.splice(index,1)
-                if (dead.length == 0){
-                    await collection.deleteOne(filter);
-                }else{
-                    const updateDoc = {
-                        $set:{
-                            "dead":dead,
-                            "updatedAt":new Date
-                        }
-                    }
-                    await collection.updateOne(filter, updateDoc,{upsert:true});
-                }
-                message.channel.createMessage(`${member.user.username} Revived. To list people as dead use \`${bot.config.prefix[0]}dead\`.`).catch(()=>{})
-            }
+    const result = await MDBConnect.findOne("bot","games",filter);
+    if (!result){
+        message.channel.createMessage(`${member.user.username} is not listed as dead.`).catch(()=>{})
+    }else{
+        if(!result.dead.includes(member.id)){
+            return message.channel.createMessage(`${member.user.username} is not listed as dead.`).catch(()=>{})
         }
-    } finally {
-		await client.close();
-	}
+        let failed = false
+        try {
+            await member.edit({mute:false}, "Among Us Game Chat Control")
+        }
+        catch (e){
+            failed = true
+            return message.channel.createMessage("Sorry but I need permissions to Mute Members").catch(()=>{})
+        }
+        if (!failed){
+            dead = result.dead
+            index = dead.indexOf(member.id)
+            dead.splice(index,1)
+            if (dead.length == 0){
+                await MDBConnect.deleteOne("bot","games",filter);
+            }else{
+                const updateDoc = {
+                    $set:{
+                        "dead":dead,
+                        "updatedAt":new Date
+                    }
+                }
+                await MDBConnect.updateOne("bot","games",filter,updateDoc);
+            }
+            message.channel.createMessage(`${member.user.username} Revived. To list people as dead use \`${bot.config.prefix[0]}dead\`.`).catch(()=>{})
+        }
+    }
 }
 
 module.exports.info = {
