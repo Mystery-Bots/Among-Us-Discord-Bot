@@ -1,5 +1,4 @@
-const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
+const { Connection } = require('../../mongodb')
 
 module.exports.run = async (bot, message, args) => {
     let channelID = message.member.voiceState.channelID
@@ -11,56 +10,49 @@ module.exports.run = async (bot, message, args) => {
         return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
     }
     let guild = message.channel.guild
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
-    try {
-		await client.connect();
 
-		const database = client.db("bot");
-		const collection = database.collection("games");
+    const collection = Connection.db.collection("games");
+
+    // create a filter for server id to find
+    const filter = { "guildID": `${guild.id}` };
     
-        // create a filter for server id to find
-        const filter = { "guildID": `${guild.id}` };
-        
-        const result = await collection.findOne(filter);
-        if (!result){
-            let failed = false
-            for ([memberID, member] of channel.voiceMembers){
-                try {
-                    await member.edit({mute:false}, "Among Us Game Chat Control")
-                }
-                catch (e) {
-                    failed = true
-                    return message.channel.createMessage("Sorry but I need permissions to Mute Members")
-                }
+    const result = await collection.findOne(filter);
+    if (!result){
+        let failed = false
+        for ([memberID, member] of channel.voiceMembers){
+            try {
+                await member.edit({mute:false}, "Among Us Game Chat Control")
             }
-            if (!failed){
-                message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix[0]}mute\`.`).catch(()=>{})
-            }
-        }else{
-            let deadUsers = []
-            let failed = false
-            for (deadUser of result.dead){
-                await deadUsers.push(deadUser)
-            }
-            for ([memberID, member] of channel.voiceMembers){
-                try {
-                    if (deadUsers.includes(memberID)){}
-                    else{
-                        await member.edit({mute:false}, "Among Us Game Chat Control")
-                    }
-                }
-                catch (e){
-                    failed = true
-                    return message.channel.createMessage("Sorry but I need permissions to Mute Members")
-                }
-            }
-            if (!failed){
-                message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix[0]}mute\`.`).catch(()=>{})
+            catch (e) {
+                failed = true
+                return message.channel.createMessage("Sorry but I need permissions to Mute Members")
             }
         }
-    } finally {
-		await client.close();
-	}
+        if (!failed){
+            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix[0]}mute\`.`).catch(()=>{})
+        }
+    }else{
+        let deadUsers = []
+        let failed = false
+        for (deadUser of result.dead){
+            await deadUsers.push(deadUser)
+        }
+        for ([memberID, member] of channel.voiceMembers){
+            try {
+                if (deadUsers.includes(memberID)){}
+                else{
+                    await member.edit({mute:false}, "Among Us Game Chat Control")
+                }
+            }
+            catch (e){
+                failed = true
+                return message.channel.createMessage("Sorry but I need permissions to Mute Members")
+            }
+        }
+        if (!failed){
+            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix[0]}mute\`.`).catch(()=>{})
+        }
+    }
 }
 
 module.exports.info = {

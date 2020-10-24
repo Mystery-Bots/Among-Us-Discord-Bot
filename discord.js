@@ -5,14 +5,15 @@ let config = require("./config");
 const ms = require("ms");
 const moment = require("moment");
 
+
 const bot = new Discord.Client(config.discord.token, {
 	//intents: 4739,
 	intents:4737,
 	compress: true,
 	maxShards:"auto",
 	guildSubscriptions:false,
-	messageLimit:10,
-	largeThreshold: 50,
+	messageLimit:0,
+	largeThreshold: 0,
 	disableEvents: [
 		"CHANNEL_CREATE",
 		"CHANNEL_DELETE",
@@ -87,7 +88,6 @@ const load = (dir = "./commands/") => {
 };
 load();
 
-require('./services/prefixFetch').Run()
 bot
 	.on("error",console.error)
 	.on("warn", console.warn)
@@ -106,4 +106,11 @@ bot
 		require("./discordEvents/message").Run(bot, message);
 	})
 
-bot.connect()
+const { Connection } = require('./mongodb')
+
+Connection.connectToMongo().then(() => {
+	setTimeout(() => {
+		require('./services/prefixFetch').Run()
+		bot.connect()
+	}, 1*1000);
+})

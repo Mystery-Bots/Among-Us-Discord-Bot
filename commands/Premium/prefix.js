@@ -1,27 +1,18 @@
-const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
+const { Connection } = require('../../mongodb')
 
 async function getGuildStatus(guild) {
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
-	try {
-		await client.connect();
 
-		const database = client.db("bot");
-		const collection = database.collection("servers");
+    const collection = Connection.db.collection("servers");
+
+    // create a filter for server id to find
+    const filter = { "guildID": `${guild.id}` };
     
-        // create a filter for server id to find
-        const filter = { "guildID": `${guild.id}` };
-        
-        const result = await collection.findOne(filter);
-        if (!result){
-            return null
-        }else{
-            return result
-        }
-
-    } finally {
-		await client.close();
-	}
+    const result = await collection.findOne(filter);
+    if (!result){
+        return null
+    }else{
+        return result
+    }
 }
 
 module.exports.run = async (bot, message, args) => {
