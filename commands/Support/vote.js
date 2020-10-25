@@ -11,12 +11,12 @@ module.exports.run = async (bot, message, args) => {
                 name: "Discord Bot List",
                 value: "https://discordbotlist.com/bots/among-us-bot-9765/upvote",
                 inline: true
-            }/* ,
+            },
             {
                 name: "Top.gg",
                 value: "https://top.gg/bot/754922494376542219/vote",
                 inline: true
-            } */
+            }
         ]
     }}
     message.channel.createMessage(embedObject)
