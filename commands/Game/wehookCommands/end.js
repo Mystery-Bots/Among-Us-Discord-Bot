@@ -22,7 +22,7 @@ module.exports.run = async (bot, message, args) => {
     const result = await collection.findOne(filter);
     if (!result){
         let failed = false
-        if (channel.voiceMembers.length < 1){
+        if (channel.voiceMembers.size < 1){
             return message.channel.createMessage("Sorry but no body is in that voice chat.")
         }
         for ([memberID, member] of channel.voiceMembers){
