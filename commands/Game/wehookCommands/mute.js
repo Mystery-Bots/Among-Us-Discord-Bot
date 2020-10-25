@@ -11,6 +11,9 @@ module.exports.run = async (bot, message, args) => {
         return message.channel.createMessage("Sorry but the channel ID is not a voice chat that I can manage.")
     }
     let failed = false
+    if (channel.voiceMembers.length < 1){
+        return message.channel.createMessage("Sorry but no body is in that voice chat.")
+    }
     for ([memberID, member] of channel.voiceMembers){
         try {
             if (member.bot){continue}

@@ -40,6 +40,9 @@ module.exports.run = async (bot, message, args) => {
         for (deadUser of result.dead){
             await deadUsers.push(deadUser)
         }
+        if (channel.voiceMembers.length < 1){
+            return message.channel.createMessage("Sorry but no body is in that voice chat.")
+        }
         for ([memberID, member] of channel.voiceMembers){
             try {
                 if (deadUsers.includes(memberID)){}
