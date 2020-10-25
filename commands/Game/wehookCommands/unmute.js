@@ -9,8 +9,8 @@ module.exports.run = async (bot, message, args) => {
     if (!channel){
         return message.channel.createMessage("Sorry but the channel ID is not a voice chat that I can manage.")
     }
-    if (!channel.type == 2){
-        return message.channel.createMessage("Sorry but the channel ID is not a voice chat that I can manage.")
+    if (channel.type == 0){
+        return message.channel.createMessage("Sorry but the channel ID is not a voice chat ID.")
     }
     let guild = message.channel.guild
     
