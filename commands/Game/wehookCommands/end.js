@@ -45,7 +45,6 @@ module.exports.run = async (bot, message, args) => {
             }
             catch (e){
                 failed = true
-                await connection.destroy();
                 return message.channel.createMessage("Sorry but I need permissions to Mute Members")
             }
         }
