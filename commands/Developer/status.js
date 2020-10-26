@@ -9,7 +9,7 @@ module.exports.run = async (bot, message, args, database) => {
         const result = await collection.findOne(filter);
         return message.channel.createMessage("Current bot status is: "+result.status)
     }else{
-        const collection = Connection.db.collection("info");
+        const collection = database.collection("info");
     
         // create a filter for server id to find
         const filter = { _id: "5f6c5183784bc0b5904a1b9d" };

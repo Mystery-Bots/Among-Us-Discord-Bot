@@ -12,7 +12,7 @@ module.exports.run = async (bot, message, args, database) => {
     }
     let guild = message.channel.guild
 
-    const collection = Connection.db.collection("games");
+    const collection = database.collection("games");
 
     // create a filter for server id to find
     const filter = { "guildID": `${guild.id}` };

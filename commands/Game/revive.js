@@ -12,7 +12,7 @@ module.exports.run = async (bot, message, args, database) => {
         return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
 
-    const collection = Connection.db.collection("games");
+    const collection = database.collection("games");
 
     // create a filter for server id to find
     const filter = { "guildID": `${guild.id}` };
