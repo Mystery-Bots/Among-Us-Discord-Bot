@@ -30,8 +30,8 @@ async function DBLUpdate(bot){
 }
 
 async function TOPUpdate(bot){
-    result = await centra(DB,'POST')
-        .header("Authorization",DBToken)
+    result = await centra(TOP,'POST')
+        .header("Authorization",TOPToken)
         .body({
             "server_count":bot.guilds.size,
             "shard_count":bot.shards.size
