@@ -118,5 +118,5 @@ bot
 
 setTimeout(() => {
 	bot.connect()
-	require('../services/prefixFetch').Run(database)
+	require('./services/prefixFetch').Run(database)
 }, 5*1000);
