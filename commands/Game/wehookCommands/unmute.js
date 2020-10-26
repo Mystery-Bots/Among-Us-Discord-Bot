@@ -1,6 +1,4 @@
-const { Connection } = require('../../../mongodb')
-
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args, database) => {
     let channelID = args[1]
     if (!channelID){
         return message.channel.createMessage("Sorry but the channel ID is not a voice chat that I can manage.")

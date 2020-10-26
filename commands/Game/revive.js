@@ -1,6 +1,4 @@
-const { Connection } = require('../../mongodb')
-
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args, database) => {
     let guild = message.channel.guild
     let userMention = message.mentions[0]
     if (!userMention) userMention = message.author

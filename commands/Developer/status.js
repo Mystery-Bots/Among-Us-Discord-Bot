@@ -1,9 +1,7 @@
-const { Connection } = require('../../mongodb')
-
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args, database) => {
     if (!bot.config.devs.includes(message.author.id)) return console.log(`${message.author.username} (ID: ${message.author.id}) tried to use "servers"`)
     if (!args[0]){
-        const collection = Connection.db.collection("info");
+        const collection = database.collection("info");
     
         // create a filter for server id to find
         const filter = { _id: "5f6c5183784bc0b5904a1b9d" };

@@ -1,8 +1,6 @@
-const { Connection } = require('../../mongodb')
+async function getGuildStatus(guild, database) {
 
-async function getGuildStatus(guild) {
-
-    const collection = Connection.db.collection("servers");
+    const collection = database.collection("servers");
 
     // create a filter for server id to find
     const filter = { "guildID": `${guild.id}` };
@@ -15,9 +13,9 @@ async function getGuildStatus(guild) {
     }
 }
 
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args, database) => {
     guild = message.channel.guild
-    guildData = await getGuildStatus(guild)
+    guildData = await getGuildStatus(guild, database)
 
     if (!args[0]){
         if (!guildData) return message.channel.createMessage("This server has no custom prefix")

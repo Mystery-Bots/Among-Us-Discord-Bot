@@ -19,7 +19,7 @@ async function getPrefix(guild){
 	}
 }
 
-module.exports.Run = async function(bot,message){
+module.exports.Run = async function(bot,message, database){
 	var prefixes = bot.config.prefix
 	prefixes.push(await getPrefix(message.channel.guild))
 	let prefix = false;
@@ -99,7 +99,7 @@ module.exports.Run = async function(bot,message){
 
 	try {
 		//Run command.
-		await command.run(bot, message, args)
+		await command.run(bot, message, args, database)
 		
 	} catch (error) {
 		//Get errors and log them and tell the user.

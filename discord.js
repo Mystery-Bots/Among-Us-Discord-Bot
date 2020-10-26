@@ -4,7 +4,17 @@ const { sep } = require("path");
 let config = require("./config");
 const ms = require("ms");
 const moment = require("moment");
+const MongoClient = require('mongodb').MongoClient
 
+const client = new MongoClient("mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority", {useUnifiedTopology: true});
+client.connect().then(connection => {
+	database = connection.db("bot")
+})
+
+
+setTimeout(() => {
+	//require('./services/prefixFetch').Run(database)
+}, 1*1000);
 
 const bot = new Discord.Client(config.discord.token, {
 	//intents: 4739,
@@ -92,7 +102,7 @@ bot
 	.on("error",console.error)
 	.on("warn", console.warn)
 	.on("ready", () => {
-		require("./discordEvents/ready").Run(bot);
+		require("./discordEvents/ready").Run(bot, database);
 	})
 	.on("disconnect", () => {
 		console.warn("Disconnected!");
@@ -103,14 +113,10 @@ bot
 		);
 	})
 	.on("messageCreate", (message) => {
-		require("./discordEvents/message").Run(bot, message);
+		require("./discordEvents/message").Run(bot, message, database);
 	})
 
-const { Connection } = require('./mongodb')
-
-Connection.connectToMongo().then(() => {
-	setTimeout(() => {
-		require('./services/prefixFetch').Run()
-		bot.connect()
-	}, 1*1000);
-})
+setTimeout(() => {
+	bot.connect()
+	require('../services/prefixFetch').Run(database)
+}, 5*1000);

@@ -1,12 +1,9 @@
-const { Connection } = require('../../mongodb')
-
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args, database) => {
     if (!bot.config.devs.includes(message.author.id)) return console.log(`${message.author.username} (ID: ${message.author.id}) tried to use "setprem"`)
     guild = bot.guilds.find(guild => guild.id == args[0])
     owner = guild.members.find(member => member.id == guild.ownerID).user
-    console.log(owner)
 
-    const collection = Connection.db.collection("servers");
+    const collection = database.collection("servers");
     
     // create a filter for server id to find
     const filter = { "guildID": `${guild.id}` };

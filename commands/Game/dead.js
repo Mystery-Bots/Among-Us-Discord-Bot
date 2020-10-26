@@ -1,6 +1,4 @@
-const { Connection } = require('../../mongodb')
-
-module.exports.run = async (bot, message, args) => {
+module.exports.run = async (bot, message, args, database) => {
     let guild = message.channel.guild
     let guildID = message.guildID
     let userMention = message.mentions[0]
@@ -15,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
         return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
 
-    const collection = Connection.db.collection("games");
+    const collection = database.collection("games");
 
     // create a filter for server id to find
     const filter = { "guildID": `${guild.id}` };
