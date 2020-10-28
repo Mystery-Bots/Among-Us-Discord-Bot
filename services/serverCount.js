@@ -47,5 +47,5 @@ module.exports.Run = async function (bot) {
         await DBUpdate(bot)
         await DBLUpdate(bot)
         await TOPUpdate(bot)
-    },120 * 1000)
+    },1000 * 60 * 60)
 };
