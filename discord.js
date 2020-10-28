@@ -66,13 +66,13 @@ const load = (dir = "./commands/") => {
 				typeof pull.info.name === "string" &&
 				typeof pull.info.category === "string"
 			) {
-				if (pull.info.disabled){}
 				if (bot.commands.get(pull.info.name))
 					return console.warn(
 						`Two or more commands have the same name ${pull.info.name}.`
 					);
+				if (pull.info.disabled){}
 				// get more info about command for help command
-				bot.commands.set(pull.info.name, pull);
+				else{bot.commands.set(pull.info.name, pull);}
 				//console.log(`Loaded command ${pull.info.name}.`);
 			} else {
 				console.log(
