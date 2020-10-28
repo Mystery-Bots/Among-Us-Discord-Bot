@@ -36,7 +36,7 @@ async function TOPUpdate(bot){
             "server_count":bot.guilds.size,
             "shard_count":bot.shards.size
         }).send().then(res => {
-            console.log(`Sent data: ${res.body.toString()} to Top.gg`)
+            console.log(`Sent data: {"server_count":${bot.guilds.size}, "shard_count":${bot.shards.size}} to Top.gg`)
         })
 }
 

@@ -69,4 +69,6 @@ module.exports.info = {
     name: "prefix",
     description: "Change the prefix of the bot in your server. (Premium Only)",
     category: "Premium",
+    GuildOnly: true,
+    disabled: false
 }

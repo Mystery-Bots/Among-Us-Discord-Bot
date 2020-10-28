@@ -6,15 +6,12 @@ const ms = require("ms");
 const moment = require("moment");
 const MongoClient = require('mongodb').MongoClient
 
-const client = new MongoClient("mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority", {useUnifiedTopology: true});
+/* const client = new MongoClient("mongodb+srv://among-us-bot:password@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority", {useUnifiedTopology: true});
 client.connect().then(connection => {
 	database = connection.db("bot")
-})
+	bot.connection = connection
+}) */
 
-
-setTimeout(() => {
-	//require('./services/prefixFetch').Run(database)
-}, 1*1000);
 
 const bot = new Discord.Client(config.discord.token, {
 	//intents: 4739,
@@ -48,7 +45,7 @@ const bot = new Discord.Client(config.discord.token, {
 });
 
 bot.config = config.discord;
-bot.database = config.database;
+//bot.database = config.database;
 
 // Creating command and aliases collection.
 ["commands", "aliases"].forEach((x) => (bot[x] = new Discord.Collection()));
@@ -69,6 +66,7 @@ const load = (dir = "./commands/") => {
 				typeof pull.info.name === "string" &&
 				typeof pull.info.category === "string"
 			) {
+				if (pull.info.disabled){}
 				if (bot.commands.get(pull.info.name))
 					return console.warn(
 						`Two or more commands have the same name ${pull.info.name}.`
@@ -102,7 +100,7 @@ bot
 	.on("error",console.error)
 	.on("warn", console.warn)
 	.on("ready", () => {
-		require("./discordEvents/ready").Run(bot, database);
+		require("./discordEvents/ready").Run(bot);
 	})
 	.on("disconnect", () => {
 		console.warn("Disconnected!");
@@ -113,10 +111,10 @@ bot
 		);
 	})
 	.on("messageCreate", (message) => {
-		require("./discordEvents/message").Run(bot, message, database);
+		require("./discordEvents/message").Run(bot, message);
 	})
 
 setTimeout(() => {
 	bot.connect()
-	require('./services/prefixFetch').Run(database)
+	//require('./services/prefixFetch').Run(database)
 }, 5*1000);

@@ -49,7 +49,7 @@ async function getChannels(guild) {
     return [text, voice]
 }
 
-async function getGuildStatus(guild) {
+/* async function getGuildStatus(guild) {
     const client = new MongoClient(uri, { useUnifiedTopology: true });
 	try {
 		await client.connect();
@@ -70,13 +70,53 @@ async function getGuildStatus(guild) {
     } finally {
 		await client.close();
 	}
+} */
+
+let Servers = {
+    "755289058741059596":{
+        "status":{
+            "type":"official",
+            "color":"12"
+        }
+    },
+    "697693701069340672":{
+        "status":{
+            "type":"partner",
+            "color":"12"
+        }
+    },
+    "504756666693189642":{
+        "status":{
+            "type":"partner",
+            "color":"12"
+        }
+    },
+    "755128953202671628":{
+        "status":{
+            "type":"premium",
+            "color":"6"
+        }
+    },
+    "760667508167409714":{
+        "status":{
+            "type":"premium",
+            "color":"9"
+        }
+    },
+    "570900369102602240":{
+        "status":{
+            "type":"premium",
+            "color":"5"
+        }
+    },
 }
 
 
 module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
     let channels = await getChannels(guild)
-    let guildStatus = await getGuildStatus(guild)
+    let guildStatus = Servers[guild.id].status
+    console.log(guildStatus)
     timestring = new Date
     let embedObject = {embed: {
         title: `${guild.name} Info`,

@@ -5,8 +5,14 @@ const cooldowns = new Discord.Collection()
 
 messageCount = 0
 
+let Servers = {
+    "755128953202671628":"?",
+    "760667508167409714":"~",
+    "570900369102602240":"."
+}
+
 async function getPrefix(guild){
-	prefixes = require('../services/prefixFetch').prefixes
+	prefixes = Servers
 	if (!guild) return null
 	guildID = guild.id
 	if (!prefixes){
@@ -19,7 +25,7 @@ async function getPrefix(guild){
 	}
 }
 
-module.exports.Run = async function(bot,message, database){
+module.exports.Run = async function(bot,message){
 	var prefixes = bot.config.prefix
 	prefixes.push(await getPrefix(message.channel.guild))
 	let prefix = false;
@@ -99,7 +105,7 @@ module.exports.Run = async function(bot,message, database){
 
 	try {
 		//Run command.
-		await command.run(bot, message, args, database)
+		await command.run(bot, message, args)
 		
 	} catch (error) {
 		//Get errors and log them and tell the user.
@@ -136,7 +142,7 @@ module.exports.Run = async function(bot,message, database){
 			]
 		}}
 		console.log(error)
-		channel.createMessage(embedObject)
+		//channel.createMessage(embedObject)
 		message.channel.createMessage("There was an error. A message has been sent to the TheMystery to alert them of this problem.\nIf this continues to happen please join the Support Server")   
 	}
 }

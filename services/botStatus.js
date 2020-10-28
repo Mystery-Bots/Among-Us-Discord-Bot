@@ -1,6 +1,6 @@
 currentStatus = 0;
 
-async function fetchStatus(bot, database){
+/* async function fetchStatus(bot, database){
 	const collection = database.collection("info");
 
 	// create a filter for server count to update
@@ -8,11 +8,11 @@ async function fetchStatus(bot, database){
 
 	const result = await collection.findOne(filter);
 	return result.status
-} 
+}  */
 
-module.exports.Run = async function (bot, database) {
+module.exports.Run = async function (bot) {
 	console.log("Bot Ready");
-	bot.editStatus(await fetchStatus(bot, database), {name:`${bot.config.prefix[0]}help | ${bot.guilds.size.toLocaleString()} Servers!`, type: 0 });
+	bot.editStatus("online", {name:`${bot.config.prefix[0]}help | ${bot.guilds.size.toLocaleString()} Servers!`, type: 0 });
 	setInterval(async function () {
 		let statuses = [
 			`${bot.config.prefix[0]}help | ${bot.guilds.size.toLocaleString()} Servers!`,
@@ -20,6 +20,6 @@ module.exports.Run = async function (bot, database) {
 		];
 		currentStatus = currentStatus + 1 < statuses.length ? currentStatus + 1 : 0;
 		let status = statuses[currentStatus];
-		bot.editStatus(await fetchStatus(bot, database),{name: status, type: 0});
+		bot.editStatus("online",{name: status, type: 0});
 	}, 60 * 1000);
 };

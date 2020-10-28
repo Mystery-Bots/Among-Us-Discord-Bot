@@ -59,5 +59,5 @@ module.exports.info = {
     usage: "(@user)",
     aliases: ["r"],
     GuildOnly: true,
-    disabled: false
+    disabled: true
 }

@@ -1,4 +1,4 @@
-module.exports.run = async (bot, message, args, database) => {
+module.exports.run = async (bot, message, args) => {
     let channelID = message.member.voiceState.channelID
     if (!channelID){
         return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
@@ -7,7 +7,7 @@ module.exports.run = async (bot, message, args, database) => {
     if (!channel.type == 2){
         return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
     }
-    let guild = message.channel.guild
+    /* let guild = message.channel.guild
 
     const collection = database.collection("games");
 
@@ -15,7 +15,7 @@ module.exports.run = async (bot, message, args, database) => {
     const filter = { "guildID": `${guild.id}` };
     
     const result = await collection.findOne(filter);
-    if (!result){
+    if (!result){ */
         let failed = false
         for ([memberID, member] of channel.voiceMembers){
             try {
@@ -29,7 +29,7 @@ module.exports.run = async (bot, message, args, database) => {
         if (!failed){
             message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix[0]}mute\`.`).catch(()=>{})
         }
-    }else{
+    /* }else{
         let deadUsers = []
         let failed = false
         for (deadUser of result.dead){
@@ -50,7 +50,7 @@ module.exports.run = async (bot, message, args, database) => {
         if (!failed){
             message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix[0]}mute\`.`).catch(()=>{})
         }
-    }
+    } */
 }
 
 module.exports.info = {
