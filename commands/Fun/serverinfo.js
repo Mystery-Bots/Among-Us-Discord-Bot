@@ -115,7 +115,12 @@ let Servers = {
 module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
     let channels = await getChannels(guild)
-    let guildStatus = Servers[guild.id].status
+    let guildData = Servers[guild.id]
+    if (guildData){
+        guildStatus = Servers[guild.id].status
+    }else{
+        guildStatus = null
+    }
     console.log(guildStatus)
     timestring = new Date
     let embedObject = {embed: {
