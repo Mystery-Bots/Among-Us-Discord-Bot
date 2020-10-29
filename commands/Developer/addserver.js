@@ -33,4 +33,5 @@ module.exports.info = {
     name: "addserver",
     description: "Sets the status for a server",
     category: "Developer",
+    disabled:true
 }

@@ -39,4 +39,5 @@ module.exports.info = {
     name: "status",
     description: "Changes the bot status",
     category: "Developer",
+    disabled:true
 }
