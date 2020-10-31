@@ -3,6 +3,8 @@ const Discord = require("eris")
 
 const cooldowns = new Discord.Collection()
 
+
+
 messageCount = 0
 
 let Servers = {
@@ -12,7 +14,7 @@ let Servers = {
 }
 
 async function getPrefix(guild){
-	prefixes = Servers
+	let prefixes = Servers
 	if (!guild) return null
 	guildID = guild.id
 	if (!prefixes){
@@ -26,8 +28,7 @@ async function getPrefix(guild){
 }
 
 module.exports.Run = async function(bot,message){
-	var prefixes = bot.config.prefix
-	prefixes.push(await getPrefix(message.channel.guild))
+	let prefixes = ["au", "Au", await getPrefix(message.channel.guild)]
 	let prefix = false;
 	for(const thisPrefix of prefixes) {
 		if(message.content.startsWith(thisPrefix)) prefix = thisPrefix;
@@ -102,7 +103,6 @@ module.exports.Run = async function(bot,message){
 
 	timestamps.set(message.author.id, now)
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)
-
 	try {
 		//Run command.
 		await command.run(bot, message, args)
