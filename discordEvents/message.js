@@ -142,7 +142,7 @@ module.exports.Run = async function(bot,message){
 			]
 		}}
 		console.log(error)
-		//channel.createMessage(embedObject)
+		channel.createMessage(embedObject)
 		message.channel.createMessage("There was an error. A message has been sent to the TheMystery to alert them of this problem.\nIf this continues to happen please join the Support Server")   
 	}
 }
