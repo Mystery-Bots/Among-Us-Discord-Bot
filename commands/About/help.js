@@ -27,7 +27,7 @@ module.exports.run = (bot, message, args) => {
 		}
 		if(!cmd || cmd.info.category == "Developer") {
 			embedObject.embed.title = "Invalid Command."
-			embedObject.embed.description =`Do \`${bot.config.prefix[0]}help\` for the list of the commands.`
+			embedObject.embed.description =`Do \`${bot.config.prefix}help\` for the list of the commands.`
 			return message.channel.createMessage(embedObject)
 		}
 		command = cmd.info
@@ -38,7 +38,7 @@ module.exports.run = (bot, message, args) => {
 		embedObject.embed.description = ([
 			`❯ **Command:** ${command.name.slice(0, 1).toUpperCase() + command.name.slice(1)}`,
 			`❯ **Description:** ${command.description || "No Description provided."}`,
-			`❯ **Usage:** ${command.usage ? `\`${bot.config.prefix[0]}${command.name} ${command.usage}\`` : "No Usage"} `,
+			`❯ **Usage:** ${command.usage ? `\`${bot.config.prefix}${command.name} ${command.usage}\`` : "No Usage"} `,
 			`❯ **Aliases:** ${command.aliases ? command.aliases.join(", ") : "None"}`,
             `❯ **Category:** ${command.category}`,
 			`❯ **Guild Only:** ${command.GuildOnly ? command.GuildOnly : "false"}`,
@@ -54,7 +54,7 @@ module.exports.run = (bot, message, args) => {
 	const categories = readdirSync("./commands/")
 	embedObject.embed.description = [
 		`Available commands for ${bot.user.username}.`,
-		`The bot prefix is **${bot.config.prefix[0]}**`,
+		`The bot prefix is **${bot.config.prefix}**`,
 		"`<>`means needed and `()` it is optional but don't include those",
 		"*Check out [premium](https://aub.mysterybots.com/premium/) for access to customize the bot*"
 	].join("\n")

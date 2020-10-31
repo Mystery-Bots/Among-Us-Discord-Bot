@@ -27,7 +27,7 @@ module.exports.run = async (bot, message, args) => {
             }
         }
         if (!failed){
-            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix[0]}mute\`.`).catch(()=>{})
+            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`).catch(()=>{})
         }
     /* }else{
         let deadUsers = []
@@ -48,7 +48,7 @@ module.exports.run = async (bot, message, args) => {
             }
         }
         if (!failed){
-            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix[0]}mute\`.`).catch(()=>{})
+            message.channel.createMessage("Users unmuted for round. To re-mute the voice chat please use" + `\`${bot.config.prefix}mute\`.`).catch(()=>{})
         }
     } */
 }

@@ -22,7 +22,7 @@ module.exports.run = async (bot, message, args) => {
         }
     }
     if (!failed){
-        message.channel.createMessage("Users muted for round. To unmute the voice chat for discussion please use" + `\`${bot.config.prefix[0]}unmute\`.`).catch(()=>{})
+        message.channel.createMessage("Users muted for round. To unmute the voice chat for discussion please use" + `\`${bot.config.prefix}unmute\`.`).catch(()=>{})
     }
 }
 

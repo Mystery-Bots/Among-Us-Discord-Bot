@@ -47,7 +47,7 @@ module.exports.run = async (bot, message, args, database) => {
                 }
                 await collection.updateOne(filter, updateDoc,{upsert:true});
             }
-            message.channel.createMessage(`${member.user.username} Revived. To list people as dead use \`${bot.config.prefix[0]}dead\`.`).catch(()=>{})
+            message.channel.createMessage(`${member.user.username} Revived. To list people as dead use \`${bot.config.prefix}dead\`.`).catch(()=>{})
         }
     }
 }

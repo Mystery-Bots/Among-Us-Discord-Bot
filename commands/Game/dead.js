@@ -41,7 +41,7 @@ module.exports.run = async (bot, message, args, database) => {
                 }
             }
             await collection.updateOne(filter, updateDoc,{upsert:true}); 
-            message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0][0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix[0]}revive\`.`).catch(()=>{})
+            message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`).catch(()=>{})
         }
     }else{
         if(result.dead.includes(member.id)){
@@ -68,7 +68,7 @@ module.exports.run = async (bot, message, args, database) => {
                 }
             }
             await collection.updateOne(filter, updateDoc,{upsert:true}); 
-            message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0][0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix[0]}revive\`.`).catch(()=>{})
+            message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`).catch(()=>{})
         }
     }
 }
