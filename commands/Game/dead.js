@@ -1,4 +1,4 @@
-module.exports.run = async (bot, message, args, database) => {
+module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
     let guildID = message.guildID
     let userMention = message.mentions[0]
@@ -13,7 +13,7 @@ module.exports.run = async (bot, message, args, database) => {
         return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
 
-    const collection = database.collection("games");
+    const collection = bot.database.collection("games");
 
     // create a filter for server id to find
     const filter = { "guildID": `${guild.id}` };
@@ -41,7 +41,7 @@ module.exports.run = async (bot, message, args, database) => {
                 }
             }
             await collection.updateOne(filter, updateDoc,{upsert:true}); 
-            message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`).catch(()=>{})
+            message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`).catch(()=>{})
         }
     }else{
         if(result.dead.includes(member.id)){
@@ -68,7 +68,7 @@ module.exports.run = async (bot, message, args, database) => {
                 }
             }
             await collection.updateOne(filter, updateDoc,{upsert:true}); 
-            message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix[0]}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`).catch(()=>{})
+            message.channel.createMessage(`${member.user.username} set as dead for round. When round is over use \`${bot.config.prefix}end\` to unmute all players.\nIf you made a mistake in listing someone as dead use \`${bot.config.prefix}revive\`.`).catch(()=>{})
         }
     }
 }
@@ -79,6 +79,4 @@ module.exports.info = {
     category: "Game",
     usage: "(@user)",
     aliases: ["d"],
-    GuildOnly: true,
-    disabled: true
 }

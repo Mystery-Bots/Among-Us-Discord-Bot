@@ -3,7 +3,7 @@ module.exports.run = async (bot, message, args, database) => {
     guild = bot.guilds.find(guild => guild.id == args[0])
     owner = guild.members.find(member => member.id == guild.ownerID).user
 
-    const collection = database.collection("servers");
+    const collection = bot.database.collection("servers");
     
     // create a filter for server id to find
     const filter = { "guildID": `${guild.id}` };
@@ -33,5 +33,4 @@ module.exports.info = {
     name: "addserver",
     description: "Sets the status for a server",
     category: "Developer",
-    disabled:true
 }

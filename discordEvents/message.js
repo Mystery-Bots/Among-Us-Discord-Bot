@@ -7,28 +7,22 @@ const cooldowns = new Discord.Collection()
 
 messageCount = 0
 
-let Servers = {
-    "755128953202671628":"?",
-    "760667508167409714":"~",
-    "570900369102602240":"."
-}
-
 async function getPrefix(guild){
-	let prefixes = Servers
+	let serverPrefixes = require('../services/prefixFetch').prefixes
 	if (!guild) return null
 	guildID = guild.id
-	if (!prefixes){
+	if (!serverPrefixes){
 		return null
 	}
-	if (!prefixes[guildID]){
+	if (!serverPrefixes[guildID]){
 		return null
 	}else{
-		return prefixes[guildID]
+		return serverPrefixes[guildID]
 	}
 }
 
 module.exports.Run = async function(bot,message){
-	let prefixes = ["au", "Au", await getPrefix(message.channel.guild)]
+	let prefixes = ["-au", "-Au", await getPrefix(message.channel.guild)]
 	let prefix = false;
 	for(const thisPrefix of prefixes) {
 		if(message.content.startsWith(thisPrefix)) prefix = thisPrefix;

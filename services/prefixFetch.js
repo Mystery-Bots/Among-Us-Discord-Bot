@@ -1,9 +1,5 @@
-/* const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority"; */
-
-async function getPrefixs(database){
-    const collection = database.collection("servers");
-    //const collection = database.collection("servers");
+async function getPrefixs(bot){
+    const collection = bot.database.collection("servers");
     const results = await collection.find();
     items = {}
     await results.forEach((item) => {

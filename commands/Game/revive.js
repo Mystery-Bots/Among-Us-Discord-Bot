@@ -1,4 +1,4 @@
-module.exports.run = async (bot, message, args, database) => {
+module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
     let userMention = message.mentions[0]
     if (!userMention) userMention = message.author
@@ -12,7 +12,7 @@ module.exports.run = async (bot, message, args, database) => {
         return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
 
-    const collection = database.collection("games");
+    const collection = bot.database.collection("games");
 
     // create a filter for server id to find
     const filter = { "guildID": `${guild.id}` };
@@ -59,5 +59,4 @@ module.exports.info = {
     usage: "(@user)",
     aliases: ["r"],
     GuildOnly: true,
-    disabled: true
 }

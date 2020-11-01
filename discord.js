@@ -6,11 +6,11 @@ const ms = require("ms");
 const moment = require("moment");
 const MongoClient = require('mongodb').MongoClient
 
-/* const client = new MongoClient("mongodb+srv://among-us-bot:password@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority", {useUnifiedTopology: true});
+const client = new MongoClient("mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority", {useUnifiedTopology: true});
 client.connect().then(connection => {
 	database = connection.db("bot")
-	bot.connection = connection
-}) */
+	bot.database = database
+})
 
 
 const bot = new Discord.Client(config.discord.token, {
@@ -45,7 +45,6 @@ const bot = new Discord.Client(config.discord.token, {
 });
 
 bot.config = config.discord;
-//bot.database = config.database;
 
 // Creating command and aliases collection.
 ["commands", "aliases"].forEach((x) => (bot[x] = new Discord.Collection()));
@@ -114,7 +113,19 @@ bot
 		require('./discordEvents/message').Run(bot, message)
 	})
 
-setTimeout(() => {
+// Set status on start
+async function fetchStatus(bot){
+	const collection = bot.database.collection("info");
+
+	// create a filter for server count to update
+	const filter = { _id: "5f6c5183784bc0b5904a1b9d" };
+
+	const result = await collection.findOne(filter);
+	return result.status
+}
+
+setTimeout(async() => {
 	bot.connect()
-	//require('./services/prefixFetch').Run(database)
+	bot.editStatus(await fetchStatus(bot), {name:`${bot.config.prefix}help | ${bot.guilds.size.toLocaleString()} Servers!`, type: 0 });
+	require('./services/prefixFetch').Run(bot)
 }, 5*1000);

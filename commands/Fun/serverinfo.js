@@ -1,7 +1,4 @@
 const moment = require("moment")
-const { MongoClient } = require("mongodb");
-const uri = "mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority";
-
 
 const embedColor = [
     0x3e474e, //Black 0
@@ -49,79 +46,25 @@ async function getChannels(guild) {
     return [text, voice]
 }
 
-/* async function getGuildStatus(guild) {
-    const client = new MongoClient(uri, { useUnifiedTopology: true });
-	try {
-		await client.connect();
+async function getGuildStatus(bot, guild) {
+    const collection = bot.database.collection("servers");
 
-		const database = client.db("bot");
-		const collection = database.collection("servers");
+    // create a filter for server id to find
+    const filter = { "guildID": `${guild.id}` };
     
-        // create a filter for server id to find
-        const filter = { "guildID": `${guild.id}` };
-        
-        const result = await collection.findOne(filter);
-        if (!result){
-            return null
-        }else{
-            return result.status
-        }
-
-    } finally {
-		await client.close();
-	}
-} */
-
-let Servers = {
-    "755289058741059596":{
-        "status":{
-            "type":"official",
-            "color":"12"
-        }
-    },
-    "697693701069340672":{
-        "status":{
-            "type":"partner",
-            "color":"12"
-        }
-    },
-    "504756666693189642":{
-        "status":{
-            "type":"partner",
-            "color":"12"
-        }
-    },
-    "755128953202671628":{
-        "status":{
-            "type":"premium",
-            "color":"6"
-        }
-    },
-    "760667508167409714":{
-        "status":{
-            "type":"premium",
-            "color":"9"
-        }
-    },
-    "570900369102602240":{
-        "status":{
-            "type":"premium",
-            "color":"5"
-        }
-    },
+    const result = await collection.findOne(filter);
+    if (!result){
+        return null
+    }else{
+        return result.status
+    }
 }
 
 
 module.exports.run = async (bot, message, args) => {
     let guild = message.channel.guild
     let channels = await getChannels(guild)
-    let guildData = Servers[guild.id]
-    if (guildData){
-        guildStatus = Servers[guild.id].status
-    }else{
-        guildStatus = null
-    }
-    console.log(guildStatus)
+    let guildStatus = await getGuildStatus(bot, guild)
     timestring = new Date
     let embedObject = {embed: {
         title: `${guild.name} Info`,

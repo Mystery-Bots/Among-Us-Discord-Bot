@@ -7,15 +7,15 @@ module.exports.run = async (bot, message, args) => {
     if (!channel.type == 2){
         return message.channel.createMessage("Sorry but you are not connected to a voice chat for me to manage.")
     }
-    /* let guild = message.channel.guild
+    let guild = message.channel.guild
 
-    const collection = database.collection("games");
+    const collection = bot.database.collection("games");
 
     // create a filter for server id to find
     const filter = { "guildID": `${guild.id}` };
     
     const result = await collection.findOne(filter);
-    if (!result){ */
+    if (!result){
         let failed = false
         for ([memberID, member] of channel.voiceMembers){
             try {
@@ -27,10 +27,9 @@ module.exports.run = async (bot, message, args) => {
             }
         }
         if (!failed){
-            message.channel.createMessage("Game ended. All users unmuted.").catch(()=>{})
-            //message.channel.createMessage('No players died in the game. Unmuting all players.').catch(()=>{})
+            message.channel.createMessage('No players died in the game. Unmuting all players.').catch(()=>{})
         }
-    /* }else{
+    }else{
         let failed = false
         for ([memberID, member] of channel.voiceMembers){
             try {
@@ -59,7 +58,7 @@ module.exports.run = async (bot, message, args) => {
             }
             message.channel.createMessage("Game ended. All users unmuted.").catch(()=>{})
         }
-    } */
+    }
 }
 
 module.exports.info = {
