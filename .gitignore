@@ -3,3 +3,5 @@
 config.js
 assets/
 discordEvents/ready.js
+main.js
+commands/Developer/ops.js
