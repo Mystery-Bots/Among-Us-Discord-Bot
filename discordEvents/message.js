@@ -22,7 +22,7 @@ async function getPrefix(guild){
 }
 
 module.exports.Run = async function(bot,message){
-	let prefixes = ["-au", "-Au", await getPrefix(message.channel.guild)]
+	let prefixes = ["au", "Au", await getPrefix(message.channel.guild)]
 	let prefix = false;
 	for(const thisPrefix of prefixes) {
 		if(message.content.startsWith(thisPrefix)) prefix = thisPrefix;
