@@ -126,6 +126,6 @@ async function fetchStatus(bot){
 
 setTimeout(async() => {
 	bot.connect()
-	bot.editStatus(await fetchStatus(bot), {name:`${bot.config.prefix}help | ${bot.guilds.size.toLocaleString()} Servers!`, type: 0 });
+	bot.editStatus("invisible");
 	require('./services/prefixFetch').Run(bot)
 }, 5*1000);
