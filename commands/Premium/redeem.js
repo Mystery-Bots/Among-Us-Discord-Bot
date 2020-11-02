@@ -7,7 +7,7 @@ colorEmbed = {
                 <:crewmate_purple:756037126709182485> Purple\n\
                 <:crewmate_pink:756037448810889226> Pink\n\
                 <:crewmate_orange:756036915404210277> Orange\n\
-                <:crewmate_limegreen:756036983280631839> Lime\n\
+                <:crewmate_lime:756036983280631839> Lime\n\
                 <:crewmate_green:756037021092413471> Green\n\
                 <:crewmate_cyan:756037049940967495> Cyan\n\
                 <:crewmate_brown:756037630696751126> Brown\n\

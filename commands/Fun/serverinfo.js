@@ -28,7 +28,7 @@ const guildIcons = {
         "<:crewmate_purple:756037126709182485>", //4
         "<:crewmate_pink:756037448810889226>", //5
         "<:crewmate_orange:756036915404210277>", //6
-        "<:crewmate_limegreen:756036983280631839>", //7
+        "<:crewmate_lime:756036983280631839>", //7
         "<:crewmate_green:756037021092413471>", //8
         "<:crewmate_cyan:756037049940967495>", //9
         "<:crewmate_brown:756037630696751126>", //10
