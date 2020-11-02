@@ -129,7 +129,7 @@ module.exports.run = async (bot, message, args) => {
         }
     }}
     if (!guildStatus || !guildStatus.type){
-        embedObject.embed.description = `Want a Crewmate and colorful embed. Feel free to get premium to get these perks and more.`
+        embedObject.embed.description = `Want a Crewmate and colorful embed. Feel free to get [premium](https://aub.mysterybots.com/premium/) to get these perks and more.`
     }
     else if (guildStatus.type == "official") {
         embedObject.embed.description = `${guildIcons[guildStatus.type]} Official Server`
