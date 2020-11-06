@@ -17,7 +17,7 @@ const embedColor = [
 ]
 
 const guildIcons = {
-    "official": "<:aub:756022955414126602>",
+    "official": "<:aub:774130247615905848>",
     "partner": "<:crewmates:756043466886086676>",
     "innersloth":"<:innersloth:760986640616521758>",
     "colors":[
