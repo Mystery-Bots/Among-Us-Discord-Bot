@@ -91,7 +91,7 @@ module.exports.Run = async function(bot,message){
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now)
-			return message.channel.createMessage(`please wait ${ms(timeLeft, {long:true})} before reusing the \`${info.name}\` command.`)
+			return message.channel.createMessage(`Please wait ${ms(timeLeft, {long:true})} before reusing the \`${info.name}\` command.`)
 		}
 	}
 
