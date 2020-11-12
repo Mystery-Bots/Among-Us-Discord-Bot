@@ -113,16 +113,6 @@ bot
 		require('./discordEvents/message').Run(bot, message)
 	})
 
-// Set status on start
-async function fetchStatus(bot){
-	const collection = bot.database.collection("info");
-
-	// create a filter for server count to update
-	const filter = { _id: "5f6c5183784bc0b5904a1b9d" };
-
-	const result = await collection.findOne(filter);
-	return result.status
-}
 
 setTimeout(async() => {
 	bot.connect()
