@@ -113,5 +113,5 @@ module.exports.info = {
     name: "quiz",
     description: "Starts an Among Us quiz in the Quiz channel (Premium)",
     category: "Fun",
-    cooldown: '1m'
+    cooldown: '4m'
 }
