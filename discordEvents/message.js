@@ -86,8 +86,8 @@ module.exports.Run = async function(bot,message){
 	const timestamps = cooldowns.get(info.name)
 	const cooldownAmount = ms(info.cooldown || 0) //info.cooldown * 1000
 
-	if (timestamps.has(message.author.id)) {
-		const expirationTime = timestamps.get(message.author.id) + cooldownAmount
+	if (timestamps.has(message.channel.guild.id)) {
+		const expirationTime = timestamps.get(message.channel.guild.id) + cooldownAmount
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now)
@@ -95,8 +95,8 @@ module.exports.Run = async function(bot,message){
 		}
 	}
 
-	timestamps.set(message.author.id, now)
-	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount)
+	timestamps.set(message.channel.guild.id, now)
+	setTimeout(() => timestamps.delete(message.channel.guild.id), cooldownAmount)
 	try {
 		//Run command.
 		await command.run(bot, message, args)
