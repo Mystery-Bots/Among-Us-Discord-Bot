@@ -75,7 +75,7 @@ const load = (dir = "./commands/") => {
 				//console.log(`Loaded command ${pull.info.name}.`);
 			} else {
 				console.log(
-					`Error loading command in ${dir}${dirs}.${file} you have a missing info.name or info.name is not a string. or you have a missing info.category or info.category is not a string`
+					`Error loading command in ${dirs}/${file} you have a missing info.name or info.name is not a string. or you have a missing info.category or info.category is not a string`
 				);
 				continue;
 			}
@@ -102,7 +102,7 @@ bot
 		require("./discordEvents/ready").Run(bot);
 	})
 	.on("disconnect", () => {
-		console.warn("Disconnected!");
+		console.warn(`${moment(Date.now()).format("hh/mm A, DD/MM/YYYY")}: Disconnected!`);
 	})
 	.on("reconnecting", () => {
 		console.warn(
