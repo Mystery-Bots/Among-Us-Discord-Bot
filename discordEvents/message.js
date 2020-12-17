@@ -99,6 +99,8 @@ module.exports.Run = async function(bot,message){
 	setTimeout(() => timestamps.delete(message.channel.guild.id), cooldownAmount)
 	try {
 		//Run command.
+		collection = bot.database.collection('info')
+		await collection.updateOne({"_id":"5f6c5183784bc0b5904a1b9d"},{"$inc":{"Usage":1}})
 		await command.run(bot, message, args)
 		
 	} catch (error) {
