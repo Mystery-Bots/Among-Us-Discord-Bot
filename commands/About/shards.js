@@ -4,8 +4,8 @@ statuses = {
     "ready":"<:online:756022005999861830>",
     "disconnected":"<:offline:756022560503758868>",
     "connecting":"<:dnd:756022005979152425>",
-    "resuming":"<:idle:758486536089239572>",
-    "handshaking":"<:idle:758486536089239572>",
+    "resuming":"<:idle:772717963400839179>",
+    "handshaking":"<:idle:772717963400839179>",
 }
 
 module.exports.run = async (bot, message, args) => {
