@@ -30,10 +30,11 @@ colors = {
 }
 
 module.exports.run = async (bot, message, args) => {
+    console.log(message)
     let token = args[0]
     let color = args[1]
     let tokenCollection = bot.database.collection("tokens")
-    let tokenCheck = await tokenCollection.findOne({"token":token})
+    let tokenCheck = await tokenCollection.findOne({"token":token.strip()})
     // Check if token was provided
     if (!token){
         return message.channel.createMessage("Please provide a token to be redeemed. If you can't remember your token check your PayPal tractions for the Transaction ID.")
