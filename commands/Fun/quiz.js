@@ -8,12 +8,12 @@ const numberToReaction = {
 }
 
 async function getGuildStatus(bot, guild) {
-    const collection = bot.database.collection("servers");
+    let collection = bot.database.collection("servers");
 
     // create a filter for server id to find
-    const filter = { "guildID": `${guild.id}` };
+    let filter = { "guildID": `${guild.id}` };
     
-    const result = await collection.findOne(filter);
+    let result = await collection.findOne(filter);
     if (!result){
         return null
     }else{
@@ -22,8 +22,8 @@ async function getGuildStatus(bot, guild) {
 }
 
 async function getQuestions(bot){
-    const collection = bot.database.collection("questions");
-    const questions = await collection.find().toArray()
+    let collection = bot.database.collection("questions");
+    let questions = await collection.find().toArray()
     return questions
 }
 

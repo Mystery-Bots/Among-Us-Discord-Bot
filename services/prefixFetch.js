@@ -1,6 +1,6 @@
 async function getPrefixs(bot){
-    const collection = bot.database.collection("servers");
-    const results = await collection.find();
+    let collection = bot.database.collection("servers");
+    let results = await collection.find();
     items = {}
     await results.forEach((item) => {
         if (!item){}

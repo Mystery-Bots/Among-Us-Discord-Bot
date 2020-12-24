@@ -1,11 +1,11 @@
 async function getGuildStatus(bot, guild) {
 
-    const collection = bot.database.collection("servers");
+    let collection = bot.database.collection("servers");
 
     // create a filter for server id to find
-    const filter = { "guildID": `${guild.id}` };
+    let filter = { "guildID": `${guild.id}` };
     
-    const result = await collection.findOne(filter);
+    let result = await collection.findOne(filter);
     if (!result){
         return null
     }else{
@@ -26,10 +26,10 @@ module.exports.run = async (bot, message, args) => {
     
     if (!guildData) return message.channel.createMessage("This is a premium feature. If you would like to get premium you can do so here:\n<https://www.patreon.com/TheMystery>")
     
-    const collection = bot.database.collection("servers");
+    let collection = bot.database.collection("servers");
 
     // create a filter for server id to find
-    const filter = { "guildID": `${guild.id}` };
+    let filter = { "guildID": `${guild.id}` };
     
     // create a document that sets the server count
     if (args[0] == 'none' || args[0] == 'clear' || args[0] == 'remove'){
@@ -48,7 +48,7 @@ module.exports.run = async (bot, message, args) => {
         };
     }
 
-    const result = await collection.updateOne(filter, updateDoc);
+    let result = await collection.updateOne(filter, updateDoc);
 
     if (args[0] == 'none' || args[0] == 'clear' || args[0] == 'remove'){
         message.channel.createMessage("Server prefix was removed")

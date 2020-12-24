@@ -13,9 +13,9 @@ module.exports.run = async (bot, message, args, database) => {
     token = await tokenGen(16)
     user = args[0]
 
-    const collection = bot.database.collection("tokens");
+    let collection = bot.database.collection("tokens");
     
-    const updateDoc = {
+    let updateDoc = {
             "token":token,
             "userID":user
     };

@@ -12,12 +12,12 @@ module.exports.run = async (bot, message, args) => {
     }
     let guild = message.channel.guild
 
-    const collection = bot.database.collection("games");
+    let collection = bot.database.collection("games");
 
     // create a filter for server id to find
-    const filter = { "guildID": `${guild.id}` };
+    let filter = { "guildID": `${guild.id}` };
     
-    const result = await collection.findOne(filter);
+    let result = await collection.findOne(filter);
     if (!result){
         let failed = false
         if (channel.voiceMembers.size < 1){

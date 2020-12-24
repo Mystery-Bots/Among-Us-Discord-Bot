@@ -13,12 +13,12 @@ module.exports.run = async (bot, message, args) => {
         return message.channel.createMessage("Sorry but you or the mentioned user are not connected to a voice chat for me to manage.")
     }
 
-    const collection = bot.database.collection("games");
+    let collection = bot.database.collection("games");
 
     // create a filter for server id to find
-    const filter = { "guildID": `${guild.id}` };
+    let filter = { "guildID": `${guild.id}` };
     
-    const result = await collection.findOne(filter);
+    let result = await collection.findOne(filter);
     if (!result){
         let failed = false
         try {
@@ -33,7 +33,7 @@ module.exports.run = async (bot, message, args) => {
         }
         if (!failed){
             dead = [member.id]
-            const updateDoc = {
+            let updateDoc = {
                 $set:{
                     "guildID":guild.id,
                     "dead":dead,
@@ -61,7 +61,7 @@ module.exports.run = async (bot, message, args) => {
         if (!failed){
             dead = result.dead
             dead.push(member.id)
-            const updateDoc = {
+            let updateDoc = {
                 $set:{
                     "dead":dead,
                     "updatedAt":new Date
