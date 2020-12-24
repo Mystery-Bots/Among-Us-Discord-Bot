@@ -98,7 +98,10 @@ load();
 bot
 	.on("error",console.error)
 	.on("warn", console.warn)
-	.on("ready", () => {
+	.on("ready", (bot) => {
+		let collection = bot.database.collection("info");
+        let filter = { _id: "5f6c5183784bc0b5904a1b9d" };
+        await collection.updateOne(filter, {$set:{'servers':bot.servers}});
 		require("./discordEvents/ready").Run(bot);
 	})
 	.on("disconnect", () => {
@@ -111,6 +114,16 @@ bot
 	})
 	.on("messageCreate", (message) => {
 		require('./discordEvents/message').Run(bot, message)
+	})
+	.on("guildCreate", () => {
+		let collection = bot.database.collection("info");
+        let filter = { _id: "5f6c5183784bc0b5904a1b9d" };
+        await collection.updateOne(filter, {$inc:{'servers':1}});
+	})
+	.on("guildDelete", () => {
+		let collection = bot.database.collection("info");
+        let filter = { _id: "5f6c5183784bc0b5904a1b9d" };
+        await collection.updateOne(filter, {$inc:{'servers':-1}});
 	})
 
 
