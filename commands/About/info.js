@@ -16,23 +16,26 @@ embedColor = [
 ]
 
 crewColor = [
-    "https://themystery.s-ul.eu/bot/l4PQmeQ3",
-    "https://themystery.s-ul.eu/bot/kj0elCnG",
-    "https://themystery.s-ul.eu/bot/BkgP4wyw",
-    "https://themystery.s-ul.eu/bot/zuFhrjTA",
-    "https://themystery.s-ul.eu/bot/Fi1yfLwo",
-    "https://themystery.s-ul.eu/bot/EplSSNXt",
-    "https://themystery.s-ul.eu/bot/a3nnrBmj",
-    "https://themystery.s-ul.eu/bot/mw4KhkOT",
-    "https://themystery.s-ul.eu/bot/0IssEuGF",
-    "https://themystery.s-ul.eu/bot/UYr66rph",
-    "https://themystery.s-ul.eu/bot/v6QOWIvQ",
-    "https://themystery.s-ul.eu/bot/5MT8kSEi"
+    "https://cdn.themystery.me/bot/l4PQmeQ3",
+    "https://cdn.themystery.me/bot/kj0elCnG",
+    "https://cdn.themystery.me/bot/BkgP4wyw",
+    "https://cdn.themystery.me/bot/zuFhrjTA",
+    "https://cdn.themystery.me/bot/Fi1yfLwo",
+    "https://cdn.themystery.me/bot/EplSSNXt",
+    "https://cdn.themystery.me/bot/a3nnrBmj",
+    "https://cdn.themystery.me/bot/mw4KhkOT",
+    "https://cdn.themystery.me/bot/0IssEuGF",
+    "https://cdn.themystery.me/bot/UYr66rph",
+    "https://cdn.themystery.me/bot/v6QOWIvQ",
+    "https://cdn.themystery.me/bot/5MT8kSEi"
 ]
 
-deadCrew = "https://themystery.s-ul.eu/bot/iP9xDX98"
+deadCrew = "https://cdn.themystery.me/bot/iP9xDX98"
 
 module.exports.run = async (bot, message, args) => {
+    let collection = bot.database.collection("info");
+	let filter = { _id: "5f6c5183784bc0b5904a1b9d" };
+	let result = await collection.findOne(filter);
     color = Math.floor(Math.random() * crewColor.length) //Number 0 to 11
     dead = Math.floor(Math.random() * 101) //Number 0 to 100
     timestring = new Date
@@ -62,7 +65,7 @@ module.exports.run = async (bot, message, args) => {
             },
             {
                 name: "Servers",
-                value: bot.guilds.size.toLocaleString(),
+                value: result.servers.toLocaleString(),
                 inline: true
             },
             {
