@@ -47,12 +47,12 @@ async function getChannels(guild) {
 }
 
 async function getGuildStatus(bot, guild) {
-    const collection = bot.database.collection("servers");
+    let collection = bot.database.collection("servers");
 
     // create a filter for server id to find
-    const filter = { "guildID": `${guild.id}` };
+    let filter = { "guildID": `${guild.id}` };
     
-    const result = await collection.findOne(filter);
+    let result = await collection.findOne(filter);
     if (!result){
         return null
     }else{
