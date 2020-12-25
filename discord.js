@@ -21,7 +21,6 @@ const bot = new Discord.Client(config.discord.token, {
 	guildSubscriptions:false,
 	messageLimit:0,
 	largeThreshold: 0,
-	cacheGuilds: false,
 	disableEvents: {
 		"CHANNEL_CREATE":true,
 		"CHANNEL_DELETE":true,
