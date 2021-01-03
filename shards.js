@@ -2,7 +2,7 @@ const Sharder = require("eris-sharder").Master;
 let config = require("./config");
 const sharder = new Sharder(config.discord.token, "/discord.js", {
 	stats: true,
-	debug: true,
+	debug: false,
 	guildsPerShard: 2000,
 	name: "Among Us Bot",
 	clientOptions: {
