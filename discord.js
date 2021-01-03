@@ -9,12 +9,8 @@ const MongoClient = require("mongodb").MongoClient;
 
 class Class extends Base {
 	constructor(bot) {
+		
 		super(bot);
-		require("./discordEvents/ready").Run(this.bot);
-		this.bot.editStatus("invisible");
-	
-	}
-	launch() {
 
 		const client = new MongoClient(
 			"mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority",
@@ -24,6 +20,13 @@ class Class extends Base {
 			let database = connection.db("bot");
 			this.bot.database = database;
 		});
+
+		require("./discordEvents/ready").Run(this.bot);
+		this.bot.editStatus("invisible");
+	
+	}
+	launch() {
+
 		this.bot.config = config.discord;
 
 		// Creating command and aliases collection.
