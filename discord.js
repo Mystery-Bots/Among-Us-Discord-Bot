@@ -11,6 +11,7 @@ class Class extends Base {
 	constructor(bot) {
 		super(bot);
 		require("./discordEvents/ready").Run(this.bot);
+		this.bot.editStatus("invisible");
 	
 	}
 	launch() {
@@ -104,8 +105,6 @@ class Class extends Base {
 			});
 
 		setTimeout(async () => {
-			this.bot.editStatus("invisible");
-			console.log("Prefix Shit")
 			require("./services/prefixFetch").Run(this.bot);
 		}, 5 * 1000);
 
