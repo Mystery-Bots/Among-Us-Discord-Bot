@@ -19,10 +19,9 @@ class Class extends Base {
 		client.connect().then((connection) => {
 			let database = connection.db("bot");
 			this.bot.database = database;
+			require("./discordEvents/ready").Run(this.bot);
+			this.bot.editStatus("invisible");
 		});
-
-		require("./discordEvents/ready").Run(this.bot);
-		this.bot.editStatus("invisible");
 	
 	}
 	launch() {
