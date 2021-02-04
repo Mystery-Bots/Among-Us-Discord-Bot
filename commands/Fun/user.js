@@ -31,7 +31,7 @@ module.exports.run = async (bot, message, args) => {
             },
             {
                 name: `Roles [${user.roles.length}]`,
-                value: `<@&${user.roles.join("> <@&")}>`
+                value: `${user.roles.length != 0 ? `<@&${user.roles.join("> <@&")}>` : "None"}`
             }
         ],
         footer: {
