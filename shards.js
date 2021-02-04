@@ -14,7 +14,6 @@ const sharder = new Sharder(config.discord.token, "/discord.js", {
 		messageLimit: 0,
 		largeThreshold: 0,
 		disableEvents: {
-			CHANNEL_CREATE: true,
 			CHANNEL_DELETE: true,
 			CHANNEL_UPDATE: true,
 			GUILD_BAN_ADD: true,
