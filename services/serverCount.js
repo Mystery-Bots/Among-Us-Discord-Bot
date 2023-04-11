@@ -1,11 +1,11 @@
 const centra = require('centra')
 
 const DB = 'https://discord.bots.gg/api/v1/bots/754922494376542219/stats'
-const DBToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGkiOnRydWUsImlkIjoiMjk1Nzk4MjUxMDIwNDg0NjA4IiwiaWF0IjoxNjAxMjgwMDQ1fQ.WZhkfbuu8AzyGUbYjsPMuUIPNSZayLRZUtPTwE5E3WY'
+const DBToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGkiOnRydWUsImlkIjoiMjk1Nzk4MjUxMDIwNDg0NjA4IiwiaWF0IjoxNjAxMjgwMDQ1fQ.WZhkfbuu8AzyGUbYjsPMuUIPNSZayLRZUtPTwE5E3WY' // Invalid
 const DBL = "https://discordbotlist.com/api/v1/bots/754922494376542219/stats"
-const DBLToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6Ijc1NDkyMjQ5NDM3NjU0MjIxOSIsImlhdCI6MTYwMjIxMTI4OX0.JSiSSfGrwtT2UPYEsy_D2FQNNxtBhQwljMFLAWOwVkE"
+const DBLToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0IjoxLCJpZCI6Ijc1NDkyMjQ5NDM3NjU0MjIxOSIsImlhdCI6MTYwMjIxMTI4OX0.JSiSSfGrwtT2UPYEsy_D2FQNNxtBhQwljMFLAWOwVkE" // Invalid
 const TOP = 'https://top.gg/api/bots/754922494376542219/stats'
-const TOPToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1NDkyMjQ5NDM3NjU0MjIxOSIsImJvdCI6dHJ1ZSwiaWF0IjoxNjAxNTkzNTA0fQ.VvPAuqP6RLUEECLm-v7qkJaB6kASyW1SH6XItdLZPAU'
+const TOPToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijc1NDkyMjQ5NDM3NjU0MjIxOSIsImJvdCI6dHJ1ZSwiaWF0IjoxNjAxNTkzNTA0fQ.VvPAuqP6RLUEECLm-v7qkJaB6kASyW1SH6XItdLZPAU' // Invalid
 
 
 async function DBUpdate(bot, servers){
