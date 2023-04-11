@@ -13,7 +13,7 @@ class Class extends Base {
 		super(bot);
 
 		const client = new MongoClient(
-			"mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority",
+			"mongodb+srv://among-us-bot:BW3Lb86EifZOiu3U@cluster0.daswr.mongodb.net/bot?retryWrites=true&w=majority", // Invalid
 			{ useUnifiedTopology: true }
 		);
 		client.connect().then((connection) => {
